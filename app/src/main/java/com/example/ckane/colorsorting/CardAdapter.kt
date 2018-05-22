@@ -11,7 +11,6 @@ class CardAdapter(val context : Context, val cards : List<Card>) : BaseAdapter()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = ImageView(context)
-        //TODO: need to make this dynamically 1/4 the size of the gridview
         val cardHeight = 250
         //TODO: find a way to change background color of vector file dynamically
         view.setBackgroundResource(getResourceBackgroundInt(position))

@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity() {
             colorText.text = getColorFromNumber(Random().nextInt(4))
             Handler().postDelayed({
                 gridView.adapter = greyGrid
-                Toast.makeText(this, "Timer Works", Toast.LENGTH_SHORT).show()
             }, 1000)
         }
     }
