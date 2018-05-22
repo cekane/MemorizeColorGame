@@ -7,22 +7,22 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 
 
-class CardAdapter(val context : Context, val cards : List<Int>) : BaseAdapter() {
+class CardAdapter(val context : Context, val cards : List<Card>) : BaseAdapter() {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = ImageView(context)
         //TODO: need to make this dynamically 1/4 the size of the gridview
         val cardHeight = 250
         //TODO: find a way to change background color of vector file dynamically
-        view.setBackgroundResource(R.drawable.ic_grey_card)
+        view.setBackgroundResource(getResourceBackgroundInt(position))
         val params = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, cardHeight)
         view.layoutParams = params
 
         return view
     }
 
-    override fun getItem(position: Int): Any =
-        cards[position]
+    override fun getItem(position: Int): String =
+        cards[position].backgroundColor
 
 
     override fun getItemId(position: Int): Long {
@@ -32,5 +32,16 @@ class CardAdapter(val context : Context, val cards : List<Int>) : BaseAdapter() 
 
     override fun getCount(): Int {
         return cards.size
+    }
+
+    private fun getResourceBackgroundInt(position: Int): Int{
+        when(cards[position].backgroundColor){
+            "red" -> return R.drawable.ic_red_card
+            "blue" -> return R.drawable.ic_blue_card
+            "orange" -> return R.drawable.ic_orange_card
+            "yellow" -> return  R.drawable.ic_yellow_card
+            "grey" -> return R.drawable.ic_grey_card
+        }
+        return 0
     }
 }

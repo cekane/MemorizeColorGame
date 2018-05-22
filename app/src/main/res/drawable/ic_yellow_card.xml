@@ -4,7 +4,7 @@
     android:viewportWidth="300"
     android:viewportHeight="500">
     <path
-        android:fillColor="#d3d3d3"
-        android:name="Grey Rectangle"
+        android:fillColor="#ffff00"
+        android:name="Yellow Rectangle"
         android:pathData="m18 0c68.33 0 136.67 0 205 0c22.64 -0 61.82 -5.21 72 8c10.44 13.55 5 78.37 5 103c0 91.99 0 184.01 0 276c0 30.78 8.94 97.98 -11 110c-15.58 9.39 -88.22 3 -113 3c-30.04 0 -154.83 5.19 -168 -5c-13.21 -10.22 -8 -49.34 -8 -72c0 -68.66 0 -137.34 0 -206c0 -66.33 0 -132.67 0 -199c2.51 -10.06 10.29 -13.01 18 -18z" />
 </vector>
