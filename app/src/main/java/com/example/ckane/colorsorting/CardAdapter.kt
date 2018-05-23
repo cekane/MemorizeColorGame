@@ -7,12 +7,11 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 
 
-class CardAdapter(val context : Context, val cards : List<Card>) : BaseAdapter() {
+class CardAdapter(val context : Context, var cards : MutableList<Card>) : BaseAdapter() {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = ImageView(context)
         val cardHeight = 250
-        //TODO: find a way to change background color of vector file dynamically
         view.setBackgroundResource(getResourceBackgroundInt(position))
         val params = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, cardHeight)
         view.layoutParams = params
@@ -42,5 +41,13 @@ class CardAdapter(val context : Context, val cards : List<Card>) : BaseAdapter()
             "grey" -> return R.drawable.ic_grey_card
         }
         return 0
+    }
+
+    fun updateCardListItem(position : Int , card : Card){
+        cards[position] = card
+    }
+
+    fun updateCardList(newCards : MutableList<Card>){
+        cards = newCards
     }
 }

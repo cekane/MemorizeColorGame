@@ -11,31 +11,47 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        var greyCardList : MutableList<Card> = createCardList(true)
+        val adapter =  CardAdapter(this, greyCardList)
+        val gridView: GridView = this.findViewById(R.id.gridview)
+        var coloredCardList : MutableList<Card> = arrayListOf()
 
         val colorText : TextView = findViewById(R.id.color_to_choose)
 
-        val greyGrid =  CardAdapter(this, createCardList(true))
-        val gridView: GridView = this.findViewById(R.id.gridview)
-        gridView.adapter = greyGrid
-//        gridView.onItemClickListener =
-//                AdapterView.OnItemClickListener { parent, v, position, id ->
-//                    val color = gridView.adapter.getItem(position)
-//                    Toast.makeText(this, color.toString(), Toast.LENGTH_SHORT).show()
-//                }
+
+        gridView.adapter = adapter
+        gridView.onItemClickListener =
+                AdapterView.OnItemClickListener { parent, v, position, id ->
+                    if(coloredCardList.isNotEmpty() && colorText.text == coloredCardList[position].backgroundColor ){
+                        adapter.updateCardListItem(position, Card(position, coloredCardList[position].backgroundColor))
+                        refreshGridView(adapter, gridView)
+                    }
+                }
 
         val gameControl: Button = this.findViewById(R.id.start_game)
         gameControl.setOnClickListener {
-            gridView.adapter = CardAdapter(this, createCardList(false))
+
+            greyCardList = createCardList(true)
+            coloredCardList = createCardList(false)
+
+            refreshGridView(adapter, gridView, coloredCardList)
             colorText.text = getColorFromNumber(Random().nextInt(4))
             Handler().postDelayed({
-                gridView.adapter = greyGrid
+                refreshGridView(adapter, gridView, greyCardList)
             }, 1000)
         }
     }
 
-    private fun createCardList(isGrey : Boolean): List<Card>{
+    private fun refreshGridView(adapter : CardAdapter, gridView : GridView , cards : MutableList<Card> = arrayListOf() ){
+        if(cards.isNotEmpty())
+            adapter.updateCardList(cards)
+        adapter.notifyDataSetChanged()
+        gridView.invalidateViews()
+    }
+
+    private fun createCardList(isGrey : Boolean): MutableList<Card>{
         var randomNumber: Int
-        return List(16, {
+        return MutableList(16, {
             if(isGrey){
                 Card(it, "grey")
             }
