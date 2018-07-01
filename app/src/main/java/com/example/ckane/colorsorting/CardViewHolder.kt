@@ -3,15 +3,14 @@ package com.example.ckane.colorsorting
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
-import android.widget.Toast
 
-class CardViewHolder(layoutView: View, private val cardState : CardListManager) : RecyclerView.ViewHolder(layoutView), View.OnClickListener {
-    val cardImage : ImageView = layoutView.findViewById(R.id.card_image)
-    init{
+class CardViewHolder(layoutView: View, private val cardState: CardListManager) : RecyclerView.ViewHolder(layoutView), View.OnClickListener {
+    val cardImage: ImageView = layoutView.findViewById(R.id.card_image)
+
+    init {
         layoutView.setOnClickListener(this)
     }
-    override fun onClick(view: View) {
-        Toast.makeText(view.context, "Clicked Position = $layoutPosition", Toast.LENGTH_SHORT).show()
-        cardState.updateCard(layoutPosition)
-    }
+
+    override fun onClick(view: View) =
+            cardState.updateCard(layoutPosition)
 }

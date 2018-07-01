@@ -1,11 +1,16 @@
-package com.example.ckane.colorsorting
+package com.example.ckane.colorsorting.util
 
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
+import com.example.ckane.colorsorting.model.Card
+import com.example.ckane.colorsorting.R
 import java.util.*
 
-
+/**
+ * takes in a number returns it's matching color
+ * @param num the number to be converted to a string color
+ */
 fun getColorFromNumber(num: Int): String {
     when (num) {
         0 -> return "red"
@@ -16,6 +21,10 @@ fun getColorFromNumber(num: Int): String {
     return ""
 }
 
+/**
+ * Creates a card list of either random colors or all grey
+ * @param isGrey when true creates a grey list of cards, when false creates a colored list
+ */
 fun createCardList(isGrey: Boolean): MutableList<Card> {
     var randomNumber: Int
     return MutableList(16, {
@@ -28,8 +37,13 @@ fun createCardList(isGrey: Boolean): MutableList<Card> {
     })
 }
 
-fun getCardDrawable(cards: MutableList<Card>, position: Int, context: Context): Drawable? {
-    when (cards[position].backgroundColor) {
+/**
+ * Gets the vector drawables of each colored card depending on the position passed in
+ * @param card the card that we want the drawable for based on it's background color
+ * @param context need to use the toDrawable function
+ */
+fun getCardDrawable(card : Card, context: Context): Drawable? {
+    when (card.backgroundColor) {
         "red" -> return toDrawable(R.drawable.ic_red_card, context)
         "blue" -> return toDrawable(R.drawable.ic_blue_card, context)
         "orange" -> return toDrawable(R.drawable.ic_orange_card, context)
@@ -39,4 +53,7 @@ fun getCardDrawable(cards: MutableList<Card>, position: Int, context: Context): 
     return null
 }
 
+/**
+ * converts resource id to vector drawable
+ */
 private fun toDrawable(resourceId: Int, context: Context): Drawable? = ContextCompat.getDrawable(context, resourceId)

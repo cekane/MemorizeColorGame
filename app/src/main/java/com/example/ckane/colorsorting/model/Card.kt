@@ -1,4 +1,4 @@
-package com.example.ckane.colorsorting
+package com.example.ckane.colorsorting.model
 
 class Card(
         val position: Int,
