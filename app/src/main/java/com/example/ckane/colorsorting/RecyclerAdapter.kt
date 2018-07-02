@@ -1,16 +1,30 @@
 package com.example.ckane.colorsorting
 
 import android.content.Context
+import android.os.Handler
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
+import android.widget.Toast.LENGTH_SHORT
 import com.example.ckane.colorsorting.model.Card
 import com.example.ckane.colorsorting.util.createCardList
 import com.example.ckane.colorsorting.util.getCardDrawable
+import com.example.ckane.colorsorting.util.getColorFromNumber
+import java.lang.Integer.parseInt
+import java.util.*
 
-class RecyclerAdapter(private val context: Context, private var cards: MutableList<Card>) : RecyclerView.Adapter<CardViewHolder>(), CardListManager {
+//TODO Extract logic to presentation layer
+class RecyclerAdapter(private val context: Context,
+                      private var cards: MutableList<Card>,
+                      private val counter: TextView,
+                      private val colorText: TextView) : RecyclerView.Adapter<CardViewHolder>(), CardListManager {
+
     private var savedColoredCards = mutableListOf<Card>()
+    private var wantedColors = mutableListOf<Card>()
     var adapterColorText = ""
+    private val longTime: Long = 1000
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
         val layoutView = LayoutInflater.from(parent.context).inflate(R.layout.card_item, parent, false)
@@ -50,17 +64,44 @@ class RecyclerAdapter(private val context: Context, private var cards: MutableLi
      */
     override fun updateCard(position: Int) {
         if (savedColoredCards.isNotEmpty() && adapterColorText == savedColoredCards[position].backgroundColor) {
+            wantedColors.removeIf { it.position == position }
             newCard(Card(position, savedColoredCards[position].backgroundColor))
+            if (wantedColors.isEmpty()) {
+                Toast.makeText(context, "You did it", LENGTH_SHORT).show()
+                counter.text = (parseInt(counter.text.toString()) + 1).toString()
+                startRound()
+            }
+        } else {
+            Toast.makeText(context, "You suck and you lost", LENGTH_SHORT).show()
+            counter.text = "0"
+            startRound()
         }
     }
 
     /**
      * Function is from card manager, makes a new list of random colored cards and sets them to
      * the current data
+     * @param color color that user is to remember
      */
-    override fun makeColors() {
+    override fun makeColors(color: String) {
+        adapterColorText = color
         savedColoredCards = createCardList(false)
+        createSingleColorList()
         newData(savedColoredCards)
+    }
+
+    /**
+     * Filters through the list of colors and finds the unique ones.
+     */
+    private fun createSingleColorList() {
+        var numColors = 0
+        wantedColors = mutableListOf()
+        savedColoredCards.forEach {
+            if (it.backgroundColor == adapterColorText) {
+                wantedColors.add(numColors, it)
+                numColors++
+            }
+        }
     }
 
     /**
@@ -69,4 +110,17 @@ class RecyclerAdapter(private val context: Context, private var cards: MutableLi
      */
     override fun makeGrey() =
             newData(createCardList(true))
+
+    fun startRound() {
+        //Picks the random color for the user
+        val color = getColorFromNumber(Random().nextInt(4))
+        colorText.text = color
+        //Makes the adapter create a random list of colored cards and displays them until post
+        //delay is over
+        makeColors(color)
+        //The amount of time the user gets to remember the colors
+        Handler().postDelayed({
+            makeGrey()
+        }, longTime)
+    }
 }

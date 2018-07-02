@@ -3,4 +3,5 @@
     <string name="start_game">Start</string>
     <string name="color_to_chose">Click Start to Begin</string>
     <string name="card_image">card image</string>
+    <string name="_0">0</string>
 </resources>
