@@ -1,5 +1,6 @@
 package com.example.ckane.colorsorting.android.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
@@ -34,20 +35,8 @@ class MainActivity : AppCompatActivity(), CardView {
         rView.layoutManager = gLayout
 
         rView.adapter = rcAdapter
-        startGameButton()
-    }
-
-    /**
-     * Handles onClickListener for the start button. Tells adapter to create a colored list,
-     * display it for x amount of time, and then switch back to grey cards. Also responsible for
-     * choosing random color for a user to pay attention to
-     */
-    private fun startGameButton() {
-        val gameControl: Button = this.findViewById(R.id.start_game)
-        gameControl.setOnClickListener {
-            it.visibility = View.GONE
-            presenter.startRound()
-        }
+        val startGame : ()->Unit= {presenter.startRound()}
+        timer(1000, startGame)
     }
 
     override fun newData(newCards: MutableList<Card>) {
@@ -72,6 +61,12 @@ class MainActivity : AppCompatActivity(), CardView {
         Handler().postDelayed({
             f()
         }, time)
+    }
+
+    override fun endGame(score: Int) {
+        startActivity(Intent(this, EndGame::class.java).apply {
+            putExtra("FINAL_SCORE", score)
+        })
     }
 }
 

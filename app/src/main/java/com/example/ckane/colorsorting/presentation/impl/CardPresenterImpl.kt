@@ -41,8 +41,9 @@ class CardPresenterImpl(val view : CardView) : CardPresenter {
                 startRound()
             }
         } else {
+            val finalScore = view.getCounterNumber()
             view.setCounterText("0")
-            startRound()
+            view.endGame(finalScore)
         }
     }
 

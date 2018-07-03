@@ -9,4 +9,5 @@ interface CardView {
     fun setCounterText(counterText: String)
     fun getCounterNumber(): Int
     fun timer(time: Long, f: () -> Unit)
+    fun endGame(score : Int)
 }
