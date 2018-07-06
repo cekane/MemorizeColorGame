@@ -25,6 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".android.activity.EndGame" />
+        <activity android:name=".android.activity.HighScoreActivity"></activity>
     </application>
 
 </manifest>

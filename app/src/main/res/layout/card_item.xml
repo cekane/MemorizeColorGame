@@ -2,15 +2,15 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
-    android:padding="5dp"
-    android:layout_width="50dp"
-    android:layout_height="50dp">
+    android:padding="2dp"
+    android:layout_width="74dp"
+    android:layout_height="84dp">
 
     <ImageView
         android:id="@+id/card_image"
         android:contentDescription="@string/card_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="70dp"
+        android:layout_height="80dp"
         android:gravity="center"
         android:background="@drawable/ic_blue_card"/>
 
