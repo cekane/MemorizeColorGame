@@ -19,6 +19,11 @@ class MenuActivity : AppCompatActivity() {
         startButton.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
         }
+
+        val scoreBoardButton : Button = findViewById(R.id.scoreboard)
+        scoreBoardButton.setOnClickListener {
+            startActivity(Intent(this, HighScoreActivity::class.java))
+        }
     }
 
 }

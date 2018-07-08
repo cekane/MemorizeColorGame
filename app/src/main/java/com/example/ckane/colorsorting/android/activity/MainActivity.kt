@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity(), CardView {
         color = findViewById(R.id.color_to_choose)
         counter = findViewById(R.id.counter)
 
-
         rView.setHasFixedSize(true)
         rView.layoutManager = gLayout
 
