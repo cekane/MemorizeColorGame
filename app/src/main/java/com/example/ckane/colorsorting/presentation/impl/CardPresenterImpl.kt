@@ -26,6 +26,10 @@ class CardPresenterImpl(val view : CardView) : CardPresenter {
         view.timer(longTime, makeGrey)
     }
 
+    private fun roundEndFragment(){
+        view.roundEndFragment()
+    }
+
     /**
      * Function is from card manager, checks to see if the card the user clicked aligns with the
      * text at the top of the screen. If it does it "flips" that card over to it's proper color
@@ -38,7 +42,7 @@ class CardPresenterImpl(val view : CardView) : CardPresenter {
             if (wantedColors.isEmpty()) {
 
                 view.setCounterText((view.getCounterNumber() + 1).toString())
-                startRound()
+                roundEndFragment()
             }
         } else {
             val finalScore = view.getCounterNumber()

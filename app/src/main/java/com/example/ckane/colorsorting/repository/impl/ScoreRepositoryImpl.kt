@@ -6,7 +6,7 @@ import com.example.ckane.colorsorting.repository.ScoreRepository
 import io.reactivex.Completable
 import io.reactivex.Single
 
-class ScoreRepositoryImpl(val db: AppDatabase) : ScoreRepository {
+class ScoreRepositoryImpl(db: AppDatabase) : ScoreRepository {
 
     private val dao = db.getHighScoreDao()
 

@@ -3,10 +3,10 @@ package com.example.ckane.colorsorting.android.activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.View
 import android.widget.*
 import com.example.ckane.colorsorting.model.Card
 import com.example.ckane.colorsorting.R
@@ -67,6 +67,11 @@ class MainActivity : AppCompatActivity(), CardView {
         startActivity(Intent(this, EndGame::class.java).apply {
             putExtra("FINAL_SCORE", score)
         })
+    }
+
+    override fun roundEndFragment(){
+        color?.text = getString(R.string.friendly_message)
+        presenter.startRound()
     }
 }
 

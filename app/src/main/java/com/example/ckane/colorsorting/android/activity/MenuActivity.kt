@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import com.example.ckane.colorsorting.R
 
 import kotlinx.android.synthetic.main.activity_menu.*
@@ -15,9 +17,16 @@ class MenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
 
+        val playerName = findViewById<EditText>(R.id.edit_name_text)
+
         val startButton : Button = findViewById(R.id.begin_game)
         startButton.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
+            if(playerName.text.toString() == ""){
+                Toast.makeText(this, "Enter a name to play", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                startActivity(Intent(this, MainActivity::class.java))
+            }
         }
 
         val scoreBoardButton : Button = findViewById(R.id.scoreboard)

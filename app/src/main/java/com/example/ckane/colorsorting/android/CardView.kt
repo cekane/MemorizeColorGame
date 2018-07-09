@@ -10,4 +10,5 @@ interface CardView {
     fun getCounterNumber(): Int
     fun timer(time: Long, f: () -> Unit)
     fun endGame(score : Int)
+    fun roundEndFragment()
 }
