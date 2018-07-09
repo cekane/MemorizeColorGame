@@ -70,8 +70,10 @@ class MainActivity : AppCompatActivity(), CardView {
     }
 
     override fun roundEndFragment(){
-        color?.text = getString(R.string.friendly_message)
-        presenter.startRound()
+        setColorText(getString(R.string.friendly_message))
+        val friendlyMessage: ()-> Unit= {presenter.startRound()}
+        timer(1000, friendlyMessage)
+
     }
 }
 
