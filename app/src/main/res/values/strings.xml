@@ -12,8 +12,6 @@
     <string name="try_again">Try Again</string>
     <string name="scoreboard">Scoreboard</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="well_done_next_round">Well done, Next Round?</string>
     <string name="next">Next</string>
     <string name="score">Score</string>
