@@ -17,8 +17,10 @@ class MenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
-
+        val sharedPref = this.getSharedPreferences("Data_file", android.content.Context.MODE_PRIVATE)
         val playerName = findViewById<EditText>(R.id.edit_name_text)
+        val userName = sharedPref.getString(getString(R.string.saved_user_name), "")
+        playerName.setText(userName)
 
         val startButton : Button = findViewById(R.id.begin_game)
         startButton.setOnClickListener {
@@ -26,7 +28,7 @@ class MenuActivity : AppCompatActivity() {
                 Toast.makeText(this, "Enter a name to play", Toast.LENGTH_SHORT).show()
             }
             else{
-                val sharedPref = this.getSharedPreferences("Data_file", android.content.Context.MODE_PRIVATE)
+
                 with(sharedPref.edit()){
                     putString(getString(R.string.saved_user_name), playerName.text.toString())
                     apply()
@@ -40,5 +42,7 @@ class MenuActivity : AppCompatActivity() {
             startActivity(Intent(this, HighScoreActivity::class.java))
         }
     }
-
+    override fun onBackPressed() {
+        //Nothing to do here
+    }
 }

@@ -54,4 +54,8 @@ class EndGame : AppCompatActivity() {
             startActivity(Intent(this, MenuActivity::class.java))
         }
     }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, MenuActivity::class.java))
+    }
 }
