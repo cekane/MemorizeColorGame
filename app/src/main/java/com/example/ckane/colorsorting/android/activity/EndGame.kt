@@ -23,14 +23,16 @@ class EndGame : AppCompatActivity() {
         setContentView(R.layout.activity_end_game)
 
         val score = intent.getIntExtra("FINAL_SCORE", 0)
-
+        val sharedPref = this.getSharedPreferences( "Data_file" ,android.content.Context.MODE_PRIVATE )
+        val userName = sharedPref.getString(getString(R.string.saved_user_name), "")
+        Log.v("[Shared Pref]", "Shared pref read : $userName")
         val scheduler = Schedulers.io()
         Single.just(AppDatabase.getInstance(this))
                 .subscribeOn(scheduler)
                 .subscribe { db: AppDatabase ->
                     val scoreRepository: ScoreRepository = ScoreRepositoryImpl(db)
-                    val scoreToInsert = HighScore("Connor", score)
-                    scoreRepository.insertScore(HighScore("Connor", score))
+                    val scoreToInsert = HighScore(userName, score)
+                    scoreRepository.insertScore(scoreToInsert)
                             .subscribeOn(scheduler)
                             .subscribe({
                                 Log.v("[Room Insert]", "Inserted ${scoreToInsert.score} to db")

@@ -17,4 +17,5 @@
     <string name="score">Score</string>
     <string name="name">Name</string>
     <string name="friendly_message">Nice job genius</string>
+    <string name="saved_user_name">SAVED_USER_NAME</string>
 </resources>
