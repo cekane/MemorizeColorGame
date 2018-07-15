@@ -7,7 +7,7 @@ import com.example.ckane.colorsorting.cache.entity.HighScore
 
 @Dao
 interface HighScoreDao {
-    @Query("SELECT * FROM high_score ORDER BY score DESC")
+    @Query("SELECT * FROM high_score ORDER BY score DESC LIMIT 10")
     fun getAllHighScores(): List<HighScore>
 
     @Insert
