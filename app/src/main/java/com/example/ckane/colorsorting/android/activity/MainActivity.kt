@@ -3,7 +3,6 @@ package com.example.ckane.colorsorting.android.activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -28,6 +27,7 @@ class MainActivity : AppCompatActivity(), CardView {
         setContentView(R.layout.activity_main)
 
         val rView: RecyclerView = findViewById(R.id.recycler_view)
+        rView.itemAnimator = null
         color = findViewById(R.id.color_to_choose)
         counter = findViewById(R.id.counter)
 
