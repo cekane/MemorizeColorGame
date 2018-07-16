@@ -7,7 +7,7 @@
     <string name="title_activity_menu">MenuActivity</string>
     <string name="start">Start</string>
     <string name="color_flash">Color Flash</string>
-    <string name="nice_try_your_final_score_is">Nice try, your final score is:</string>
+    <string name="nice_try_your_final_score_is">Nice try!\n Your final score is</string>
     <string name="menu">Menu</string>
     <string name="try_again">Try Again</string>
     <string name="scoreboard">Scoreboard</string>
@@ -18,4 +18,6 @@
     <string name="name">Name</string>
     <string name="friendly_message">Nice job genius</string>
     <string name="saved_user_name">SAVED_USER_NAME</string>
+    <string name="logo">logo</string>
+    <string name="applicatin_name">applicatin name</string>
 </resources>
