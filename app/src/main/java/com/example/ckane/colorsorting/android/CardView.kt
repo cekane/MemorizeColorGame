@@ -11,4 +11,5 @@ interface CardView {
     fun timer(time: Long, f: () -> Unit)
     fun endGame(score : Int)
     fun roundEndFragment()
+    fun setColorTextColor(textColor: String)
 }

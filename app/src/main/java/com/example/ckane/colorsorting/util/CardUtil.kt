@@ -21,6 +21,16 @@ fun getColorFromNumber(num: Int): String {
     return ""
 }
 
+fun getHexFromNumber(num: Int): String {
+    when (num) {
+        0 -> return "#ff6961"
+        1 -> return "#779ecb"
+        2 -> return "#ffcc33"
+        3 -> return "#ffff99"
+    }
+    return ""
+}
+
 /**
  * Creates a card list of either random colors or all grey
  * @param isGrey when true creates a grey list of cards, when false creates a colored list
@@ -42,7 +52,7 @@ fun createCardList(isGrey: Boolean): MutableList<Card> {
  * @param card the card that we want the drawable for based on it's background color
  * @param context need to use the toDrawable function
  */
-fun getCardDrawable(card : Card, context: Context): Drawable? {
+fun getCardDrawable(card: Card, context: Context): Drawable? {
     when (card.backgroundColor) {
         "red" -> return toDrawable(R.drawable.ic_red_card, context)
         "blue" -> return toDrawable(R.drawable.ic_blue_card, context)
@@ -52,6 +62,8 @@ fun getCardDrawable(card : Card, context: Context): Drawable? {
     }
     return null
 }
+
+fun randomColorTextColor(): String = getHexFromNumber(Random().nextInt(4))
 
 /**
  * converts resource id to vector drawable

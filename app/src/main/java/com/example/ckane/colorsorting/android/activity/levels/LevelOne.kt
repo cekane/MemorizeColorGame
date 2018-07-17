@@ -1,6 +1,7 @@
-package com.example.ckane.colorsorting.android.activity
+package com.example.ckane.colorsorting.android.activity.levels
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
@@ -11,11 +12,12 @@ import com.example.ckane.colorsorting.model.Card
 import com.example.ckane.colorsorting.R
 import com.example.ckane.colorsorting.android.adapter.RecyclerAdapter
 import com.example.ckane.colorsorting.android.CardView
+import com.example.ckane.colorsorting.android.activity.EndGame
 import com.example.ckane.colorsorting.presentation.CardPresenter
 import com.example.ckane.colorsorting.presentation.impl.CardPresenterImpl
 import com.example.ckane.colorsorting.util.createCardList
 
-class MainActivity : AppCompatActivity(), CardView {
+class LevelOne : AppCompatActivity(), CardView {
     private val presenter: CardPresenter = CardPresenterImpl(this)
     private val cardList: MutableList<Card> = createCardList(true)
     private val rcAdapter = RecyclerAdapter(this, cardList, presenter)
@@ -51,6 +53,10 @@ class MainActivity : AppCompatActivity(), CardView {
         color?.text = colorText
     }
 
+    override fun setColorTextColor(textColor: String) {
+        color?.setTextColor(Color.parseColor(textColor))
+    }
+
     override fun setCounterText(counterText : String){
         counter?.text = counterText
     }
@@ -73,7 +79,6 @@ class MainActivity : AppCompatActivity(), CardView {
         setColorText(getString(R.string.friendly_message))
         val friendlyMessage: ()-> Unit= {presenter.startRound()}
         timer(1000, friendlyMessage)
-
     }
 }
 

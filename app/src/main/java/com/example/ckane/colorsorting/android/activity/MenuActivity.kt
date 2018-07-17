@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.example.ckane.colorsorting.R
+import com.example.ckane.colorsorting.android.activity.levels.LevelOne
 
 class MenuActivity : AppCompatActivity() {
 
@@ -29,7 +30,7 @@ class MenuActivity : AppCompatActivity() {
                     putString(getString(R.string.saved_user_name), playerName.text.toString())
                     apply()
                 }
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, LevelOne::class.java))
             }
         }
 

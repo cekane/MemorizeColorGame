@@ -7,11 +7,11 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import com.example.ckane.colorsorting.R
+import com.example.ckane.colorsorting.android.activity.levels.LevelOne
 import com.example.ckane.colorsorting.cache.AppDatabase
 import com.example.ckane.colorsorting.cache.entity.HighScore
 import com.example.ckane.colorsorting.repository.ScoreRepository
 import com.example.ckane.colorsorting.repository.impl.ScoreRepositoryImpl
-import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
@@ -46,7 +46,7 @@ class EndGame : AppCompatActivity() {
 
         val tryAgainBtn: Button = findViewById(R.id.try_again)
         tryAgainBtn.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, LevelOne::class.java))
         }
 
         val menuButton: Button = findViewById(R.id.menu)
