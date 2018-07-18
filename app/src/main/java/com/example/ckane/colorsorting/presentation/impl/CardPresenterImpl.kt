@@ -1,32 +1,33 @@
 package com.example.ckane.colorsorting.presentation.impl
 
-import android.graphics.Color
 import com.example.ckane.colorsorting.android.CardView
 import com.example.ckane.colorsorting.model.Card
 import com.example.ckane.colorsorting.presentation.CardPresenter
 import com.example.ckane.colorsorting.util.createCardList
 import com.example.ckane.colorsorting.util.getColorFromNumber
 import com.example.ckane.colorsorting.util.randomColorTextColor
+import com.example.ckane.colorsorting.util.randomTextPosition
 import java.util.*
 
-class CardPresenterImpl(val view : CardView) : CardPresenter {
+class CardPresenterImpl(val view: CardView) : CardPresenter {
 
     private var savedColoredCards = mutableListOf<Card>()
     private var wantedColors = mutableListOf<Card>()
     var adapterColorText = ""
     private val longTime: Long = 1000
     private var textColor = "#000000"
+    private var textPosition = 0
 
     override fun startRound() {
         //Picks the random color for the user
         val color = getColorFromNumber(Random().nextInt(4))
-        view.setColorText(color)
+        view.setColorText(color, textPosition)
         view.setColorTextColor(textColor)
         //Makes the adapter create a random list of colored cards and displays them until post
         //delay is over
         makeColors(color)
         //The amount of time the user gets to remember the colors
-        val makeGrey : ()-> Unit = {view.newData(createCardList(true))}
+        val makeGrey: () -> Unit = { view.newData(createCardList(true)) }
         view.timer(longTime, makeGrey)
     }
 
@@ -41,15 +42,23 @@ class CardPresenterImpl(val view : CardView) : CardPresenter {
             view.newCard(Card(position, savedColoredCards[position].backgroundColor))
             if (wantedColors.isEmpty()) {
                 val counterValue = (view.getCounterNumber() + 1)
-                when {
-                    counterValue >= 10 -> {
+                when (counterValue) {
+                    in 6..10 -> {
+                        textPosition = randomTextPosition()
+                    }
+                    in 11..15 -> {
+                        textPosition = 0
                         textColor = randomColorTextColor()
+                    }
+                    in 16..20 -> {
+                        textColor = randomColorTextColor()
+                        textPosition = randomTextPosition()
                     }
                 }
                 view.setCounterText(counterValue.toString())
                 view.roundEndFragment()
             }
-        }else {
+        } else {
             val finalScore = view.getCounterNumber()
             view.setCounterText("0")
             view.endGame(finalScore)

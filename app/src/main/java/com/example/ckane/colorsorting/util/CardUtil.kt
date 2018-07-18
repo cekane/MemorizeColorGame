@@ -69,3 +69,6 @@ fun randomColorTextColor(): String = getHexFromNumber(Random().nextInt(4))
  * converts resource id to vector drawable
  */
 private fun toDrawable(resourceId: Int, context: Context): Drawable? = ContextCompat.getDrawable(context, resourceId)
+
+fun randomTextPosition(): Int = Random().nextInt(2)
+

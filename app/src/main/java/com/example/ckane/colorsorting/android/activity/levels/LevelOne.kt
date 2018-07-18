@@ -22,8 +22,9 @@ class LevelOne : AppCompatActivity(), CardView {
     private val cardList: MutableList<Card> = createCardList(true)
     private val rcAdapter = RecyclerAdapter(this, cardList, presenter)
     private val gLayout = GridLayoutManager(this, 4)
-    var color : TextView? = null
-    var counter : TextView? = null
+    var color: TextView? = null
+    var color2: TextView? = null
+    var counter: TextView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -31,6 +32,7 @@ class LevelOne : AppCompatActivity(), CardView {
         val rView: RecyclerView = findViewById(R.id.recycler_view)
         rView.itemAnimator = null
         color = findViewById(R.id.color_to_choose)
+        color2 = findViewById(R.id.color_to_choose2)
         counter = findViewById(R.id.counter)
 
         rView.setHasFixedSize(true)
@@ -40,7 +42,7 @@ class LevelOne : AppCompatActivity(), CardView {
 
         updateLocalHighScore()
 
-        val startGame : ()->Unit= {presenter.startRound()}
+        val startGame: () -> Unit = { presenter.startRound() }
         timer(1000, startGame)
     }
 
@@ -52,21 +54,31 @@ class LevelOne : AppCompatActivity(), CardView {
         rcAdapter.newCard(newCard)
     }
 
-    override fun setColorText(colorText: String) {
-        color?.text = colorText
+    override fun setColorText(colorText: String, textSelector: Int) {
+        when (textSelector) {
+            0 -> {
+                color?.text = colorText
+                color2?.text = ""
+            }
+            1 -> {
+                color?.text = ""
+                color2?.text = colorText
+            }
+        }
     }
 
     override fun setColorTextColor(textColor: String) {
         color?.setTextColor(Color.parseColor(textColor))
+        color2?.setTextColor(Color.parseColor(textColor))
     }
 
-    override fun setCounterText(counterText : String){
+    override fun setCounterText(counterText: String) {
         counter?.text = counterText
     }
 
-    override fun getCounterNumber() : Int = Integer.parseInt(counter?.text.toString())
+    override fun getCounterNumber(): Int = Integer.parseInt(counter?.text.toString())
 
-    override fun timer(time : Long, f : () -> Unit ){
+    override fun timer(time: Long, f: () -> Unit) {
         Handler().postDelayed({
             f()
         }, time)
@@ -78,13 +90,13 @@ class LevelOne : AppCompatActivity(), CardView {
         })
     }
 
-    override fun roundEndFragment(){
-        setColorText(getString(R.string.friendly_message))
-        val friendlyMessage: ()-> Unit= {presenter.startRound()}
+    override fun roundEndFragment() {
+        setColorText(getString(R.string.friendly_message), 0)
+        val friendlyMessage: () -> Unit = { presenter.startRound() }
         timer(1000, friendlyMessage)
     }
 
-    fun updateLocalHighScore(){
+    private fun updateLocalHighScore() {
         val sharedPref = this.getSharedPreferences("Data_file", android.content.Context.MODE_PRIVATE)
         val highScore = sharedPref.getInt(getString(R.string.local_high_score), 0)
         findViewById<TextView>(R.id.high_score_value).text = highScore.toString()
