@@ -22,4 +22,5 @@
     <string name="applicatin_name">applicatin name</string>
     <string name="current_score">Score :</string>
     <string name="high_score_text">High \nScore :</string>
+    <string name="local_high_score">local_high_score</string>
 </resources>

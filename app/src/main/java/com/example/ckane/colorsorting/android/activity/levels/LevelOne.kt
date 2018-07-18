@@ -37,6 +37,9 @@ class LevelOne : AppCompatActivity(), CardView {
         rView.layoutManager = gLayout
 
         rView.adapter = rcAdapter
+
+        updateLocalHighScore()
+
         val startGame : ()->Unit= {presenter.startRound()}
         timer(1000, startGame)
     }
@@ -79,6 +82,12 @@ class LevelOne : AppCompatActivity(), CardView {
         setColorText(getString(R.string.friendly_message))
         val friendlyMessage: ()-> Unit= {presenter.startRound()}
         timer(1000, friendlyMessage)
+    }
+
+    fun updateLocalHighScore(){
+        val sharedPref = this.getSharedPreferences("Data_file", android.content.Context.MODE_PRIVATE)
+        val highScore = sharedPref.getInt(getString(R.string.local_high_score), 0)
+        findViewById<TextView>(R.id.high_score_value).text = highScore.toString()
     }
 }
 

@@ -7,4 +7,5 @@ import io.reactivex.Single
 interface ScoreRepository {
     fun getAllHighScores(): Single<List<HighScore>>
     fun insertScore(newHighScore: HighScore): Completable
+    fun getHighScore(): Single<HighScore>
 }

@@ -18,4 +18,8 @@ class ScoreRepositoryImpl(db: AppDatabase) : ScoreRepository {
         dao.insertScore(newHighScore)
         it.onComplete()
     }
+
+    override fun getHighScore(): Single<HighScore> = Single.create {
+        it.onSuccess(dao.getHighScore())
+    }
 }

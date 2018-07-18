@@ -19,14 +19,12 @@ class MenuActivity : AppCompatActivity() {
         val userName = sharedPref.getString(getString(R.string.saved_user_name), "")
         playerName.setText(userName)
 
-        val startButton : Button = findViewById(R.id.begin_game)
+        val startButton: Button = findViewById(R.id.begin_game)
         startButton.setOnClickListener {
-            if(playerName.text.toString() == ""){
+            if (playerName.text.toString() == "") {
                 Toast.makeText(this, "Enter a name to play", Toast.LENGTH_SHORT).show()
-            }
-            else{
-
-                with(sharedPref.edit()){
+            } else {
+                with(sharedPref.edit()) {
                     putString(getString(R.string.saved_user_name), playerName.text.toString())
                     apply()
                 }

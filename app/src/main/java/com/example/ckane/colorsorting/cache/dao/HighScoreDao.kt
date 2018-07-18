@@ -12,4 +12,7 @@ interface HighScoreDao {
 
     @Insert
     fun insertScore(score: HighScore)
+
+    @Query("SELECT * FROM high_score ORDER BY score DESC LIMIT 1")
+    fun getHighScore(): HighScore
 }

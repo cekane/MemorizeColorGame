@@ -27,6 +27,14 @@ class EndGame : AppCompatActivity() {
         val userName = sharedPref.getString(getString(R.string.saved_user_name), "")
         Log.v("[Shared Pref]", "Shared pref read : $userName")
         val scheduler = Schedulers.io()
+
+        if(score > sharedPref.getInt(getString(R.string.local_high_score), 0)){
+            with(sharedPref.edit()) {
+                putInt(getString(R.string.local_high_score), score)
+                apply()
+            }
+        }
+
         Single.just(AppDatabase.getInstance(this))
                 .subscribeOn(scheduler)
                 .subscribe { db: AppDatabase ->
