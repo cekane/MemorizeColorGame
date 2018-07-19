@@ -12,4 +12,5 @@ interface CardView {
     fun endGame(score: Int)
     fun roundEndFragment()
     fun setColorTextColor(textColor: String)
+    fun expandGrid(deckSize : Int, row : Int)
 }

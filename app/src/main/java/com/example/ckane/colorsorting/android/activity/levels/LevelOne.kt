@@ -20,19 +20,20 @@ import com.example.ckane.colorsorting.util.createCardList
 
 class LevelOne : AppCompatActivity(), CardView {
     private val presenter: CardPresenter = CardPresenterImpl(this)
-    private val cardList: MutableList<Card> = createCardList(true)
-    private val rcAdapter = RecyclerAdapter(this, cardList, presenter)
-    private val gLayout = GridLayoutManager(this, 4)
+    private var cardList: MutableList<Card> = createCardList(true, 16)
+    private var rcAdapter = RecyclerAdapter(this, cardList, presenter, R.layout.card_item)
+    private var gLayout = GridLayoutManager(this, 4)
     var color: TextView? = null
     var color2: TextView? = null
     var counter: TextView? = null
     var nextBtn : Button? = null
+    var rView : RecyclerView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val rView: RecyclerView = findViewById(R.id.recycler_view)
-        rView.itemAnimator = null
+        rView = findViewById(R.id.recycler_view)
+        rView?.itemAnimator = null
         color = findViewById(R.id.color_to_choose)
         color2 = findViewById(R.id.color_to_choose2)
         counter = findViewById(R.id.counter)
@@ -44,10 +45,10 @@ class LevelOne : AppCompatActivity(), CardView {
             nextBtn?.visibility = View.GONE
         }
 
-        rView.setHasFixedSize(true)
-        rView.layoutManager = gLayout
+        rView?.setHasFixedSize(true)
+        rView?.layoutManager = gLayout
 
-        rView.adapter = rcAdapter
+        rView?.adapter = rcAdapter
 
         updateLocalHighScore()
 
@@ -108,6 +109,15 @@ class LevelOne : AppCompatActivity(), CardView {
         val sharedPref = this.getSharedPreferences("Data_file", android.content.Context.MODE_PRIVATE)
         val highScore = sharedPref.getInt(getString(R.string.local_high_score), 0)
         findViewById<TextView>(R.id.high_score_value).text = highScore.toString()
+    }
+
+    override fun expandGrid(deckSize : Int, rowCount : Int){
+        cardList = createCardList(true, deckSize)
+        rcAdapter = RecyclerAdapter(this, cardList, presenter, R.layout.card_item_smaller)
+        gLayout = GridLayoutManager(this, rowCount)
+
+        rView?.adapter = rcAdapter
+        rView?.layoutManager = gLayout
     }
 }
 

@@ -35,9 +35,9 @@ fun getHexFromNumber(num: Int): String {
  * Creates a card list of either random colors or all grey
  * @param isGrey when true creates a grey list of cards, when false creates a colored list
  */
-fun createCardList(isGrey: Boolean): MutableList<Card> {
+fun createCardList(isGrey: Boolean, size : Int): MutableList<Card> {
     var randomNumber: Int
-    return MutableList(16, {
+    return MutableList(size, {
         if (isGrey) {
             Card(it, "grey")
         } else {

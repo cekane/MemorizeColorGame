@@ -2,6 +2,7 @@ package com.example.ckane.colorsorting.android.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.text.Layout
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.ckane.colorsorting.android.CardViewHolder
@@ -13,10 +14,11 @@ import com.example.ckane.colorsorting.util.getCardDrawable
 
 class RecyclerAdapter(private val context: Context,
                       private var cards: MutableList<Card>,
-                      private val presenter: CardPresenter) : RecyclerView.Adapter<CardViewHolder>(), CardListManager {
+                      private val presenter: CardPresenter,
+                      private val cardItemLayout : Int) : RecyclerView.Adapter<CardViewHolder>(), CardListManager {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
-        val layoutView = LayoutInflater.from(parent.context).inflate(R.layout.card_item, parent, false)
+        val layoutView = LayoutInflater.from(parent.context).inflate(cardItemLayout, parent, false)
         return CardViewHolder(layoutView, presenter)
     }
 

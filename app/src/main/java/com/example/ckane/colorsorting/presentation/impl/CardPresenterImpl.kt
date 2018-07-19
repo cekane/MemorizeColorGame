@@ -17,6 +17,7 @@ class CardPresenterImpl(val view: CardView) : CardPresenter {
     private val longTime: Long = 1000
     private var textColor = "#000000"
     private var textPosition = 0
+    private var deckSize = 16
 
     override fun startRound() {
         //Picks the random color for the user
@@ -27,7 +28,7 @@ class CardPresenterImpl(val view: CardView) : CardPresenter {
         //delay is over
         makeColors(color)
         //The amount of time the user gets to remember the colors
-        val makeGrey: () -> Unit = { view.newData(createCardList(true)) }
+        val makeGrey: () -> Unit = { view.newData(createCardList(true, deckSize)) }
         view.timer(longTime, makeGrey)
     }
 
@@ -54,6 +55,23 @@ class CardPresenterImpl(val view: CardView) : CardPresenter {
                         textColor = randomColorTextColor()
                         textPosition = randomTextPosition()
                     }
+                    21 -> {
+                        textPosition = 0
+                        textColor = "#000000"
+                        deckSize = 25
+                        view.expandGrid(deckSize, 5)
+                    }
+                    in 26..30 ->{
+                        textPosition = randomTextPosition()
+                    }
+                    in 31..35 ->{
+                        textPosition = 0
+                        textColor = randomColorTextColor()
+                    }
+                    in 36..40 ->{
+                        textColor = randomColorTextColor()
+                        textPosition = randomTextPosition()
+                    }
                 }
                 view.setCounterText(counterValue.toString())
                 view.roundEndFragment()
@@ -72,7 +90,7 @@ class CardPresenterImpl(val view: CardView) : CardPresenter {
      */
     override fun makeColors(color: String) {
         adapterColorText = color
-        savedColoredCards = createCardList(false)
+        savedColoredCards = createCardList(false, deckSize)
         createSingleColorList()
         view.newData(savedColoredCards)
     }
