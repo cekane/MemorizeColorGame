@@ -15,7 +15,7 @@ fun getColorFromNumber(num: Int): String {
     when (num) {
         0 -> return "red"
         1 -> return "blue"
-        2 -> return "orange"
+        2 -> return "green"
         3 -> return "yellow"
     }
     return ""
@@ -23,10 +23,10 @@ fun getColorFromNumber(num: Int): String {
 
 fun getHexFromNumber(num: Int): String {
     when (num) {
-        0 -> return "#ff6961"
-        1 -> return "#779ecb"
-        2 -> return "#ffcc33"
-        3 -> return "#ffff99"
+        0 -> return "#F56154"
+        1 -> return "#4F87B3"
+        2 -> return "#87B34F"
+        3 -> return "#F2C238"
     }
     return ""
 }
@@ -56,7 +56,7 @@ fun getCardDrawable(card: Card, context: Context): Drawable? {
     when (card.backgroundColor) {
         "red" -> return toDrawable(R.drawable.ic_red_card, context)
         "blue" -> return toDrawable(R.drawable.ic_blue_card, context)
-        "orange" -> return toDrawable(R.drawable.ic_orange_card, context)
+        "green" -> return toDrawable(R.drawable.ic_green_card, context)
         "yellow" -> return toDrawable(R.drawable.ic_yellow_card, context)
         "grey" -> return toDrawable(R.drawable.ic_grey_card, context)
     }

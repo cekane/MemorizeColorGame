@@ -7,6 +7,7 @@ import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.View
 import android.widget.*
 import com.example.ckane.colorsorting.model.Card
 import com.example.ckane.colorsorting.R
@@ -25,6 +26,7 @@ class LevelOne : AppCompatActivity(), CardView {
     var color: TextView? = null
     var color2: TextView? = null
     var counter: TextView? = null
+    var nextBtn : Button? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -34,6 +36,13 @@ class LevelOne : AppCompatActivity(), CardView {
         color = findViewById(R.id.color_to_choose)
         color2 = findViewById(R.id.color_to_choose2)
         counter = findViewById(R.id.counter)
+        nextBtn = findViewById(R.id.next_btn)
+        nextBtn?.visibility = View.GONE
+
+        nextBtn?.setOnClickListener {
+            presenter.startRound()
+            nextBtn?.visibility = View.GONE
+        }
 
         rView.setHasFixedSize(true)
         rView.layoutManager = gLayout
@@ -92,8 +101,7 @@ class LevelOne : AppCompatActivity(), CardView {
 
     override fun roundEndFragment() {
         setColorText(getString(R.string.friendly_message), 0)
-        val friendlyMessage: () -> Unit = { presenter.startRound() }
-        timer(1000, friendlyMessage)
+        nextBtn?.visibility = View.VISIBLE
     }
 
     private fun updateLocalHighScore() {
