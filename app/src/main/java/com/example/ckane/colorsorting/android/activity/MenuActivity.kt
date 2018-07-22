@@ -8,6 +8,10 @@ import android.widget.EditText
 import android.widget.Toast
 import com.example.ckane.colorsorting.R
 import com.example.ckane.colorsorting.android.activity.levels.LevelOne
+import com.example.ckane.colorsorting.presentation.MainMenuPresenter
+import com.example.ckane.colorsorting.presentation.impl.MainMenuPresenterImpl
+import com.example.ckane.colorsorting.repository.LocalStorage
+import com.example.ckane.colorsorting.repository.impl.LocalStorageImpl
 
 class MenuActivity : AppCompatActivity() {
 
@@ -15,19 +19,20 @@ class MenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
         val sharedPref = this.getSharedPreferences("Data_file", android.content.Context.MODE_PRIVATE)
+        val repository : LocalStorage = LocalStorageImpl(sharedPref)
+        val presenter : MainMenuPresenter = MainMenuPresenterImpl(repository)
+
+
         val playerName = findViewById<EditText>(R.id.edit_name_text)
-        val userName = sharedPref.getString(getString(R.string.saved_user_name), "")
+        val userName = presenter.getLocalUserName()
         playerName.setText(userName)
 
         val startButton: Button = findViewById(R.id.begin_game)
         startButton.setOnClickListener {
-            if (playerName.text.toString() == "") {
+            if (getPlayerName(playerName) == "") {
                 Toast.makeText(this, "Enter a name to play", Toast.LENGTH_SHORT).show()
             } else {
-                with(sharedPref.edit()) {
-                    putString(getString(R.string.saved_user_name), playerName.text.toString())
-                    apply()
-                }
+                presenter.setLocalUsername(getPlayerName(playerName))
                 startActivity(Intent(this, LevelOne::class.java))
             }
         }
@@ -45,4 +50,6 @@ class MenuActivity : AppCompatActivity() {
     override fun onBackPressed() {
         //Nothing to do here
     }
+
+    private fun getPlayerName(playerName : EditText) : String = playerName.text.toString()
 }
