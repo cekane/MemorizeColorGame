@@ -32,6 +32,11 @@ class MenuActivity : AppCompatActivity() {
             }
         }
 
+        val howToButton : Button = findViewById(R.id.how_to_play)
+        howToButton.setOnClickListener {
+            //Todo placeholder for how to play
+        }
+
         val scoreBoardButton : Button = findViewById(R.id.scoreboard)
         scoreBoardButton.setOnClickListener {
             startActivity(Intent(this, HighScoreActivity::class.java))
