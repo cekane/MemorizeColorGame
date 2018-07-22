@@ -3,17 +3,15 @@ package com.example.ckane.colorsorting.android.activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import com.example.ckane.colorsorting.R
 import com.example.ckane.colorsorting.android.activity.levels.LevelOne
 import com.example.ckane.colorsorting.cache.AppDatabase
-import com.example.ckane.colorsorting.cache.entity.HighScore
-import com.example.ckane.colorsorting.repository.ScoreRepository
-import com.example.ckane.colorsorting.repository.impl.ScoreRepositoryImpl
-import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
+import com.example.ckane.colorsorting.presentation.EndGamePresenter
+import com.example.ckane.colorsorting.presentation.impl.EndGamePresenterImpl
+import com.example.ckane.colorsorting.repository.LocalStorage
+import com.example.ckane.colorsorting.repository.impl.LocalStorageImpl
 
 
 class EndGame : AppCompatActivity() {
@@ -23,31 +21,12 @@ class EndGame : AppCompatActivity() {
         setContentView(R.layout.activity_end_game)
 
         val score = intent.getIntExtra("FINAL_SCORE", 0)
-        val sharedPref = this.getSharedPreferences( "Data_file" ,android.content.Context.MODE_PRIVATE )
-        val userName = sharedPref.getString(getString(R.string.saved_user_name), "")
-        Log.v("[Shared Pref]", "Shared pref read : $userName")
-        val scheduler = Schedulers.io()
+        val sharedPref = this.getSharedPreferences("Data_file", android.content.Context.MODE_PRIVATE)
+        val repository : LocalStorage = LocalStorageImpl(sharedPref)
+        val presenter : EndGamePresenter = EndGamePresenterImpl(repository)
 
-        if(score > sharedPref.getInt(getString(R.string.local_high_score), 0)){
-            with(sharedPref.edit()) {
-                putInt(getString(R.string.local_high_score), score)
-                apply()
-            }
-        }
-
-        Single.just(AppDatabase.getInstance(this))
-                .subscribeOn(scheduler)
-                .subscribe { db: AppDatabase ->
-                    val scoreRepository: ScoreRepository = ScoreRepositoryImpl(db)
-                    val scoreToInsert = HighScore(userName, score)
-                    scoreRepository.insertScore(scoreToInsert)
-                            .subscribeOn(scheduler)
-                            .subscribe({
-                                Log.v("[Room Insert]", "Inserted ${scoreToInsert.score} to db")
-                            },{
-                                Log.v("[Room Error]", "Error Inserted ${scoreToInsert.score} to db", it)
-                            })
-                }
+        presenter.updateHighScore(score)
+        presenter.updateHighScoreDatabase(score, AppDatabase.getInstance(this))
 
         val scoreTextView = findViewById<TextView>(R.id.score)
         scoreTextView.text = score.toString()
