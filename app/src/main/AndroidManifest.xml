@@ -32,9 +32,6 @@
         <activity
             android:name=".android.activity.HighScoreActivity"
             android:theme="@style/AppFullScreenTheme" />
-        <activity
-            android:name=".android.activity.levels.ClassicMode"
-            android:theme="@style/AppFullScreenTheme" />
     </application>
 
 </manifest>
