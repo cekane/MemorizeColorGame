@@ -3,6 +3,7 @@ package com.example.ckane.colorsorting.presentation.impl
 import com.example.ckane.colorsorting.android.CardView
 import com.example.ckane.colorsorting.model.Card
 import com.example.ckane.colorsorting.presentation.CardPresenter
+import com.example.ckane.colorsorting.repository.LocalStorage
 import com.example.ckane.colorsorting.util.createCardList
 import com.example.ckane.colorsorting.util.getColorFromNumber
 import com.example.ckane.colorsorting.util.randomColorTextColor
@@ -10,7 +11,6 @@ import com.example.ckane.colorsorting.util.randomTextPosition
 import java.util.*
 
 open class CardPresenterImpl(val view: CardView) : CardPresenter {
-
 
     private var savedColoredCards = mutableListOf<Card>()
     private var wantedColors = mutableListOf<Card>()
@@ -20,12 +20,14 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
     private var textPosition = 0
     private var deckSize = 16
     private var mode = ""
+    private var repository : LocalStorage? = null
 
     override fun startRound() {
         //Picks the random color for the user
         val color = getColorFromNumber(Random().nextInt(4))
         view.setColorText(color, textPosition)
         view.setColorTextColor(textColor)
+
         //Makes the adapter create a random list of colored cards and displays them until post
         //delay is over
         makeColors(color)
@@ -106,6 +108,9 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
 
     override fun setGameMode(gameMode: String) {
         mode = gameMode
+        repository?.let{
+            view.updateLocalHighScore(it.getLocalHighScore(mode))
+        }
     }
 
     /**
@@ -132,5 +137,9 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
                 numColors++
             }
         }
+    }
+
+    override fun setRepository(repository: LocalStorage) {
+        this.repository = repository
     }
 }

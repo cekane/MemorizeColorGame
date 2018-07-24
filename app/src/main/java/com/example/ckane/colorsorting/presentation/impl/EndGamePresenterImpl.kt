@@ -14,9 +14,9 @@ import io.reactivex.schedulers.Schedulers
 class EndGamePresenterImpl(private val repository: LocalStorage) : EndGamePresenter {
     private val scheduler: Scheduler = Schedulers.io()
 
-    override fun updateHighScore(score: Int) {
-        if (score > repository.getLocalHighScore()) {
-            repository.insertLocalHighScore(score)
+    override fun updateHighScore(mode : String, score: Int) {
+        if (score > repository.getLocalHighScore(mode)) {
+            repository.insertLocalHighScore(mode, score)
         }
     }
 

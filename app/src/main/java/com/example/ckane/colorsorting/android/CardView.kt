@@ -13,4 +13,5 @@ interface CardView {
     fun roundEndFragment()
     fun setColorTextColor(textColor: String)
     fun expandGrid(deckSize : Int, rowCount : Int)
+    fun updateLocalHighScore(highScore: Int)
 }

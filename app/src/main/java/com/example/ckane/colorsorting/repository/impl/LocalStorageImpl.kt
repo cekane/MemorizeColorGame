@@ -6,11 +6,11 @@ import com.example.ckane.colorsorting.repository.LocalStorage
 
 class LocalStorageImpl(private val sharedPref: SharedPreferences) : LocalStorage {
 
-    override fun getLocalHighScore(): Int = sharedPref.getInt("local_high_score", 0)
+    override fun getLocalHighScore(mode: String): Int = sharedPref.getInt(mode + "_HIGH_SCORE", 0)
 
-    override fun insertLocalHighScore(score: Int) {
+    override fun insertLocalHighScore(mode: String, score: Int) {
         with(sharedPref.edit()) {
-            putInt("local_high_score", score)
+            putInt(mode + "_HIGH_SCORE", score)
             apply()
         }
     }

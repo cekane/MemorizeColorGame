@@ -21,11 +21,12 @@ class EndGame : AppCompatActivity() {
         setContentView(R.layout.end_game_activity)
 
         val score = intent.getIntExtra("FINAL_SCORE", 0)
+        val mode = intent.getStringExtra("GAME_MODE")
         val sharedPref = this.getSharedPreferences("Data_file", android.content.Context.MODE_PRIVATE)
         val repository : LocalStorage = LocalStorageImpl(sharedPref)
         val presenter : EndGamePresenter = EndGamePresenterImpl(repository)
 
-        presenter.updateHighScore(score)
+        presenter.updateHighScore(mode, score)
         presenter.updateHighScoreDatabase(score, AppDatabase.getInstance(this))
 
         val scoreTextView = findViewById<TextView>(R.id.score)
@@ -33,7 +34,9 @@ class EndGame : AppCompatActivity() {
 
         val tryAgainBtn: Button = findViewById(R.id.try_again)
         tryAgainBtn.setOnClickListener {
-            startActivity(Intent(this, ChallengeMode::class.java))
+            startActivity(Intent(this, ChallengeMode::class.java).apply {
+                putExtra("GAME_MODE", mode)
+            })
         }
 
         val menuButton: Button = findViewById(R.id.menu)

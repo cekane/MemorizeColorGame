@@ -17,23 +17,33 @@ import com.example.ckane.colorsorting.android.adapter.RecyclerAdapter
 import com.example.ckane.colorsorting.model.Card
 import com.example.ckane.colorsorting.presentation.CardPresenter
 import com.example.ckane.colorsorting.presentation.impl.CardPresenterImpl
+import com.example.ckane.colorsorting.repository.LocalStorage
+import com.example.ckane.colorsorting.repository.impl.LocalStorageImpl
 import com.example.ckane.colorsorting.util.createCardList
 
 class ChallengeMode : AppCompatActivity(), CardView {
+
+
     private val presenter: CardPresenter = CardPresenterImpl(this)
     private var cardList: MutableList<Card> = createCardList(true, 16)
     private var rcAdapter = RecyclerAdapter(this, cardList, presenter, R.layout.card_item)
     private var gLayout = GridLayoutManager(this, 4)
     var color: TextView? = null
-    var color2: TextView? = null
+    private var color2: TextView? = null
     var counter: TextView? = null
-    var nextBtn: Button? = null
-    var rView: RecyclerView? = null
+    private var nextBtn: Button? = null
+    private var rView: RecyclerView? = null
+    private var gameMode = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.challenge_mode_activity)
 
-        presenter.setGameMode(intent.getStringExtra("GAME_MODE"))
+        val sharedPref = this.getSharedPreferences("Data_file", android.content.Context.MODE_PRIVATE)
+        val repository: LocalStorage = LocalStorageImpl(sharedPref)
+        presenter.setRepository(repository)
+
+        gameMode = intent.getStringExtra("GAME_MODE")
+        presenter.setGameMode(gameMode)
 
         rView = findViewById(R.id.recycler_view)
         rView?.itemAnimator = null
@@ -53,7 +63,6 @@ class ChallengeMode : AppCompatActivity(), CardView {
 
         rView?.adapter = rcAdapter
 
-        updateLocalHighScore()
 
         val startGame: () -> Unit = { presenter.startRound() }
         timer(1000, startGame)
@@ -100,6 +109,7 @@ class ChallengeMode : AppCompatActivity(), CardView {
     override fun endGame(score: Int) {
         startActivity(Intent(this, EndGame::class.java).apply {
             putExtra("FINAL_SCORE", score)
+            putExtra("GAME_MODE", gameMode)
         })
     }
 
@@ -108,9 +118,7 @@ class ChallengeMode : AppCompatActivity(), CardView {
         nextBtn?.visibility = View.VISIBLE
     }
 
-    private fun updateLocalHighScore() {
-        val sharedPref = this.getSharedPreferences("Data_file", android.content.Context.MODE_PRIVATE)
-        val highScore = sharedPref.getInt(getString(R.string.local_high_score), 0)
+    override fun updateLocalHighScore(highScore: Int) {
         findViewById<TextView>(R.id.high_score_value).text = highScore.toString()
     }
 
