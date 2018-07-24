@@ -9,7 +9,8 @@ import com.example.ckane.colorsorting.util.randomColorTextColor
 import com.example.ckane.colorsorting.util.randomTextPosition
 import java.util.*
 
-class CardPresenterImpl(val view: CardView) : CardPresenter {
+open class CardPresenterImpl(val view: CardView) : CardPresenter {
+
 
     private var savedColoredCards = mutableListOf<Card>()
     private var wantedColors = mutableListOf<Card>()
@@ -18,6 +19,7 @@ class CardPresenterImpl(val view: CardView) : CardPresenter {
     private var textColor = "#000000"
     private var textPosition = 0
     private var deckSize = 16
+    private var mode = ""
 
     override fun startRound() {
         //Picks the random color for the user
@@ -43,43 +45,11 @@ class CardPresenterImpl(val view: CardView) : CardPresenter {
             view.newCard(Card(position, savedColoredCards[position].backgroundColor))
             if (wantedColors.isEmpty()) {
                 val counterValue = (view.getCounterNumber() + 1)
-                when (counterValue) {
-                    //Text Moves around
-                    in 6..10 -> {
-                        textPosition = randomTextPosition()
-                    }
-                    //Just Random Colors
-                    in 11..15 -> {
-                        textPosition = 0
-                        textColor = randomColorTextColor()
-                    }
-                    //Text Moves and Random color
-                    in 16..20 -> {
-                        textColor = randomColorTextColor()
-                        textPosition = randomTextPosition()
-                    }
-                    //5x5 Grid
-                    21 -> {
-                        textPosition = 0
-                        textColor = "#000000"
-                        deckSize = 25
-                        view.expandGrid(deckSize, 5)
-                    }
-                    //Text Moves around
-                    in 26..30 ->{
-                        textPosition = randomTextPosition()
-                    }
-                    //Just Random Colors
-                    in 31..35 ->{
-                        textPosition = 0
-                        textColor = randomColorTextColor()
-                    }
-                    //Text Moves and Random color
-                    in 36..40 ->{
-                        textColor = randomColorTextColor()
-                        textPosition = randomTextPosition()
-                    }
+                when(mode){
+                    "CLASSIC_MODE" -> classicMode(counterValue)
+                    "CHALLENGE_MODE" -> challengeMode(counterValue)
                 }
+
                 view.setCounterText(counterValue.toString())
                 view.roundEndFragment()
             }
@@ -88,6 +58,54 @@ class CardPresenterImpl(val view: CardView) : CardPresenter {
             view.setCounterText("0")
             view.endGame(finalScore)
         }
+    }
+
+    private fun classicMode(counterValue: Int){
+        //Implement classic mode
+    }
+
+    private fun challengeMode(counterValue : Int){
+        when (counterValue) {
+        //Text Moves around
+            in 6..10 -> {
+                textPosition = randomTextPosition()
+            }
+        //Just Random Colors
+            in 11..15 -> {
+                textPosition = 0
+                textColor = randomColorTextColor()
+            }
+        //Text Moves and Random color
+            in 16..20 -> {
+                textColor = randomColorTextColor()
+                textPosition = randomTextPosition()
+            }
+        //5x5 Grid
+            21 -> {
+                textPosition = 0
+                textColor = "#000000"
+                deckSize = 25
+                view.expandGrid(deckSize, 5)
+            }
+        //Text Moves around
+            in 26..30 ->{
+                textPosition = randomTextPosition()
+            }
+        //Just Random Colors
+            in 31..35 ->{
+                textPosition = 0
+                textColor = randomColorTextColor()
+            }
+        //Text Moves and Random color
+            in 36..40 ->{
+                textColor = randomColorTextColor()
+                textPosition = randomTextPosition()
+            }
+        }
+    }
+
+    override fun setGameMode(gameMode: String) {
+        mode = gameMode
     }
 
     /**

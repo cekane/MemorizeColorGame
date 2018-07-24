@@ -8,12 +8,13 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.widget.*
-import com.example.ckane.colorsorting.model.Card
+import android.widget.Button
+import android.widget.TextView
 import com.example.ckane.colorsorting.R
-import com.example.ckane.colorsorting.android.adapter.RecyclerAdapter
 import com.example.ckane.colorsorting.android.CardView
 import com.example.ckane.colorsorting.android.activity.EndGame
+import com.example.ckane.colorsorting.android.adapter.RecyclerAdapter
+import com.example.ckane.colorsorting.model.Card
 import com.example.ckane.colorsorting.presentation.CardPresenter
 import com.example.ckane.colorsorting.presentation.impl.CardPresenterImpl
 import com.example.ckane.colorsorting.util.createCardList
@@ -26,11 +27,13 @@ class ChallengeMode : AppCompatActivity(), CardView {
     var color: TextView? = null
     var color2: TextView? = null
     var counter: TextView? = null
-    var nextBtn : Button? = null
-    var rView : RecyclerView? = null
+    var nextBtn: Button? = null
+    var rView: RecyclerView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.challenge_mode_activity)
+
+        presenter.setGameMode(intent.getStringExtra("GAME_MODE"))
 
         rView = findViewById(R.id.recycler_view)
         rView?.itemAnimator = null
@@ -111,7 +114,7 @@ class ChallengeMode : AppCompatActivity(), CardView {
         findViewById<TextView>(R.id.high_score_value).text = highScore.toString()
     }
 
-    override fun expandGrid(deckSize : Int, rowCount : Int){
+    override fun expandGrid(deckSize: Int, rowCount: Int) {
         cardList = createCardList(true, deckSize)
         rcAdapter = RecyclerAdapter(this, cardList, presenter, R.layout.card_item_smaller)
         gLayout = GridLayoutManager(this, rowCount)

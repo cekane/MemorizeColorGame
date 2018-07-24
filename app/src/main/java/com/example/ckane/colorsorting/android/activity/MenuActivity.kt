@@ -8,7 +8,6 @@ import android.widget.EditText
 import android.widget.Toast
 import com.example.ckane.colorsorting.R
 import com.example.ckane.colorsorting.android.activity.levels.ChallengeMode
-import com.example.ckane.colorsorting.android.activity.levels.ClassicMode
 import com.example.ckane.colorsorting.presentation.MainMenuPresenter
 import com.example.ckane.colorsorting.presentation.impl.MainMenuPresenterImpl
 import com.example.ckane.colorsorting.repository.LocalStorage
@@ -30,7 +29,9 @@ class MenuActivity : AppCompatActivity() {
 
         val classicModeBtn : Button = findViewById(R.id.classic_mode)
         classicModeBtn.setOnClickListener{
-            startActivity(Intent(this, ClassicMode::class.java))
+            startActivity(Intent(this, ChallengeMode::class.java).apply {
+                putExtra("GAME_MODE", "CLASSIC_MODE")
+            })
         }
         
         val challengeModeBtn: Button = findViewById(R.id.challenge_mode)
@@ -39,7 +40,9 @@ class MenuActivity : AppCompatActivity() {
                 Toast.makeText(this, "Enter a name to play", Toast.LENGTH_SHORT).show()
             } else {
                 presenter.setLocalUsername(getPlayerName(playerName))
-                startActivity(Intent(this, ChallengeMode::class.java))
+                startActivity(Intent(this, ChallengeMode::class.java).apply {
+                    putExtra("GAME_MODE", "CHALLENGE_MODE")
+                })
             }
         }
 

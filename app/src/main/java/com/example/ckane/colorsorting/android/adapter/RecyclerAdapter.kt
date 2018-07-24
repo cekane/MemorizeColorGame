@@ -2,11 +2,9 @@ package com.example.ckane.colorsorting.android.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.ckane.colorsorting.android.CardViewHolder
-import com.example.ckane.colorsorting.R
 import com.example.ckane.colorsorting.android.CardListManager
 import com.example.ckane.colorsorting.model.Card
 import com.example.ckane.colorsorting.presentation.CardPresenter
