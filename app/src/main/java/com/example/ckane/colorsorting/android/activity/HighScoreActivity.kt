@@ -17,7 +17,7 @@ class HighScoreActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_high_score)
+        setContentView(R.layout.high_score_activity)
 
         val rView: RecyclerView = findViewById(R.id.score_adapter)
         val layoutManager = LinearLayoutManager(this)

@@ -44,30 +44,37 @@ class CardPresenterImpl(val view: CardView) : CardPresenter {
             if (wantedColors.isEmpty()) {
                 val counterValue = (view.getCounterNumber() + 1)
                 when (counterValue) {
+                    //Text Moves around
                     in 6..10 -> {
                         textPosition = randomTextPosition()
                     }
+                    //Just Random Colors
                     in 11..15 -> {
                         textPosition = 0
                         textColor = randomColorTextColor()
                     }
+                    //Text Moves and Random color
                     in 16..20 -> {
                         textColor = randomColorTextColor()
                         textPosition = randomTextPosition()
                     }
+                    //5x5 Grid
                     21 -> {
                         textPosition = 0
                         textColor = "#000000"
                         deckSize = 25
                         view.expandGrid(deckSize, 5)
                     }
+                    //Text Moves around
                     in 26..30 ->{
                         textPosition = randomTextPosition()
                     }
+                    //Just Random Colors
                     in 31..35 ->{
                         textPosition = 0
                         textColor = randomColorTextColor()
                     }
+                    //Text Moves and Random color
                     in 36..40 ->{
                         textColor = randomColorTextColor()
                         textPosition = randomTextPosition()

@@ -18,7 +18,7 @@ import com.example.ckane.colorsorting.presentation.CardPresenter
 import com.example.ckane.colorsorting.presentation.impl.CardPresenterImpl
 import com.example.ckane.colorsorting.util.createCardList
 
-class LevelOne : AppCompatActivity(), CardView {
+class ChallengeMode : AppCompatActivity(), CardView {
     private val presenter: CardPresenter = CardPresenterImpl(this)
     private var cardList: MutableList<Card> = createCardList(true, 16)
     private var rcAdapter = RecyclerAdapter(this, cardList, presenter, R.layout.card_item)
@@ -30,7 +30,7 @@ class LevelOne : AppCompatActivity(), CardView {
     var rView : RecyclerView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.challenge_mode_activity)
 
         rView = findViewById(R.id.recycler_view)
         rView?.itemAnimator = null

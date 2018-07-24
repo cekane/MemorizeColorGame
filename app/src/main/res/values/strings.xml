@@ -24,4 +24,6 @@
     <string name="high_score_text">High \nScore :</string>
     <string name="local_high_score">local_high_score</string>
     <string name="how_to_play">How To Play</string>
+    <string name="challenge_mode">Challenge Mode</string>
+    <string name="classic_mode">Classic Mode</string>
 </resources>

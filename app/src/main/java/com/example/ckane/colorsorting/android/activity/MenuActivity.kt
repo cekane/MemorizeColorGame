@@ -7,7 +7,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.example.ckane.colorsorting.R
-import com.example.ckane.colorsorting.android.activity.levels.LevelOne
+import com.example.ckane.colorsorting.android.activity.levels.ChallengeMode
+import com.example.ckane.colorsorting.android.activity.levels.ClassicMode
 import com.example.ckane.colorsorting.presentation.MainMenuPresenter
 import com.example.ckane.colorsorting.presentation.impl.MainMenuPresenterImpl
 import com.example.ckane.colorsorting.repository.LocalStorage
@@ -17,7 +18,7 @@ class MenuActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_menu)
+        setContentView(R.layout.menu_activity)
         val sharedPref = this.getSharedPreferences("Data_file", android.content.Context.MODE_PRIVATE)
         val repository : LocalStorage = LocalStorageImpl(sharedPref)
         val presenter : MainMenuPresenter = MainMenuPresenterImpl(repository)
@@ -27,13 +28,18 @@ class MenuActivity : AppCompatActivity() {
         val userName = presenter.getLocalUserName()
         playerName.setText(userName)
 
-        val startButton: Button = findViewById(R.id.begin_game)
-        startButton.setOnClickListener {
+        val classicModeBtn : Button = findViewById(R.id.classic_mode)
+        classicModeBtn.setOnClickListener{
+            startActivity(Intent(this, ClassicMode::class.java))
+        }
+        
+        val challengeModeBtn: Button = findViewById(R.id.challenge_mode)
+        challengeModeBtn.setOnClickListener {
             if (getPlayerName(playerName) == "") {
                 Toast.makeText(this, "Enter a name to play", Toast.LENGTH_SHORT).show()
             } else {
                 presenter.setLocalUsername(getPlayerName(playerName))
-                startActivity(Intent(this, LevelOne::class.java))
+                startActivity(Intent(this, ChallengeMode::class.java))
             }
         }
 

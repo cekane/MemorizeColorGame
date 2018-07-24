@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import com.example.ckane.colorsorting.R
-import com.example.ckane.colorsorting.android.activity.levels.LevelOne
+import com.example.ckane.colorsorting.android.activity.levels.ChallengeMode
 import com.example.ckane.colorsorting.cache.AppDatabase
 import com.example.ckane.colorsorting.presentation.EndGamePresenter
 import com.example.ckane.colorsorting.presentation.impl.EndGamePresenterImpl
@@ -18,7 +18,7 @@ class EndGame : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_end_game)
+        setContentView(R.layout.end_game_activity)
 
         val score = intent.getIntExtra("FINAL_SCORE", 0)
         val sharedPref = this.getSharedPreferences("Data_file", android.content.Context.MODE_PRIVATE)
@@ -33,7 +33,7 @@ class EndGame : AppCompatActivity() {
 
         val tryAgainBtn: Button = findViewById(R.id.try_again)
         tryAgainBtn.setOnClickListener {
-            startActivity(Intent(this, LevelOne::class.java))
+            startActivity(Intent(this, ChallengeMode::class.java))
         }
 
         val menuButton: Button = findViewById(R.id.menu)
