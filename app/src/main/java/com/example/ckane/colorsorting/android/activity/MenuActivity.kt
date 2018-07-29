@@ -19,21 +19,23 @@ class MenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.menu_activity)
         val sharedPref = this.getSharedPreferences("Data_file", android.content.Context.MODE_PRIVATE)
-        val repository : LocalStorage = LocalStorageImpl(sharedPref)
-        val presenter : MainMenuPresenter = MainMenuPresenterImpl(repository)
+        val repository: LocalStorage = LocalStorageImpl(sharedPref)
+        val presenter: MainMenuPresenter = MainMenuPresenterImpl(repository)
 
 
         val playerName = findViewById<EditText>(R.id.edit_name_text)
         val userName = presenter.getLocalUserName()
         playerName.setText(userName)
 
-        val classicModeBtn : Button = findViewById(R.id.classic_mode)
-        classicModeBtn.setOnClickListener{
-            startActivity(Intent(this, ChallengeMode::class.java).apply {
-                putExtra("GAME_MODE", "CLASSIC_MODE")
-            })
+        val classicModeBtn: Button = findViewById(R.id.classic_mode)
+        classicModeBtn.setOnClickListener {
+            if (getPlayerName(playerName) == "") {
+                Toast.makeText(this, "Enter a name to play", Toast.LENGTH_SHORT).show()
+            } else {
+                startActivity(Intent(this, DifficultyPickerActivity::class.java))
+            }
         }
-        
+
         val challengeModeBtn: Button = findViewById(R.id.challenge_mode)
         challengeModeBtn.setOnClickListener {
             if (getPlayerName(playerName) == "") {
@@ -46,19 +48,20 @@ class MenuActivity : AppCompatActivity() {
             }
         }
 
-        val howToButton : Button = findViewById(R.id.how_to_play)
+        val howToButton: Button = findViewById(R.id.how_to_play)
         howToButton.setOnClickListener {
             //Todo placeholder for how to play
         }
 
-        val scoreBoardButton : Button = findViewById(R.id.scoreboard)
+        val scoreBoardButton: Button = findViewById(R.id.scoreboard)
         scoreBoardButton.setOnClickListener {
             startActivity(Intent(this, HighScoreActivity::class.java))
         }
     }
+
     override fun onBackPressed() {
         //Nothing to do here
     }
 
-    private fun getPlayerName(playerName : EditText) : String = playerName.text.toString()
+    private fun getPlayerName(playerName: EditText): String = playerName.text.toString()
 }

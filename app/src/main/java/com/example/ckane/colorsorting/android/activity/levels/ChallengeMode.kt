@@ -44,7 +44,7 @@ class ChallengeMode : AppCompatActivity(), CardView {
 
         gameMode = intent.getStringExtra("GAME_MODE")
         presenter.setGameMode(gameMode)
-
+        presenter.setGameTime()
         rView = findViewById(R.id.recycler_view)
         rView?.itemAnimator = null
         color = findViewById(R.id.color_to_choose)

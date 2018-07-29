@@ -8,5 +8,6 @@ interface CardPresenter {
     fun createSingleColorList()
     fun updateCard(position: Int)
     fun setGameMode(gameMode : String)
+    fun setGameTime()
     fun setRepository(repository : LocalStorage)
 }

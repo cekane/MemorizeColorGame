@@ -14,13 +14,13 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
 
     private var savedColoredCards = mutableListOf<Card>()
     private var wantedColors = mutableListOf<Card>()
-    var adapterColorText = ""
-    private val longTime: Long = 1000
+    private var adapterColorText = ""
+    private var timerTime: Long = 1000
     private var textColor = "#000000"
     private var textPosition = 0
     private var deckSize = 16
     private var mode = ""
-    private var repository : LocalStorage? = null
+    private var repository: LocalStorage? = null
 
     override fun startRound() {
         //Picks the random color for the user
@@ -33,7 +33,7 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
         makeColors(color)
         //The amount of time the user gets to remember the colors
         val makeGrey: () -> Unit = { view.newData(createCardList(true, deckSize)) }
-        view.timer(longTime, makeGrey)
+        view.timer(timerTime, makeGrey)
     }
 
     /**
@@ -47,8 +47,13 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
             view.newCard(Card(position, savedColoredCards[position].backgroundColor))
             if (wantedColors.isEmpty()) {
                 val counterValue = (view.getCounterNumber() + 1)
-                when(mode){
-                    "CLASSIC_MODE" -> classicMode(counterValue)
+                when (mode) {
+                    "CLASSIC_MODE_EASY" -> {
+                        classicMode(counterValue, 1400)
+                    }
+                    "CLASSIC_MODE_HARD" -> {
+                        classicMode(counterValue, 600)
+                    }
                     "CHALLENGE_MODE" -> challengeMode(counterValue)
                 }
 
@@ -62,11 +67,17 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
         }
     }
 
-    private fun classicMode(counterValue: Int){
-        //Implement classic mode
+    private fun classicMode(counterValue: Int, startingTime: Int) {
+        val tempTime = startingTime - (((counterValue.toDouble()/10)) * 0.1)
+        timerTime = if(tempTime >= .2){
+            tempTime.toLong()
+        }
+        else{
+            .2.toLong()
+        }
     }
 
-    private fun challengeMode(counterValue : Int){
+    private fun challengeMode(counterValue: Int) {
         when (counterValue) {
         //Text Moves around
             in 6..10 -> {
@@ -90,16 +101,16 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
                 view.expandGrid(deckSize, 5)
             }
         //Text Moves around
-            in 26..30 ->{
+            in 26..30 -> {
                 textPosition = randomTextPosition()
             }
         //Just Random Colors
-            in 31..35 ->{
+            in 31..35 -> {
                 textPosition = 0
                 textColor = randomColorTextColor()
             }
         //Text Moves and Random color
-            in 36..40 ->{
+            in 36..40 -> {
                 textColor = randomColorTextColor()
                 textPosition = randomTextPosition()
             }
@@ -108,8 +119,16 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
 
     override fun setGameMode(gameMode: String) {
         mode = gameMode
-        repository?.let{
+        repository?.let {
             view.updateLocalHighScore(it.getLocalHighScore(mode))
+        }
+    }
+
+    override fun setGameTime() {
+        when (mode) {
+            "CLASSIC_MODE_EASY" -> timerTime = 1400
+            "CLASSIC_MODE_HARD" -> timerTime = 600
+            "CHALLENGE_MODE" -> timerTime = 1000
         }
     }
 

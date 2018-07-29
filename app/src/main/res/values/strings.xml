@@ -26,4 +26,7 @@
     <string name="how_to_play">How To Play</string>
     <string name="challenge_mode">Challenge Mode</string>
     <string name="classic_mode">Classic Mode</string>
+    <string name="easy">Easy</string>
+    <string name="hard">Hard</string>
+    <string name="choose_your_difficulty">Choose Your Difficulty</string>
 </resources>
