@@ -68,12 +68,10 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
     }
 
     private fun classicMode(counterValue: Int, startingTime: Int) {
-        val tempTime = startingTime - (((counterValue.toDouble()/10)) * 0.1)
-        timerTime = if(tempTime >= .2){
-            tempTime.toLong()
-        }
-        else{
-            .2.toLong()
+        if (timerTime >= 200) {
+            timerTime -= 10
+        } else {
+            timerTime = 200
         }
     }
 

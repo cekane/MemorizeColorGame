@@ -9,6 +9,8 @@
         android:roundIcon="@drawable/color_flash_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data android:name="com.google.android.gms.games.APP_ID"
+            android:value="@string/application_id"/>
         <activity
             android:name=".android.activity.levels.ChallengeMode"
             android:screenOrientation="portrait"

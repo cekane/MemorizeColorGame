@@ -2,7 +2,9 @@ package com.example.ckane.colorsorting.android.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -12,6 +14,11 @@ import com.example.ckane.colorsorting.presentation.MainMenuPresenter
 import com.example.ckane.colorsorting.presentation.impl.MainMenuPresenterImpl
 import com.example.ckane.colorsorting.repository.LocalStorage
 import com.example.ckane.colorsorting.repository.impl.LocalStorageImpl
+import com.google.android.gms.auth.api.Auth
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.auth.api.signin.GoogleSignInResult
+import com.google.android.gms.games.Games.signOut
 
 class MenuActivity : AppCompatActivity() {
 
@@ -57,6 +64,8 @@ class MenuActivity : AppCompatActivity() {
         scoreBoardButton.setOnClickListener {
             startActivity(Intent(this, HighScoreActivity::class.java))
         }
+
+        startSignInIntent()
     }
 
     override fun onBackPressed() {
@@ -64,4 +73,34 @@ class MenuActivity : AppCompatActivity() {
     }
 
     private fun getPlayerName(playerName: EditText): String = playerName.text.toString()
+
+    private fun startSignInIntent(){
+        Log.v("[Google Sign In]", "In here")
+        val RC_SIGN_IN = 100
+        val signInClient = GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
+        val intent = signInClient.signInIntent
+        startActivityForResult(intent, RC_SIGN_IN)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == 100){
+            val result : GoogleSignInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
+            if(result.isSuccess){
+                val signedInAccount = result.signInAccount
+                Log.v("[Google Sign In]", signedInAccount.toString())
+                GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).signOut()
+            }else{
+                var message = result.status.statusMessage
+                if (message == null || message.isEmpty()) {
+                    message = "Sign in error"
+                }
+                GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).signOut()
+                AlertDialog.Builder(this).setMessage(message)
+                        .setNeutralButton(android.R.string.ok, null).show()
+
+            }
+        }
+
+    }
 }
