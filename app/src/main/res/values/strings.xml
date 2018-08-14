@@ -29,4 +29,5 @@
     <string name="easy">Easy</string>
     <string name="hard">Hard</string>
     <string name="choose_your_difficulty">Choose Your Difficulty</string>
+    <string name="coins">%1$s Coins</string>
 </resources>

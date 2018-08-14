@@ -5,11 +5,14 @@ import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 import com.example.ckane.colorsorting.cache.dao.HighScoreDao
+import com.example.ckane.colorsorting.cache.dao.UserInfoDao
 import com.example.ckane.colorsorting.cache.entity.HighScore
+import com.example.ckane.colorsorting.cache.entity.UserInfo
 
-@Database(entities = [(HighScore::class)], version = 1)
+@Database(entities = [(HighScore::class), (UserInfo::class)], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getHighScoreDao(): HighScoreDao
+    abstract fun getUserInfoDao(): UserInfoDao
 
     companion object {
         private var instance: AppDatabase? = null
