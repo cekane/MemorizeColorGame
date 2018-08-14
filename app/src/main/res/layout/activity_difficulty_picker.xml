@@ -6,6 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".android.activity.DifficultyPickerActivity">
 
+    <Button
+        android:id="@+id/challenge_mode"
+        android:layout_width="0dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:background="#F2C238"
+        android:fontFamily="casual"
+        android:text="@string/challenge_mode"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hard_difficulty" />
+
     <TextView
         android:id="@+id/difficulty_picker_text"
         android:layout_width="wrap_content"

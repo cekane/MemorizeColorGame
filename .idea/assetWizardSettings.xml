@@ -16,10 +16,25 @@
                             <entry key="launcher">
                               <value>
                                 <PersistentState>
+                                  <option name="children">
+                                    <map>
+                                      <entry key="foregroundImage">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="scalingPercent" value="76" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundLayerName" value="ic_launcher_background" />
-                                      <entry key="foregroundImage" value="D:\Images\color_flash_launcher.psd" />
+                                      <entry key="foregroundImage" value="D:\Downloads\drive-download-20180814T015850Z-001\xxxhdpi (4x).png" />
                                       <entry key="foregroundLayerName" value="ic_launcher_foreground" />
                                       <entry key="outputName" value="color_flash_launcher" />
                                     </map>
@@ -34,17 +49,12 @@
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
                                       <entry key="backgroundColor" value="cfcfc4" />
-                                      <entry key="imageAsset" value="D:\Coding\Android\app\src\main\res\drawable\color_flash_launcher.png" />
+                                      <entry key="imageAsset" value="D:\Downloads\drive-download-20180814T015850Z-001\xxxhdpi (4x).png" />
                                     </map>
                                   </option>
                                 </PersistentState>
                               </value>
                             </entry>
-                          </map>
-                        </option>
-                        <option name="values">
-                          <map>
-                            <entry key="outputIconType" value="LAUNCHER_LEGACY" />
                           </map>
                         </option>
                       </PersistentState>

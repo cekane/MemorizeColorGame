@@ -28,11 +28,11 @@ class ChallengeMode : AppCompatActivity(), CardView {
     private var cardList: MutableList<Card> = createCardList(true, 16)
     private var rcAdapter = RecyclerAdapter(this, cardList, presenter, R.layout.card_item)
     private var gLayout = GridLayoutManager(this, 4)
-    var color: TextView? = null
-    private var color2: TextView? = null
-    var counter: TextView? = null
-    private var nextBtn: Button? = null
-    private var rView: RecyclerView? = null
+    val color: TextView by lazy { findViewById<TextView>(R.id.color_to_choose) }
+    private val color2: TextView by lazy { findViewById<TextView>(R.id.color_to_choose2) }
+    val counter: TextView by lazy {findViewById<TextView>(R.id.counter)}
+    private val nextBtn: Button by lazy{ findViewById<Button>(R.id.next_btn) }
+    private val rView: RecyclerView by lazy { findViewById<RecyclerView>(R.id.recycler_view) }
     private var gameMode = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,23 +45,18 @@ class ChallengeMode : AppCompatActivity(), CardView {
         gameMode = intent.getStringExtra("GAME_MODE")
         presenter.setGameMode(gameMode)
         presenter.setGameTime()
-        rView = findViewById(R.id.recycler_view)
-        rView?.itemAnimator = null
-        color = findViewById(R.id.color_to_choose)
-        color2 = findViewById(R.id.color_to_choose2)
-        counter = findViewById(R.id.counter)
-        nextBtn = findViewById(R.id.next_btn)
-        nextBtn?.visibility = View.GONE
+        rView.itemAnimator = null
+        nextBtn.visibility = View.GONE
 
-        nextBtn?.setOnClickListener {
+        nextBtn.setOnClickListener {
             presenter.startRound()
-            nextBtn?.visibility = View.GONE
+            nextBtn.visibility = View.GONE
         }
 
-        rView?.setHasFixedSize(true)
-        rView?.layoutManager = gLayout
+        rView.setHasFixedSize(true)
+        rView.layoutManager = gLayout
 
-        rView?.adapter = rcAdapter
+        rView.adapter = rcAdapter
 
 
         val startGame: () -> Unit = { presenter.startRound() }
@@ -79,26 +74,26 @@ class ChallengeMode : AppCompatActivity(), CardView {
     override fun setColorText(colorText: String, textSelector: Int) {
         when (textSelector) {
             0 -> {
-                color?.text = colorText
-                color2?.text = ""
+                color.text = colorText
+                color2.text = ""
             }
             1 -> {
-                color?.text = ""
-                color2?.text = colorText
+                color.text = ""
+                color2.text = colorText
             }
         }
     }
 
     override fun setColorTextColor(textColor: String) {
-        color?.setTextColor(Color.parseColor(textColor))
-        color2?.setTextColor(Color.parseColor(textColor))
+        color.setTextColor(Color.parseColor(textColor))
+        color2.setTextColor(Color.parseColor(textColor))
     }
 
     override fun setCounterText(counterText: String) {
-        counter?.text = counterText
+        counter.text = counterText
     }
 
-    override fun getCounterNumber(): Int = Integer.parseInt(counter?.text.toString())
+    override fun getCounterNumber(): Int = Integer.parseInt(counter.text.toString())
 
     override fun timer(time: Long, f: () -> Unit) {
         Handler().postDelayed({
@@ -115,7 +110,7 @@ class ChallengeMode : AppCompatActivity(), CardView {
 
     override fun roundEndFragment() {
         setColorText(getString(R.string.friendly_message), 0)
-        nextBtn?.visibility = View.VISIBLE
+        nextBtn.visibility = View.VISIBLE
     }
 
     override fun updateLocalHighScore(highScore: Int) {
@@ -127,8 +122,8 @@ class ChallengeMode : AppCompatActivity(), CardView {
         rcAdapter = RecyclerAdapter(this, cardList, presenter, R.layout.card_item_smaller)
         gLayout = GridLayoutManager(this, rowCount)
 
-        rView?.adapter = rcAdapter
-        rView?.layoutManager = gLayout
+        rView.adapter = rcAdapter
+        rView.layoutManager = gLayout
     }
 }
 

@@ -14,6 +14,6 @@ interface UserInfoDao {
     @Insert
     fun insertNewUser(userInfo : UserInfo)
 
-    @Query("UPDATE user_info SET money = :coins WHERE userName = :userName")
+    @Query("UPDATE user_info SET money = money + :coins WHERE userName = :userName")
     fun updateCoins(userName : String, coins : Int)
 }

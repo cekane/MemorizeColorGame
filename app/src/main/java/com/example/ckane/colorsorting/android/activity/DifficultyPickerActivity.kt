@@ -26,5 +26,12 @@ class DifficultyPickerActivity : AppCompatActivity() {
                 putExtra("GAME_MODE", "CLASSIC_MODE_HARD")
             })
         }
+
+        val challengeModeBtn: Button = findViewById(R.id.challenge_mode)
+        challengeModeBtn.setOnClickListener {
+            startActivity(Intent(this, ChallengeMode::class.java).apply {
+                putExtra("GAME_MODE", "CHALLENGE_MODE")
+            })
+        }
     }
 }
