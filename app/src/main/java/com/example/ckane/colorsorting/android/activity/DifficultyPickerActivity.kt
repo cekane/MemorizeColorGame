@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import com.example.ckane.colorsorting.R
 import com.example.ckane.colorsorting.android.activity.levels.ChallengeMode
-
+//Todo: Make difficulty an enum
 class DifficultyPickerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

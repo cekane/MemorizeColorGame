@@ -18,4 +18,9 @@ class UserInfoRepositoryImpl(db: AppDatabase) : UserInfoRepository {
         dao.insertNewUser(userInfo)
         it.onComplete()
     }
+
+    override fun updateUserCoins(userName: String, coins: Int) : Completable = Completable.create {
+        dao.updateCoins(userName, coins)
+        it.onComplete()
+    }
 }

@@ -144,5 +144,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.25"
         app:srcCompat="@drawable/color_flash_title"
-        android:contentDescription="@string/applicatin_name" />
+        android:contentDescription="@string/application_name" />
 </android.support.constraint.ConstraintLayout>

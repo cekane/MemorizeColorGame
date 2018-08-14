@@ -6,15 +6,16 @@ import com.example.ckane.colorsorting.cache.entity.HighScore
 import com.example.ckane.colorsorting.presentation.EndGamePresenter
 import com.example.ckane.colorsorting.repository.LocalStorage
 import com.example.ckane.colorsorting.repository.ScoreRepository
+import com.example.ckane.colorsorting.repository.UserInfoRepository
 import com.example.ckane.colorsorting.repository.impl.ScoreRepositoryImpl
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
-class EndGamePresenterImpl(private val repository: LocalStorage) : EndGamePresenter {
+class EndGamePresenterImpl(private val repository: LocalStorage, private val userInfoRepository : UserInfoRepository) : EndGamePresenter {
     private val scheduler: Scheduler = Schedulers.io()
 
-    override fun updateHighScore(mode : String, score: Int) {
+    override fun updateHighScore(mode: String, score: Int) {
         if (score > repository.getLocalHighScore(mode)) {
             repository.insertLocalHighScore(mode, score)
         }
@@ -36,4 +37,29 @@ class EndGamePresenterImpl(private val repository: LocalStorage) : EndGamePresen
                             })
                 }
     }
+
+    override fun determineCoins(score: Int, mode: String): Int {
+        when (mode) {
+            "CHALLENGE_MODE"  -> {
+                return (score/5) * 3
+            }
+            "CLASSIC_MODE_EASY" -> {
+                return (score/5) * 1
+            }
+            "CLASSIC_MODE_HARD" -> {
+                return (score/5) * 2
+            }
+        }
+        return 0
+    }
+
+    override fun updateCoins(userName: String, coins: Int) {
+        userInfoRepository.updateUserCoins(userName, coins).subscribeOn(Schedulers.io()).subscribe({
+            Log.v("[UserInfo]", "Added $coins to $userName")
+        })
+
+    }
+
+    override fun getUserName(): String = repository.getLocalUsername()
+
 }

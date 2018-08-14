@@ -4,6 +4,7 @@
     <string name="color_to_chose">Click Start to Begin</string>
     <string name="card_image">card image</string>
     <string name="_0">0</string>
+    <string name="end_game_coins">+ %1$s Coins</string>
     <string name="title_activity_menu">MenuActivity</string>
     <string name="start">Start</string>
     <string name="color_flash">Color Flash</string>
@@ -19,7 +20,7 @@
     <string name="friendly_message">Nice job genius</string>
     <string name="saved_user_name">SAVED_USER_NAME</string>
     <string name="logo">logo</string>
-    <string name="applicatin_name">applicatin name</string>
+    <string name="application_name">application name</string>
     <string name="current_score">Score :</string>
     <string name="high_score_text">High \nScore :</string>
     <string name="local_high_score">local_high_score</string>
