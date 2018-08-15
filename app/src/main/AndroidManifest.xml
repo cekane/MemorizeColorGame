@@ -9,8 +9,10 @@
         android:roundIcon="@mipmap/color_flash_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data android:name="com.google.android.gms.games.APP_ID"
-            android:value="@string/application_id"/>
+        <meta-data
+            android:name="com.google.android.gms.games.APP_ID"
+            android:value="@string/application_id" />
+
         <activity
             android:name=".android.activity.levels.ChallengeMode"
             android:screenOrientation="portrait"
@@ -37,6 +39,7 @@
         <activity
             android:name=".android.activity.DifficultyPickerActivity"
             android:theme="@style/AppFullScreenTheme" />
+        <activity android:name=".android.activity.PowerUpStore" />
     </application>
 
 </manifest>

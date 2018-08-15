@@ -7,7 +7,6 @@ import io.reactivex.Completable
 import io.reactivex.Single
 
 class UserInfoRepositoryImpl(db: AppDatabase) : UserInfoRepository {
-
     private val dao = db.getUserInfoDao()
 
     override fun getUserInfo(userName : String) : Single<UserInfo> = Single.create{
@@ -21,6 +20,15 @@ class UserInfoRepositoryImpl(db: AppDatabase) : UserInfoRepository {
 
     override fun updateUserCoins(userName: String, coins: Int) : Completable = Completable.create {
         dao.updateCoins(userName, coins)
+        it.onComplete()
+    }
+    override fun updatePowerUp(powerUp : String, userName: String): Completable = Completable.create {
+        when(powerUp){
+            "A" -> { dao.updatePowerUpA(userName) }
+            "B" -> { dao.updatePowerUpB(userName) }
+            "C" -> { dao.updatePowerUpC(userName) }
+            "D" -> { dao.updatePowerUpD(userName) }
+        }
         it.onComplete()
     }
 }

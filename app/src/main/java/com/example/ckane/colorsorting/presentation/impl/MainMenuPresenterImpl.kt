@@ -29,18 +29,7 @@ class MainMenuPresenterImpl(private val repository: LocalStorage,
             //Insert new user into database
             createNewUser(UserInfo(userName))
         }
-        getUserInfo(userName)
         Log.v("[UserInfo]Local user name", getLocalUserName())
-    }
-
-    private fun getUserInfo(userName: String) {
-        userInfoRepository.getUserInfo(userName).subscribeOn(Schedulers.io())
-                .subscribe({
-                    Log.v("[UserInfo]", it.toString())
-                    view.updateUserInfoUi(it)
-                }, {
-                    Log.v("[UserInfo]", "Error", it)
-                })
     }
 
     private fun createNewUser(userInfo: UserInfo) {

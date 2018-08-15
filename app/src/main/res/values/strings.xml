@@ -34,4 +34,12 @@
     <string name="hard">Hard</string>
     <string name="choose_your_difficulty">Choose Your Difficulty</string>
     <string name="coins">%1$s Coins</string>
+    <string name="power_up_1">Power Up 1</string>
+    <string name="power_up_1_status">Cost: 10 Own: %1$s</string>
+    <string name="power_up_2">Power Up 2</string>
+    <string name="power_up_2_status">Cost: 20 Own: %1$s</string>
+    <string name="power_up_3">Power Up 3</string>
+    <string name="power_up_3_status">Cost: 15 Own: %1$s</string>
+    <string name="power_up_4">Power Up 4</string>
+    <string name="power_up_4_status">Cost: 50 Own: %1$s</string>
 </resources>

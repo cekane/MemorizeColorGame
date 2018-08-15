@@ -70,7 +70,7 @@ class MenuActivity : AppCompatActivity(), MenuView {
 
         val storeButton: Button = findViewById(R.id.game_store)
         storeButton.setOnClickListener {
-            //Todo placeholder for how to play
+            startActivity(Intent(this, PowerUpStore::class.java))
         }
 
         val settingsButton: Button = findViewById(R.id.game_settings)
@@ -82,14 +82,6 @@ class MenuActivity : AppCompatActivity(), MenuView {
         //TODO implement google play sign in
         //signInSilently()
 
-    }
-
-    override fun updateUserInfoUi(userInfo: UserInfo) {
-        val userNameTextView = findViewById<TextView>(R.id.user_name)
-        userNameTextView.text = userInfo.userName
-        val moneyTextView = findViewById<TextView>(R.id.money)
-        Log.v("[UserInfo Coins]", userInfo.money.toString())
-        moneyTextView.text = resources.getString(R.string.coins, userInfo.money.toString())
     }
 
     override fun updateCards(cards: MutableList<Card>) {
