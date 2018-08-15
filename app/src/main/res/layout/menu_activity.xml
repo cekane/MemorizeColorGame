@@ -1,13 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#434343"
+    android:background="@color/backgroundDarkGrey"
     tools:context=".android.activity.MenuActivity">
 
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:horizontalSpacing="0dp"
+        android:numColumns="4"
+        android:orientation="horizontal"
+        android:verticalSpacing="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/top" />
 
     <Button
         android:id="@+id/game_settings"
@@ -16,7 +33,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        android:background="#F56154"
+        android:background="@color/cardRed"
         android:fontFamily="casual"
         android:text="@string/settings_game"
         android:textStyle="bold"
@@ -32,7 +49,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
-        android:background="#4F87B3"
+        android:background="@color/cardBlue"
         android:fontFamily="casual"
         android:text="@string/store_game"
         android:textStyle="bold"
@@ -65,8 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:background="#66cc66"
+        android:background="@color/cardGreen"
         android:fontFamily="casual"
         android:text="@string/play_game"
         android:textStyle="bold"
@@ -82,7 +98,7 @@
         android:layout_marginEnd="4dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        android:background="#F2C238"
+        android:background="@color/cardYellow"
         android:fontFamily="casual"
         android:text="@string/how_to_play"
         android:textStyle="bold"
@@ -95,14 +111,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.3"/>
+        app:layout_constraintGuide_percent="0.2" />
 
     <android.support.constraint.Guideline
         android:id="@+id/bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.7"/>
+        app:layout_constraintGuide_percent="0.75" />
 
     <android.support.constraint.Guideline
         android:id="@+id/vertical"
@@ -134,9 +150,6 @@
         android:id="@+id/applicatin_name"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:contentDescription="@string/application_name"
         app:layout_constraintBottom_toTopOf="@+id/top"
         app:layout_constraintEnd_toEndOf="parent"

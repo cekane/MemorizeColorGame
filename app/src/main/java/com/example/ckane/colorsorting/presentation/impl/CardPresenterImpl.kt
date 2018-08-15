@@ -16,7 +16,7 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
     private var wantedColors = mutableListOf<Card>()
     private var adapterColorText = ""
     private var timerTime: Long = 1000
-    private var textColor = "#000000"
+    private var textColor = "#FFFFFF"
     private var textPosition = 0
     private var deckSize = 16
     private var mode = ""

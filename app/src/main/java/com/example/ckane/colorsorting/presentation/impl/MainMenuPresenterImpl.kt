@@ -1,17 +1,22 @@
 package com.example.ckane.colorsorting.presentation.impl
 
+import android.os.CountDownTimer
 import android.util.Log
 import com.example.ckane.colorsorting.android.MenuView
 import com.example.ckane.colorsorting.cache.entity.UserInfo
 import com.example.ckane.colorsorting.presentation.MainMenuPresenter
 import com.example.ckane.colorsorting.repository.LocalStorage
 import com.example.ckane.colorsorting.repository.UserInfoRepository
+import com.example.ckane.colorsorting.util.createCardList
 import io.reactivex.schedulers.Schedulers
 
 class MainMenuPresenterImpl(private val repository: LocalStorage,
                             private val userInfoRepository: UserInfoRepository,
                             private val view: MenuView) : MainMenuPresenter {
 
+    val myTimer : AnimatedTimer by lazy {
+        AnimatedTimer(1000000, 1000, view)
+    }
     override fun getLocalUserName(): String = repository.getLocalUsername()
 
     override fun setLocalUsername(userName: String) {
@@ -23,10 +28,8 @@ class MainMenuPresenterImpl(private val repository: LocalStorage,
             setLocalUsername(userName)
             //Insert new user into database
             createNewUser(UserInfo(userName))
-        } else {
-            //Get the current user from the database
-            getUserInfo(userName)
         }
+        getUserInfo(userName)
         Log.v("[UserInfo]Local user name", getLocalUserName())
     }
 
@@ -45,5 +48,23 @@ class MainMenuPresenterImpl(private val repository: LocalStorage,
                 .subscribe({
                     Log.v("[UserInfo]", "Successfully inserted user into table")
                 })
+    }
+
+    override fun setUpAnimatedView() {
+        myTimer.start()
+    }
+
+    override fun cleanUp() {
+        myTimer.onFinish()
+    }
+}
+
+class AnimatedTimer(howLong: Long, tick : Long, val view : MenuView) : CountDownTimer(howLong, tick){
+    override fun onFinish() {
+        this.cancel()
+    }
+
+    override fun onTick(millisUntilFinished: Long) {
+        view.updateCards(createCardList(false, 16))
     }
 }

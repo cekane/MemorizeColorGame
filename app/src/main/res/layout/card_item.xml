@@ -4,13 +4,13 @@
     android:orientation="horizontal"
     android:padding="2dp"
     android:layout_width="74dp"
-    android:layout_height="84dp">
+    android:layout_height="74dp">
 
     <ImageView
         android:id="@+id/card_image"
         android:contentDescription="@string/card_image"
         android:layout_width="70dp"
-        android:layout_height="80dp"
+        android:layout_height="70dp"
         android:gravity="center"
         android:background="@drawable/ic_blue_card"/>
 

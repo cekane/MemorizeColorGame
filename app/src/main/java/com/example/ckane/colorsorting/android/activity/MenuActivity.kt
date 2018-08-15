@@ -5,26 +5,29 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import com.example.ckane.colorsorting.R
 import com.example.ckane.colorsorting.android.MenuView
+import com.example.ckane.colorsorting.android.adapter.RecyclerAdapterAnimated
 import com.example.ckane.colorsorting.cache.AppDatabase
 import com.example.ckane.colorsorting.cache.AppDatabase.Companion.getInstance
 import com.example.ckane.colorsorting.cache.entity.UserInfo
+import com.example.ckane.colorsorting.model.Card
 import com.example.ckane.colorsorting.presentation.MainMenuPresenter
 import com.example.ckane.colorsorting.presentation.impl.MainMenuPresenterImpl
 import com.example.ckane.colorsorting.repository.LocalStorage
 import com.example.ckane.colorsorting.repository.UserInfoRepository
 import com.example.ckane.colorsorting.repository.impl.LocalStorageImpl
 import com.example.ckane.colorsorting.repository.impl.UserInfoRepositoryImpl
+import com.example.ckane.colorsorting.util.createCardList
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.*
 
 class MenuActivity : AppCompatActivity(), MenuView {
-
-
     private val sharedPref: SharedPreferences by lazy {
         this.getSharedPreferences("Data_file", android.content.Context.MODE_PRIVATE)
     }
@@ -40,11 +43,20 @@ class MenuActivity : AppCompatActivity(), MenuView {
     private val presenter: MainMenuPresenter by lazy {
         MainMenuPresenterImpl(repository, userInfoRepository, this)
     }
+    private val rView: RecyclerView by lazy { findViewById<RecyclerView>(R.id.recycler_view) }
+    private var animateAdapter = RecyclerAdapterAnimated(this,createCardList(false, 16) , R.layout.card_item)
+    private var gLayout = GridLayoutManager(this, 4)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.menu_activity)
 
+        rView.itemAnimator = null
+        rView.setHasFixedSize(true)
+        rView.layoutManager = gLayout
+        rView.adapter = animateAdapter
+
+        presenter.setUpAnimatedView()
 
         val classicModeBtn: Button = findViewById(R.id.play_game)
         classicModeBtn.setOnClickListener {
@@ -78,6 +90,15 @@ class MenuActivity : AppCompatActivity(), MenuView {
         val moneyTextView = findViewById<TextView>(R.id.money)
         Log.v("[UserInfo Coins]", userInfo.money.toString())
         moneyTextView.text = resources.getString(R.string.coins, userInfo.money.toString())
+    }
+
+    override fun updateCards(cards: MutableList<Card>) {
+        animateAdapter.newData(cards)
+    }
+
+    override fun onDestroy() {
+        presenter.cleanUp()
+        super.onDestroy()
     }
 
     override fun onBackPressed() {

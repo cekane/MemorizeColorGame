@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundDarkGrey"
     tools:context=".android.activity.DifficultyPickerActivity">
 
     <Button
@@ -14,7 +15,7 @@
         android:layout_marginEnd="35dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        android:background="#F2C238"
+        android:background="@color/cardBlue"
         android:fontFamily="casual"
         android:text="@string/challenge_mode"
         android:textSize="30sp"
@@ -37,7 +38,7 @@
         android:text="@string/choose_your_difficulty"
         android:textAlignment="center"
         android:textAllCaps="true"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/easy_difficulty"
@@ -53,7 +54,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        android:background="#66cc66"
+        android:background="@color/cardGreen"
         android:fontFamily="casual"
         android:text="@string/easy"
         android:textSize="30sp"
@@ -72,7 +73,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        android:background="#F56154"
+        android:background="@color/cardRed"
         android:fontFamily="casual"
         android:text="@string/hard"
         android:textSize="30sp"
