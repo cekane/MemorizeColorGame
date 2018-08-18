@@ -32,6 +32,10 @@ class ChallengeMode : AppCompatActivity(), CardView {
     private val color2: TextView by lazy { findViewById<TextView>(R.id.color_to_choose2) }
     val counter: TextView by lazy {findViewById<TextView>(R.id.counter)}
     private val nextBtn: Button by lazy{ findViewById<Button>(R.id.next_btn) }
+    private val powerUpABtn: Button by lazy{ findViewById<Button>(R.id.power_up_A) }
+    private val powerUpBBtn: Button by lazy{ findViewById<Button>(R.id.power_up_B) }
+    private val powerUpCBtn: Button by lazy{ findViewById<Button>(R.id.power_up_C) }
+    private val powerUpDBtn: Button by lazy{ findViewById<Button>(R.id.power_up_D) }
     private val rView: RecyclerView by lazy { findViewById<RecyclerView>(R.id.recycler_view) }
     private var gameMode = ""
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +55,10 @@ class ChallengeMode : AppCompatActivity(), CardView {
         nextBtn.setOnClickListener {
             presenter.startRound()
             nextBtn.visibility = View.GONE
+            powerUpABtn.visibility = View.VISIBLE
+            powerUpBBtn.visibility = View.VISIBLE
+            powerUpCBtn.visibility = View.VISIBLE
+            powerUpDBtn.visibility = View.VISIBLE
         }
 
         rView.setHasFixedSize(true)
@@ -111,6 +119,10 @@ class ChallengeMode : AppCompatActivity(), CardView {
     override fun roundEndFragment() {
         setColorText(getString(R.string.friendly_message), 0)
         nextBtn.visibility = View.VISIBLE
+        powerUpABtn.visibility = View.GONE
+        powerUpBBtn.visibility = View.GONE
+        powerUpCBtn.visibility = View.GONE
+        powerUpDBtn.visibility = View.GONE
     }
 
     override fun updateLocalHighScore(highScore: Int) {
