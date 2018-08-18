@@ -4,5 +4,5 @@ import com.example.ckane.colorsorting.cache.entity.UserInfo
 
 interface StorePresenter {
     fun updateUserInfo()
-    fun buyPowerUp(powerUp : String)
+    fun buyPowerUp(powerUp : Int)
 }

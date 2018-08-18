@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import com.example.ckane.colorsorting.model.Card
 import com.example.ckane.colorsorting.R
+import com.example.ckane.colorsorting.model.PowerUpModel
 import java.util.*
 
 /**
@@ -68,7 +69,17 @@ fun randomColorTextColor(): String = getHexFromNumber(Random().nextInt(4))
 /**
  * converts resource id to vector drawable
  */
-private fun toDrawable(resourceId: Int, context: Context): Drawable? = ContextCompat.getDrawable(context, resourceId)
+fun toDrawable(resourceId: Int, context: Context): Drawable? = ContextCompat.getDrawable(context, resourceId)
 
 fun randomTextPosition(): Int = Random().nextInt(2)
+
+fun createPowerUpList(): MutableList<PowerUpModel> = MutableList(4 , {
+    when(it){
+        0 -> PowerUpModel(R.drawable.icon_activateshield,"Shield", "Protect yourself from the next wrong card you select", 0, 40)
+        1 -> PowerUpModel(R.drawable.icon_showallcolors, "Replay", "Replay all the colors", 0, 30)
+        2 -> PowerUpModel(R.drawable.icon_showdifferentcolor, "Show", "Show all cards of one other color", 0, 20)
+        3 -> PowerUpModel(R.drawable.icon_showtargetcolor, "Target", "Pick a card to flip over", 0, 15)
+        else -> PowerUpModel(0, "","", 0, 0)
+    }
+})
 

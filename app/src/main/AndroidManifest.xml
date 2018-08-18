@@ -39,7 +39,8 @@
         <activity
             android:name=".android.activity.DifficultyPickerActivity"
             android:theme="@style/AppFullScreenTheme" />
-        <activity android:name=".android.activity.PowerUpStore" />
+        <activity android:name=".android.activity.PowerUpStore"
+            android:theme="@style/AppFullScreenTheme"/>
     </application>
 
 </manifest>

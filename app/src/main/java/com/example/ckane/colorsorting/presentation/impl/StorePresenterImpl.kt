@@ -26,7 +26,7 @@ class StorePresenterImpl(val repository: LocalStorage,
         })
     }
 
-    override fun buyPowerUp(powerUp: String) {
+    override fun buyPowerUp(powerUp: Int) {
         userInfoRepository.updatePowerUp(powerUp, userName).subscribeOn(Schedulers.io()).subscribe({
             updateUserInfo()
         }, {
