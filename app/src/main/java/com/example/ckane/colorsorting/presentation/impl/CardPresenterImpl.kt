@@ -63,6 +63,7 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
         } else {
             val finalScore = view.getCounterNumber()
             view.setCounterText("0")
+            view.newData(savedColoredCards)
             view.endGame(finalScore)
         }
     }

@@ -30,12 +30,12 @@ class ChallengeMode : AppCompatActivity(), CardView {
     private var gLayout = GridLayoutManager(this, 4)
     val color: TextView by lazy { findViewById<TextView>(R.id.color_to_choose) }
     private val color2: TextView by lazy { findViewById<TextView>(R.id.color_to_choose2) }
-    val counter: TextView by lazy {findViewById<TextView>(R.id.counter)}
-    private val nextBtn: Button by lazy{ findViewById<Button>(R.id.next_btn) }
-    private val powerUpABtn: Button by lazy{ findViewById<Button>(R.id.power_up_A) }
-    private val powerUpBBtn: Button by lazy{ findViewById<Button>(R.id.power_up_B) }
-    private val powerUpCBtn: Button by lazy{ findViewById<Button>(R.id.power_up_C) }
-    private val powerUpDBtn: Button by lazy{ findViewById<Button>(R.id.power_up_D) }
+    val counter: TextView by lazy { findViewById<TextView>(R.id.counter) }
+    private val nextBtn: Button by lazy { findViewById<Button>(R.id.next_btn) }
+    private val powerUpABtn: Button by lazy { findViewById<Button>(R.id.power_up_A) }
+    private val powerUpBBtn: Button by lazy { findViewById<Button>(R.id.power_up_B) }
+    private val powerUpCBtn: Button by lazy { findViewById<Button>(R.id.power_up_C) }
+    private val powerUpDBtn: Button by lazy { findViewById<Button>(R.id.power_up_D) }
     private val rView: RecyclerView by lazy { findViewById<RecyclerView>(R.id.recycler_view) }
     private var gameMode = ""
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -110,15 +110,23 @@ class ChallengeMode : AppCompatActivity(), CardView {
     }
 
     override fun endGame(score: Int) {
-        startActivity(Intent(this, EndGame::class.java).apply {
-            putExtra("FINAL_SCORE", score)
-            putExtra("GAME_MODE", gameMode)
-        })
+        nextBtn.visibility = View.VISIBLE
+        makePowerUpInvisable()
+        nextBtn.setOnClickListener {
+            startActivity(Intent(this, EndGame::class.java).apply {
+                putExtra("FINAL_SCORE", score)
+                putExtra("GAME_MODE", gameMode)
+            })
+        }
     }
 
     override fun roundEndFragment() {
         setColorText(getString(R.string.friendly_message), 0)
         nextBtn.visibility = View.VISIBLE
+        makePowerUpInvisable()
+    }
+
+    private fun makePowerUpInvisable(){
         powerUpABtn.visibility = View.GONE
         powerUpBBtn.visibility = View.GONE
         powerUpCBtn.visibility = View.GONE
