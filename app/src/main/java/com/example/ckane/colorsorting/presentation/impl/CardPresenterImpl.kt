@@ -14,7 +14,7 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
 
     private var savedColoredCards = mutableListOf<Card>()
     private var wantedColors = mutableListOf<Card>()
-    private var correctChoices = mutableListOf<Card>()
+    private var pickedColors = mutableListOf<Card>()
     private var adapterColorText = ""
     private var timerTime: Long = 1000
     private var textColor = "#FFFFFF"
@@ -45,7 +45,7 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
     override fun updateCard(position: Int) {
         if (savedColoredCards.isNotEmpty() && adapterColorText == savedColoredCards[position].backgroundColor) {
             wantedColors.removeIf { it.position == position }
-            correctChoices.add(Card(position, savedColoredCards[position].backgroundColor))
+            pickedColors.add(Card(position, savedColoredCards[position].backgroundColor))
             view.newCard(Card(position, savedColoredCards[position].backgroundColor))
             if (wantedColors.isEmpty()) {
                 val counterValue = (view.getCounterNumber() + 1)
@@ -58,7 +58,7 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
                     }
                     "CHALLENGE_MODE" -> challengeMode(counterValue)
                 }
-                correctChoices = mutableListOf()
+                pickedColors = mutableListOf()
                 view.setCounterText(counterValue.toString())
                 view.roundEndFragment()
             }
@@ -70,6 +70,7 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
         } else {
             //Player had a shield active and got one wrong
             shieldActivated = false
+            pickedColors.add(Card(position, savedColoredCards[position].backgroundColor))
             view.newCard(Card(position, savedColoredCards[position].backgroundColor))
         }
     }
@@ -174,15 +175,25 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
 
     override fun replayBoard() {
         view.newData(savedColoredCards)
-
         val makeGrey: () -> Unit = {
             view.newData(createCardList(true, deckSize))
-            correctChoices.forEach {
+            pickedColors.forEach {
                 view.newCard(it)
             }
         }
         boardToGrey(makeGrey)
+    }
 
+    override fun showOneColor(){
+        val colorsToChoose = mutableListOf("blue", "green", "yellow", "red")
+        colorsToChoose.removeIf{ it == adapterColorText }
+        val colorToChoose = colorsToChoose[Random().nextInt(3)]
+        savedColoredCards.forEach {
+            if(it.backgroundColor == colorToChoose){
+                pickedColors.add(it)
+                view.newCard(it)
+            }
+        }
     }
 
     private fun boardToGrey(makeGrey: () -> Unit) {

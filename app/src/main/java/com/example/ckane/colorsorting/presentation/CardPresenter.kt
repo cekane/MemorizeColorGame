@@ -12,4 +12,5 @@ interface CardPresenter {
     fun setRepository(repository: LocalStorage)
     fun activateShield()
     fun replayBoard()
+    fun showOneColor()
 }

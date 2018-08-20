@@ -69,10 +69,17 @@ class ChallengeMode : AppCompatActivity(), CardView {
         }
 
         //Replay board
-        powerUpBBtn.setOnClickListener{
+        powerUpBBtn.setOnClickListener {
             presenter.replayBoard()
             powerUpBBtn.background = toDrawable(R.drawable.icon_showallcolors_disabled, this)
             powerUpBBtn.isEnabled = false
+        }
+
+        //Show all of one color button
+        powerUpCBtn.setOnClickListener {
+            presenter.showOneColor()
+            powerUpCBtn.background = toDrawable(R.drawable.icon_showdifferentcolor_disabled, this)
+            powerUpCBtn.isEnabled = false
         }
 
         rView.setHasFixedSize(true)
