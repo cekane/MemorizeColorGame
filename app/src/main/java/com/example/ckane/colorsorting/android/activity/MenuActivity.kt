@@ -9,13 +9,11 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.widget.Button
-import android.widget.TextView
 import com.example.ckane.colorsorting.R
 import com.example.ckane.colorsorting.android.MenuView
 import com.example.ckane.colorsorting.android.adapter.RecyclerAdapterAnimated
 import com.example.ckane.colorsorting.cache.AppDatabase
 import com.example.ckane.colorsorting.cache.AppDatabase.Companion.getInstance
-import com.example.ckane.colorsorting.cache.entity.UserInfo
 import com.example.ckane.colorsorting.model.Card
 import com.example.ckane.colorsorting.presentation.MainMenuPresenter
 import com.example.ckane.colorsorting.presentation.impl.MainMenuPresenterImpl
@@ -44,7 +42,7 @@ class MenuActivity : AppCompatActivity(), MenuView {
         MainMenuPresenterImpl(repository, userInfoRepository, this)
     }
     private val rView: RecyclerView by lazy { findViewById<RecyclerView>(R.id.recycler_view) }
-    private var animateAdapter = RecyclerAdapterAnimated(this,createCardList(false, 16) , R.layout.card_item)
+    private var animateAdapter = RecyclerAdapterAnimated(this, createCardList(false, 16), R.layout.card_item)
     private var gLayout = GridLayoutManager(this, 4)
 
     override fun onCreate(savedInstanceState: Bundle?) {

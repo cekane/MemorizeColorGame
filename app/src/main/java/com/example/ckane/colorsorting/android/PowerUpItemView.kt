@@ -6,8 +6,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.ckane.colorsorting.R
-import com.example.ckane.colorsorting.presentation.StorePresenter
-import java.text.FieldPosition
 
 class PowerUpItemView(layoutView : View) : RecyclerView.ViewHolder(layoutView) {
     val powerUpImage: ImageView = layoutView.findViewById(R.id.power_up_img)

@@ -7,8 +7,9 @@ interface CardPresenter {
     fun makeColors(color: String)
     fun createSingleColorList()
     fun updateCard(position: Int)
-    fun setGameMode(gameMode : String)
+    fun setGameMode(gameMode: String)
     fun setGameTime()
-    fun setRepository(repository : LocalStorage)
+    fun setRepository(repository: LocalStorage)
     fun activateShield()
+    fun replayBoard()
 }

@@ -64,8 +64,15 @@ class ChallengeMode : AppCompatActivity(), CardView {
         //Activate shield button
         powerUpABtn.setOnClickListener {
             presenter.activateShield()
-            powerUpABtn.background = toDrawable(R.drawable.icon_activateshield_disabled,this)
+            powerUpABtn.background = toDrawable(R.drawable.icon_activateshield_disabled, this)
             powerUpABtn.isEnabled = false
+        }
+
+        //Replay board
+        powerUpBBtn.setOnClickListener{
+            presenter.replayBoard()
+            powerUpBBtn.background = toDrawable(R.drawable.icon_showallcolors_disabled, this)
+            powerUpBBtn.isEnabled = false
         }
 
         rView.setHasFixedSize(true)
@@ -133,7 +140,7 @@ class ChallengeMode : AppCompatActivity(), CardView {
         makePowerUpInvisible()
     }
 
-    private fun makePowerUpInvisible(){
+    private fun makePowerUpInvisible() {
         powerUpABtn.visibility = View.GONE
         powerUpBBtn.visibility = View.GONE
         powerUpCBtn.visibility = View.GONE

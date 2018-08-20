@@ -8,5 +8,5 @@ interface UserInfoRepository {
     fun getUserInfo(userName: String): Single<UserInfo>
     fun insertNewUser(userInfo: UserInfo): Completable
     fun updateUserCoins(userName: String, coins: Int): Completable
-    fun updatePowerUp(powerUp : Int, userName: String): Completable
+    fun updatePowerUp(powerUp: Int, userName: String): Completable
 }

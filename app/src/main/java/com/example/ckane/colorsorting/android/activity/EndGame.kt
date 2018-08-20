@@ -25,15 +25,16 @@ class EndGame : AppCompatActivity() {
     private val repository: LocalStorage by lazy {
         LocalStorageImpl(sharedPref)
     }
-    val db : AppDatabase by lazy{
+    val db: AppDatabase by lazy {
         AppDatabase.getInstance(this)
     }
-    val userInfoRepository : UserInfoRepository by lazy{
+    val userInfoRepository: UserInfoRepository by lazy {
         UserInfoRepositoryImpl(db)
     }
     val presenter: EndGamePresenter by lazy {
         EndGamePresenterImpl(repository, userInfoRepository)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.end_game_activity)

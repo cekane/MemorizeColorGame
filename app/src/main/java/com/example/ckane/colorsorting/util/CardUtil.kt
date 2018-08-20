@@ -36,16 +36,16 @@ fun getHexFromNumber(num: Int): String {
  * Creates a card list of either random colors or all grey
  * @param isGrey when true creates a grey list of cards, when false creates a colored list
  */
-fun createCardList(isGrey: Boolean, size : Int): MutableList<Card> {
+fun createCardList(isGrey: Boolean, size: Int): MutableList<Card> {
     var randomNumber: Int
-    return MutableList(size, {
+    return MutableList(size) {
         if (isGrey) {
             Card(it, "grey")
         } else {
             randomNumber = Random().nextInt(4)
             Card(it, getColorFromNumber(randomNumber))
         }
-    })
+    }
 }
 
 /**
@@ -73,13 +73,13 @@ fun toDrawable(resourceId: Int, context: Context): Drawable? = ContextCompat.get
 
 fun randomTextPosition(): Int = Random().nextInt(2)
 
-fun createPowerUpList(): MutableList<PowerUpModel> = MutableList(4 , {
-    when(it){
-        0 -> PowerUpModel(R.drawable.icon_activateshield,"Shield", "Protect yourself from the next wrong card you select", 0, 40)
+fun createPowerUpList(): MutableList<PowerUpModel> = MutableList(4) {
+    when (it) {
+        0 -> PowerUpModel(R.drawable.icon_activateshield, "Shield", "Protect yourself from the next wrong card you select", 0, 40)
         1 -> PowerUpModel(R.drawable.icon_showallcolors, "Replay", "Replay all the colors", 0, 30)
         2 -> PowerUpModel(R.drawable.icon_showdifferentcolor, "Show", "Show all cards of one other color", 0, 20)
         3 -> PowerUpModel(R.drawable.icon_showtargetcolor, "Target", "Pick a card to flip over", 0, 15)
-        else -> PowerUpModel(0, "","", 0, 0)
+        else -> PowerUpModel(0, "", "", 0, 0)
     }
-})
+}
 

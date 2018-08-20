@@ -14,6 +14,7 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
 
     private var savedColoredCards = mutableListOf<Card>()
     private var wantedColors = mutableListOf<Card>()
+    private var correctChoices = mutableListOf<Card>()
     private var adapterColorText = ""
     private var timerTime: Long = 1000
     private var textColor = "#FFFFFF"
@@ -32,9 +33,8 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
         //Makes the adapter create a random list of colored cards and displays them until post
         //delay is over
         makeColors(color)
-        //The amount of time the user gets to remember the colors
         val makeGrey: () -> Unit = { view.newData(createCardList(true, deckSize)) }
-        view.timer(timerTime, makeGrey)
+        boardToGrey(makeGrey)
     }
 
     /**
@@ -45,6 +45,7 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
     override fun updateCard(position: Int) {
         if (savedColoredCards.isNotEmpty() && adapterColorText == savedColoredCards[position].backgroundColor) {
             wantedColors.removeIf { it.position == position }
+            correctChoices.add(Card(position, savedColoredCards[position].backgroundColor))
             view.newCard(Card(position, savedColoredCards[position].backgroundColor))
             if (wantedColors.isEmpty()) {
                 val counterValue = (view.getCounterNumber() + 1)
@@ -57,11 +58,11 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
                     }
                     "CHALLENGE_MODE" -> challengeMode(counterValue)
                 }
-
+                correctChoices = mutableListOf()
                 view.setCounterText(counterValue.toString())
                 view.roundEndFragment()
             }
-        } else if(!shieldActivated){
+        } else if (!shieldActivated) {
             val finalScore = view.getCounterNumber()
             view.setCounterText("0")
             view.newData(savedColoredCards)
@@ -83,37 +84,37 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
 
     private fun challengeMode(counterValue: Int) {
         when (counterValue) {
-        //Text Moves around
+            //Text Moves around
             in 6..10 -> {
                 textPosition = randomTextPosition()
             }
-        //Just Random Colors
+            //Just Random Colors
             in 11..15 -> {
                 textPosition = 0
                 textColor = randomColorTextColor()
             }
-        //Text Moves and Random color
+            //Text Moves and Random color
             in 16..20 -> {
                 textColor = randomColorTextColor()
                 textPosition = randomTextPosition()
             }
-        //5x5 Grid
+            //5x5 Grid
             21 -> {
                 textPosition = 0
-                textColor = "#000000"
+                textColor = "#FFFFFF"
                 deckSize = 25
                 view.expandGrid(deckSize, 5)
             }
-        //Text Moves around
+            //Text Moves around
             in 26..30 -> {
                 textPosition = randomTextPosition()
             }
-        //Just Random Colors
+            //Just Random Colors
             in 31..35 -> {
                 textPosition = 0
                 textColor = randomColorTextColor()
             }
-        //Text Moves and Random color
+            //Text Moves and Random color
             in 36..40 -> {
                 textColor = randomColorTextColor()
                 textPosition = randomTextPosition()
@@ -171,4 +172,21 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
         shieldActivated = true
     }
 
+    override fun replayBoard() {
+        view.newData(savedColoredCards)
+
+        val makeGrey: () -> Unit = {
+            view.newData(createCardList(true, deckSize))
+            correctChoices.forEach {
+                view.newCard(it)
+            }
+        }
+        boardToGrey(makeGrey)
+
+    }
+
+    private fun boardToGrey(makeGrey: () -> Unit) {
+        //The amount of time the user gets to remember the colors
+        view.timer(timerTime, makeGrey)
+    }
 }

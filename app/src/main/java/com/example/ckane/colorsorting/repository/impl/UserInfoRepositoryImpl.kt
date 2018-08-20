@@ -9,25 +9,34 @@ import io.reactivex.Single
 class UserInfoRepositoryImpl(db: AppDatabase) : UserInfoRepository {
     private val dao = db.getUserInfoDao()
 
-    override fun getUserInfo(userName : String) : Single<UserInfo> = Single.create{
+    override fun getUserInfo(userName: String): Single<UserInfo> = Single.create {
         it.onSuccess(dao.getAllUserInfo(userName))
     }
 
-    override fun insertNewUser(userInfo: UserInfo) : Completable = Completable.create {
+    override fun insertNewUser(userInfo: UserInfo): Completable = Completable.create {
         dao.insertNewUser(userInfo)
         it.onComplete()
     }
 
-    override fun updateUserCoins(userName: String, coins: Int) : Completable = Completable.create {
+    override fun updateUserCoins(userName: String, coins: Int): Completable = Completable.create {
         dao.updateCoins(userName, coins)
         it.onComplete()
     }
-    override fun updatePowerUp(powerUp : Int, userName: String): Completable = Completable.create {
-        when(powerUp){
-            0 -> { dao.updatePowerUpA(userName) }
-            1 -> { dao.updatePowerUpB(userName) }
-            2 -> { dao.updatePowerUpC(userName) }
-            3 -> { dao.updatePowerUpD(userName) }
+
+    override fun updatePowerUp(powerUp: Int, userName: String): Completable = Completable.create {
+        when (powerUp) {
+            0 -> {
+                dao.updatePowerUpA(userName)
+            }
+            1 -> {
+                dao.updatePowerUpB(userName)
+            }
+            2 -> {
+                dao.updatePowerUpC(userName)
+            }
+            3 -> {
+                dao.updatePowerUpD(userName)
+            }
         }
         it.onComplete()
     }

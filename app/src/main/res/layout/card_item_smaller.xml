@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="64dp"
+    android:layout_height="64dp"
     android:orientation="horizontal"
-    android:padding="2dp"
-    android:layout_width="56.2dp"
-    android:layout_height="64dp">
+    android:padding="2dp">
 
     <ImageView
         android:id="@+id/card_image"
-        android:contentDescription="@string/card_image"
-        android:layout_width="52.5dp"
+        android:layout_width="60dp"
         android:layout_height="60dp"
-        android:gravity="center"
-        android:background="@drawable/ic_blue_card"/>
+        android:background="@drawable/ic_blue_card"
+        android:contentDescription="@string/card_image"
+        android:gravity="center" />
 
 </LinearLayout>

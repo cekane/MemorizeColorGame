@@ -33,8 +33,8 @@ class HighScoreActivity : AppCompatActivity() {
                         val scoreAdapter = ScoreRecyclerAdapter(this, it)
                         rView.adapter = scoreAdapter
 
-                        it.map {
-                            Log.v("[Entries]", "Item : ${it.score} ${it.name}")
+                        it.map { highScore ->
+                            Log.v("[Entries]", "Item : ${highScore.score} ${highScore.name}")
                         }
                     }, {
                         Log.v("[Entries]", "Failed", it)

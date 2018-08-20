@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
 import com.example.ckane.colorsorting.R
-import kotlinx.android.synthetic.main.score_item.view.*
 
 class ScoreViewHolder(layoutView: View)  : RecyclerView.ViewHolder(layoutView), View.OnClickListener{
     val nameText : TextView = layoutView.findViewById(R.id.player_name)
