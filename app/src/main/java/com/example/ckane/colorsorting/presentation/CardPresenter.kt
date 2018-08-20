@@ -10,4 +10,5 @@ interface CardPresenter {
     fun setGameMode(gameMode : String)
     fun setGameTime()
     fun setRepository(repository : LocalStorage)
+    fun activateShield()
 }

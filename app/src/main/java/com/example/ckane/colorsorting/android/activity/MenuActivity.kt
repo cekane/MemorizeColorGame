@@ -58,8 +58,8 @@ class MenuActivity : AppCompatActivity(), MenuView {
 
         presenter.setUpAnimatedView()
 
-        val classicModeBtn: Button = findViewById(R.id.play_game)
-        classicModeBtn.setOnClickListener {
+        val updateTimerBtn: Button = findViewById(R.id.play_game)
+        updateTimerBtn.setOnClickListener {
             startActivity(Intent(this, DifficultyPickerActivity::class.java))
         }
 

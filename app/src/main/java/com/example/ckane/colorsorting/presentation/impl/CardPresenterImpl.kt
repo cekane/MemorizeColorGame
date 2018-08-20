@@ -21,6 +21,7 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
     private var deckSize = 16
     private var mode = ""
     private var repository: LocalStorage? = null
+    private var shieldActivated: Boolean = false
 
     override fun startRound() {
         //Picks the random color for the user
@@ -49,10 +50,10 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
                 val counterValue = (view.getCounterNumber() + 1)
                 when (mode) {
                     "CLASSIC_MODE_EASY" -> {
-                        classicMode(counterValue, 1400)
+                        updateTimer()
                     }
                     "CLASSIC_MODE_HARD" -> {
-                        classicMode(counterValue, 600)
+                        updateTimer()
                     }
                     "CHALLENGE_MODE" -> challengeMode(counterValue)
                 }
@@ -60,15 +61,19 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
                 view.setCounterText(counterValue.toString())
                 view.roundEndFragment()
             }
-        } else {
+        } else if(!shieldActivated){
             val finalScore = view.getCounterNumber()
             view.setCounterText("0")
             view.newData(savedColoredCards)
             view.endGame(finalScore)
+        } else {
+            //Player had a shield active and got one wrong
+            shieldActivated = false
+            view.newCard(Card(position, savedColoredCards[position].backgroundColor))
         }
     }
 
-    private fun classicMode(counterValue: Int, startingTime: Int) {
+    private fun updateTimer() {
         if (timerTime >= 200) {
             timerTime -= 10
         } else {
@@ -160,4 +165,10 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
     override fun setRepository(repository: LocalStorage) {
         this.repository = repository
     }
+
+
+    override fun activateShield() {
+        shieldActivated = true
+    }
+
 }

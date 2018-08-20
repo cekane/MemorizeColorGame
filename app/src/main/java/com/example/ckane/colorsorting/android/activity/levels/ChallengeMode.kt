@@ -20,9 +20,9 @@ import com.example.ckane.colorsorting.presentation.impl.CardPresenterImpl
 import com.example.ckane.colorsorting.repository.LocalStorage
 import com.example.ckane.colorsorting.repository.impl.LocalStorageImpl
 import com.example.ckane.colorsorting.util.createCardList
+import com.example.ckane.colorsorting.util.toDrawable
 
 class ChallengeMode : AppCompatActivity(), CardView {
-
 
     private val presenter: CardPresenter = CardPresenterImpl(this)
     private var cardList: MutableList<Card> = createCardList(true, 16)
@@ -59,6 +59,13 @@ class ChallengeMode : AppCompatActivity(), CardView {
             powerUpBBtn.visibility = View.VISIBLE
             powerUpCBtn.visibility = View.VISIBLE
             powerUpDBtn.visibility = View.VISIBLE
+        }
+
+        //Activate shield button
+        powerUpABtn.setOnClickListener {
+            presenter.activateShield()
+            powerUpABtn.background = toDrawable(R.drawable.icon_activateshield_disabled,this)
+            powerUpABtn.isEnabled = false
         }
 
         rView.setHasFixedSize(true)
@@ -111,7 +118,7 @@ class ChallengeMode : AppCompatActivity(), CardView {
 
     override fun endGame(score: Int) {
         nextBtn.visibility = View.VISIBLE
-        makePowerUpInvisable()
+        makePowerUpInvisible()
         nextBtn.setOnClickListener {
             startActivity(Intent(this, EndGame::class.java).apply {
                 putExtra("FINAL_SCORE", score)
@@ -123,10 +130,10 @@ class ChallengeMode : AppCompatActivity(), CardView {
     override fun roundEndFragment() {
         setColorText(getString(R.string.friendly_message), 0)
         nextBtn.visibility = View.VISIBLE
-        makePowerUpInvisable()
+        makePowerUpInvisible()
     }
 
-    private fun makePowerUpInvisable(){
+    private fun makePowerUpInvisible(){
         powerUpABtn.visibility = View.GONE
         powerUpBBtn.visibility = View.GONE
         powerUpCBtn.visibility = View.GONE
@@ -145,5 +152,6 @@ class ChallengeMode : AppCompatActivity(), CardView {
         rView.adapter = rcAdapter
         rView.layoutManager = gLayout
     }
+
 }
 
