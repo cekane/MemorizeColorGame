@@ -34,9 +34,9 @@ class MainMenuPresenterImpl(private val repository: LocalStorage,
 
     private fun createNewUser(userInfo: UserInfo) {
         userInfoRepository.insertNewUser(userInfo).subscribeOn(Schedulers.io())
-                .subscribe({
+                .subscribe {
                     Log.v("[UserInfo]", "Successfully inserted user into table")
-                })
+                }
     }
 
     override fun setUpAnimatedView() {

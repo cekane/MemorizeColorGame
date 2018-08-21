@@ -1,16 +1,23 @@
 package com.example.ckane.colorsorting.presentation.impl
 
+import android.util.Log
 import com.example.ckane.colorsorting.android.CardView
+import com.example.ckane.colorsorting.cache.entity.UserInfo
 import com.example.ckane.colorsorting.model.Card
 import com.example.ckane.colorsorting.presentation.CardPresenter
 import com.example.ckane.colorsorting.repository.LocalStorage
+import com.example.ckane.colorsorting.repository.UserInfoRepository
 import com.example.ckane.colorsorting.util.createCardList
 import com.example.ckane.colorsorting.util.getColorFromNumber
 import com.example.ckane.colorsorting.util.randomColorTextColor
 import com.example.ckane.colorsorting.util.randomTextPosition
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import java.util.*
 
-open class CardPresenterImpl(val view: CardView) : CardPresenter {
+open class CardPresenterImpl(val view: CardView,
+                             val repository: LocalStorage,
+                             val userInfoRepository: UserInfoRepository) : CardPresenter {
 
     private var savedColoredCards = mutableListOf<Card>()
     private var wantedColors = mutableListOf<Card>()
@@ -21,8 +28,28 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
     private var textPosition = 0
     private var deckSize = 16
     private var mode = ""
-    private var repository: LocalStorage? = null
     private var shieldActivated: Boolean = false
+
+    override fun getUserInfo() {
+        userInfoRepository.getUserInfo(repository.getLocalUsername())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    view.enablePowerUps(it)
+                }, {
+                    view.enablePowerUps(UserInfo(""))
+                })
+    }
+
+    override fun updatePowerUpAmount(powerUp: Int) {
+        userInfoRepository.updatePowerUp(powerUp, repository.getLocalUsername(), -1)
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    Log.v("[CardPresenterImpl]", "Successfully updated powerups")
+                }, {
+                    Log.v("[CardPresenterImpl]", "Error updating powerups", it)
+                })
+    }
 
     override fun startRound() {
         //Picks the random color for the user
@@ -63,7 +90,7 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
         }
     }
 
-    private fun endRound(){
+    private fun endRound() {
         val counterValue = (view.getCounterNumber() + 1)
         when (mode) {
             "CLASSIC_MODE_EASY" -> {
@@ -129,9 +156,7 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
 
     override fun setGameMode(gameMode: String) {
         mode = gameMode
-        repository?.let {
-            view.updateLocalHighScore(it.getLocalHighScore(mode))
-        }
+        view.updateLocalHighScore(repository.getLocalHighScore(mode))
     }
 
     override fun setGameTime() {
@@ -168,11 +193,6 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
         }
     }
 
-    override fun setRepository(repository: LocalStorage) {
-        this.repository = repository
-    }
-
-
     override fun activateShield() {
         shieldActivated = true
     }
@@ -201,11 +221,10 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
     }
 
     override fun showTargetedColor() {
-        if(wantedColors.size == 1){
+        if (wantedColors.size == 1) {
             view.newCard(wantedColors[0])
             endRound()
-        }
-        else{
+        } else {
             val chosenColorIndex = Random().nextInt(wantedColors.size)
             view.newCard(wantedColors[chosenColorIndex])
             pickedColors.add(wantedColors[chosenColorIndex])

@@ -1,6 +1,7 @@
 package com.example.ckane.colorsorting.android.activity.levels
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -14,20 +15,28 @@ import com.example.ckane.colorsorting.R
 import com.example.ckane.colorsorting.android.CardView
 import com.example.ckane.colorsorting.android.activity.EndGame
 import com.example.ckane.colorsorting.android.adapter.RecyclerAdapter
+import com.example.ckane.colorsorting.cache.AppDatabase
+import com.example.ckane.colorsorting.cache.entity.UserInfo
 import com.example.ckane.colorsorting.model.Card
 import com.example.ckane.colorsorting.presentation.CardPresenter
 import com.example.ckane.colorsorting.presentation.impl.CardPresenterImpl
 import com.example.ckane.colorsorting.repository.LocalStorage
+import com.example.ckane.colorsorting.repository.UserInfoRepository
 import com.example.ckane.colorsorting.repository.impl.LocalStorageImpl
+import com.example.ckane.colorsorting.repository.impl.UserInfoRepositoryImpl
 import com.example.ckane.colorsorting.util.createCardList
 import com.example.ckane.colorsorting.util.toDrawable
 
 class ChallengeMode : AppCompatActivity(), CardView {
-
-    private val presenter: CardPresenter = CardPresenterImpl(this)
+    private val sharedPref: SharedPreferences by lazy { this.getSharedPreferences("Data_file", android.content.Context.MODE_PRIVATE) }
+    private val localStorage: LocalStorage by lazy { LocalStorageImpl(sharedPref) }
+    val db: AppDatabase by lazy { AppDatabase.getInstance(this) }
+    private val userInfoRepository: UserInfoRepository by lazy { UserInfoRepositoryImpl(db) }
+    private val presenter: CardPresenter by lazy { CardPresenterImpl(this, localStorage, userInfoRepository) }
     private var cardList: MutableList<Card> = createCardList(true, 16)
-    private var rcAdapter = RecyclerAdapter(this, cardList, presenter, R.layout.card_item)
+    private val rcAdapter : RecyclerAdapter by lazy { RecyclerAdapter(this, cardList, presenter, R.layout.card_item) }
     private var gLayout = GridLayoutManager(this, 4)
+
     val color: TextView by lazy { findViewById<TextView>(R.id.color_to_choose) }
     private val color2: TextView by lazy { findViewById<TextView>(R.id.color_to_choose2) }
     val counter: TextView by lazy { findViewById<TextView>(R.id.counter) }
@@ -37,14 +46,11 @@ class ChallengeMode : AppCompatActivity(), CardView {
     private val powerUpCBtn: Button by lazy { findViewById<Button>(R.id.power_up_C) }
     private val powerUpDBtn: Button by lazy { findViewById<Button>(R.id.power_up_D) }
     private val rView: RecyclerView by lazy { findViewById<RecyclerView>(R.id.recycler_view) }
+
     private var gameMode = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.challenge_mode_activity)
-
-        val sharedPref = this.getSharedPreferences("Data_file", android.content.Context.MODE_PRIVATE)
-        val repository: LocalStorage = LocalStorageImpl(sharedPref)
-        presenter.setRepository(repository)
 
         gameMode = intent.getStringExtra("GAME_MODE")
         presenter.setGameMode(gameMode)
@@ -65,33 +71,52 @@ class ChallengeMode : AppCompatActivity(), CardView {
         powerUpABtn.setOnClickListener {
             presenter.activateShield()
             handlePowerUpButton(powerUpABtn, R.drawable.icon_activateshield_disabled)
+            presenter.updatePowerUpAmount(0)
         }
 
         //Replay board
         powerUpBBtn.setOnClickListener {
             presenter.replayBoard()
             handlePowerUpButton(powerUpBBtn, R.drawable.icon_showallcolors_disabled)
+            presenter.updatePowerUpAmount(1)
         }
 
         //Show all of one color button
         powerUpCBtn.setOnClickListener {
             presenter.showOneColor()
             handlePowerUpButton(powerUpCBtn, R.drawable.icon_showdifferentcolor_disabled)
+            presenter.updatePowerUpAmount(2)
         }
 
         //Show targeted color
         powerUpDBtn.setOnClickListener {
             presenter.showTargetedColor()
             handlePowerUpButton(powerUpDBtn, R.drawable.icon_showtargetcolor_disabled)
+            presenter.updatePowerUpAmount(3)
         }
         rView.setHasFixedSize(true)
         rView.layoutManager = gLayout
 
         rView.adapter = rcAdapter
-
+        presenter.getUserInfo()
 
         val startGame: () -> Unit = { presenter.startRound() }
         timer(1000, startGame)
+    }
+
+    override fun enablePowerUps(userInfo: UserInfo) {
+        if (userInfo.powerUpA == 0) {
+            handlePowerUpButton(powerUpABtn, R.drawable.icon_activateshield_disabled)
+        }
+        if (userInfo.powerUpB == 0) {
+            handlePowerUpButton(powerUpBBtn, R.drawable.icon_showallcolors_disabled)
+        }
+        if(userInfo.powerUpC == 0 ){
+            handlePowerUpButton(powerUpCBtn, R.drawable.icon_showdifferentcolor_disabled)
+        }
+        if( userInfo.powerUpD == 0 ){
+            handlePowerUpButton(powerUpDBtn, R.drawable.icon_showtargetcolor_disabled)
+        }
     }
 
     private fun handlePowerUpButton(btn: Button, backgroundImage: Int) {
@@ -167,10 +192,10 @@ class ChallengeMode : AppCompatActivity(), CardView {
 
     override fun expandGrid(deckSize: Int, rowCount: Int) {
         cardList = createCardList(true, deckSize)
-        rcAdapter = RecyclerAdapter(this, cardList, presenter, R.layout.card_item_smaller)
+        val largeRcAdapter = RecyclerAdapter(this, cardList, presenter, R.layout.card_item_smaller)
         gLayout = GridLayoutManager(this, rowCount)
 
-        rView.adapter = rcAdapter
+        rView.adapter = largeRcAdapter
         rView.layoutManager = gLayout
     }
 

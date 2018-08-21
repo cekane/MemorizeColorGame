@@ -1,7 +1,5 @@
 package com.example.ckane.colorsorting.presentation
 
-import com.example.ckane.colorsorting.repository.LocalStorage
-
 interface CardPresenter {
     fun startRound()
     fun makeColors(color: String)
@@ -9,9 +7,10 @@ interface CardPresenter {
     fun updateCard(position: Int)
     fun setGameMode(gameMode: String)
     fun setGameTime()
-    fun setRepository(repository: LocalStorage)
     fun activateShield()
     fun replayBoard()
     fun showOneColor()
     fun showTargetedColor()
+    fun getUserInfo()
+    fun updatePowerUpAmount(powerUp : Int)
 }

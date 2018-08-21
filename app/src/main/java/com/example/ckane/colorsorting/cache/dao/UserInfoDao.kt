@@ -16,15 +16,15 @@ interface UserInfoDao {
     @Query("UPDATE user_info SET money = money + :coins WHERE userName = :userName")
     fun updateCoins(userName: String, coins: Int)
 
-    @Query("UPDATE user_info set powerUpA = powerUpA + 1 WHERE userName = :userName")
-    fun updatePowerUpA(userName: String)
+    @Query("UPDATE user_info set powerUpA = powerUpA + :num WHERE userName = :userName")
+    fun updatePowerUpA(userName: String, num : Int)
 
-    @Query("UPDATE user_info set powerUpB = powerUpB + 1 WHERE userName = :userName")
-    fun updatePowerUpB(userName: String)
+    @Query("UPDATE user_info set powerUpB = powerUpB + :num WHERE userName = :userName")
+    fun updatePowerUpB(userName: String, num : Int)
 
-    @Query("UPDATE user_info set powerUpC = powerUpC + 1 WHERE userName = :userName")
-    fun updatePowerUpC(userName: String)
+    @Query("UPDATE user_info set powerUpC = powerUpC + :num WHERE userName = :userName")
+    fun updatePowerUpC(userName: String, num : Int)
 
-    @Query("UPDATE user_info set powerUpD = powerUpD + 1 WHERE userName = :userName")
-    fun updatePowerUpD(userName: String)
+    @Query("UPDATE user_info set powerUpD = powerUpD + :num WHERE userName = :userName")
+    fun updatePowerUpD(userName: String, num : Int)
 }

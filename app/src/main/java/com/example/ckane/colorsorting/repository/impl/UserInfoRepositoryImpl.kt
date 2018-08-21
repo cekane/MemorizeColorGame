@@ -23,19 +23,19 @@ class UserInfoRepositoryImpl(db: AppDatabase) : UserInfoRepository {
         it.onComplete()
     }
 
-    override fun updatePowerUp(powerUp: Int, userName: String): Completable = Completable.create {
+    override fun updatePowerUp(powerUp: Int, userName: String, num : Int): Completable = Completable.create {
         when (powerUp) {
             0 -> {
-                dao.updatePowerUpA(userName)
+                dao.updatePowerUpA(userName, num)
             }
             1 -> {
-                dao.updatePowerUpB(userName)
+                dao.updatePowerUpB(userName, num)
             }
             2 -> {
-                dao.updatePowerUpC(userName)
+                dao.updatePowerUpC(userName, num)
             }
             3 -> {
-                dao.updatePowerUpD(userName)
+                dao.updatePowerUpD(userName, num)
             }
         }
         it.onComplete()

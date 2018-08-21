@@ -1,5 +1,6 @@
 package com.example.ckane.colorsorting.android
 
+import com.example.ckane.colorsorting.cache.entity.UserInfo
 import com.example.ckane.colorsorting.model.Card
 
 interface CardView {
@@ -14,4 +15,5 @@ interface CardView {
     fun setColorTextColor(textColor: String)
     fun expandGrid(deckSize: Int, rowCount: Int)
     fun updateLocalHighScore(highScore: Int)
+    fun enablePowerUps(userInfo : UserInfo)
 }
