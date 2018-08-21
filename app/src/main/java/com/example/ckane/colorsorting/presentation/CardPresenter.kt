@@ -13,4 +13,5 @@ interface CardPresenter {
     fun activateShield()
     fun replayBoard()
     fun showOneColor()
+    fun showTargetedColor()
 }

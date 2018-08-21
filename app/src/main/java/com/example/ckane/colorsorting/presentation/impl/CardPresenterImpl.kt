@@ -48,19 +48,7 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
             pickedColors.add(Card(position, savedColoredCards[position].backgroundColor))
             view.newCard(Card(position, savedColoredCards[position].backgroundColor))
             if (wantedColors.isEmpty()) {
-                val counterValue = (view.getCounterNumber() + 1)
-                when (mode) {
-                    "CLASSIC_MODE_EASY" -> {
-                        updateTimer()
-                    }
-                    "CLASSIC_MODE_HARD" -> {
-                        updateTimer()
-                    }
-                    "CHALLENGE_MODE" -> challengeMode(counterValue)
-                }
-                pickedColors = mutableListOf()
-                view.setCounterText(counterValue.toString())
-                view.roundEndFragment()
+                endRound()
             }
         } else if (!shieldActivated) {
             val finalScore = view.getCounterNumber()
@@ -73,6 +61,22 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
             pickedColors.add(Card(position, savedColoredCards[position].backgroundColor))
             view.newCard(Card(position, savedColoredCards[position].backgroundColor))
         }
+    }
+
+    private fun endRound(){
+        val counterValue = (view.getCounterNumber() + 1)
+        when (mode) {
+            "CLASSIC_MODE_EASY" -> {
+                updateTimer()
+            }
+            "CLASSIC_MODE_HARD" -> {
+                updateTimer()
+            }
+            "CHALLENGE_MODE" -> challengeMode(counterValue)
+        }
+        pickedColors = mutableListOf()
+        view.setCounterText(counterValue.toString())
+        view.roundEndFragment()
     }
 
     private fun updateTimer() {
@@ -184,15 +188,28 @@ open class CardPresenterImpl(val view: CardView) : CardPresenter {
         boardToGrey(makeGrey)
     }
 
-    override fun showOneColor(){
+    override fun showOneColor() {
         val colorsToChoose = mutableListOf("blue", "green", "yellow", "red")
-        colorsToChoose.removeIf{ it == adapterColorText }
+        colorsToChoose.removeIf { it == adapterColorText }
         val colorToChoose = colorsToChoose[Random().nextInt(3)]
         savedColoredCards.forEach {
-            if(it.backgroundColor == colorToChoose){
+            if (it.backgroundColor == colorToChoose) {
                 pickedColors.add(it)
                 view.newCard(it)
             }
+        }
+    }
+
+    override fun showTargetedColor() {
+        if(wantedColors.size == 1){
+            view.newCard(wantedColors[0])
+            endRound()
+        }
+        else{
+            val chosenColorIndex = Random().nextInt(wantedColors.size)
+            view.newCard(wantedColors[chosenColorIndex])
+            pickedColors.add(wantedColors[chosenColorIndex])
+            wantedColors.removeAt(chosenColorIndex)
         }
     }
 

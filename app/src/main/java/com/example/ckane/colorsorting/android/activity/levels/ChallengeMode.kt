@@ -64,24 +64,26 @@ class ChallengeMode : AppCompatActivity(), CardView {
         //Activate shield button
         powerUpABtn.setOnClickListener {
             presenter.activateShield()
-            powerUpABtn.background = toDrawable(R.drawable.icon_activateshield_disabled, this)
-            powerUpABtn.isEnabled = false
+            handlePowerUpButton(powerUpABtn, R.drawable.icon_activateshield_disabled)
         }
 
         //Replay board
         powerUpBBtn.setOnClickListener {
             presenter.replayBoard()
-            powerUpBBtn.background = toDrawable(R.drawable.icon_showallcolors_disabled, this)
-            powerUpBBtn.isEnabled = false
+            handlePowerUpButton(powerUpBBtn, R.drawable.icon_showallcolors_disabled)
         }
 
         //Show all of one color button
         powerUpCBtn.setOnClickListener {
             presenter.showOneColor()
-            powerUpCBtn.background = toDrawable(R.drawable.icon_showdifferentcolor_disabled, this)
-            powerUpCBtn.isEnabled = false
+            handlePowerUpButton(powerUpCBtn, R.drawable.icon_showdifferentcolor_disabled)
         }
 
+        //Show targeted color
+        powerUpDBtn.setOnClickListener {
+            presenter.showTargetedColor()
+            handlePowerUpButton(powerUpDBtn, R.drawable.icon_showtargetcolor_disabled)
+        }
         rView.setHasFixedSize(true)
         rView.layoutManager = gLayout
 
@@ -90,6 +92,11 @@ class ChallengeMode : AppCompatActivity(), CardView {
 
         val startGame: () -> Unit = { presenter.startRound() }
         timer(1000, startGame)
+    }
+
+    private fun handlePowerUpButton(btn: Button, backgroundImage: Int) {
+        btn.background = toDrawable(backgroundImage, this)
+        btn.isEnabled = false
     }
 
     override fun newData(newCards: MutableList<Card>) {
