@@ -4,7 +4,7 @@
     <string name="color_to_chose">Click Start to Begin</string>
     <string name="card_image">card image</string>
     <string name="_0">0</string>
-    <string name="end_game_coins">+ %1$s Coins</string>
+    <string name="end_game_coins">+ %1$s</string>
     <string name="title_activity_menu">MenuActivity</string>
     <string name="start">Start</string>
     <string name="color_flash">Color Flash</string>
@@ -33,7 +33,7 @@
     <string name="easy">Easy</string>
     <string name="hard">Hard</string>
     <string name="choose_your_difficulty">Choose Your Difficulty</string>
-    <string name="coins">%1$s Coins</string>
+    <string name="coins">%1$s</string>
     <string name="power_up_1">Power Up 1</string>
     <string name="power_up_1_status">Cost: 10 Own: %1$s</string>
     <string name="power_up_2">Power Up 2</string>
