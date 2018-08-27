@@ -3,6 +3,7 @@ package com.example.ckane.colorsorting.android.activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.provider.Settings
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
@@ -73,7 +74,7 @@ class MenuActivity : AppCompatActivity(), MenuView {
 
         val settingsButton: Button = findViewById(R.id.game_settings)
         settingsButton.setOnClickListener {
-            startActivity(Intent(this, HighScoreActivity::class.java))
+            startActivity(Intent(this, SettingsActivity::class.java))
         }
 
         presenter.handleRegistration("Connor")

@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.ckane.colorsorting">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/color_flash_launcher"
@@ -32,21 +33,26 @@
         </activity>
         <activity
             android:name=".android.activity.EndGame"
-            android:theme="@style/AppFullScreenTheme"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppFullScreenTheme" />
         <activity
             android:name=".android.activity.HighScoreActivity"
             android:theme="@style/AppFullScreenTheme" />
         <activity
             android:name=".android.activity.DifficultyPickerActivity"
-            android:theme="@style/AppFullScreenTheme"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppFullScreenTheme" />
         <activity
             android:name=".android.activity.PowerUpStore"
-            android:theme="@style/AppFullScreenTheme"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".android.activity.HowToPlayActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppFullScreenTheme" />
+        <activity
+            android:name=".android.activity.HowToPlayActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppFullScreenTheme"/>
+        <activity android:name=".android.activity.SettingsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppFullScreenTheme"/>
     </application>
 
 </manifest>

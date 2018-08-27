@@ -2,6 +2,7 @@ package com.example.ckane.colorsorting.android.activity
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
@@ -20,6 +21,8 @@ import com.example.ckane.colorsorting.R
 import com.example.ckane.colorsorting.android.adapter.RecyclerAdapter
 import com.example.ckane.colorsorting.model.Card
 import com.example.ckane.colorsorting.presentation.UpdateCardPresenter
+import com.example.ckane.colorsorting.repository.LocalStorage
+import com.example.ckane.colorsorting.repository.impl.LocalStorageImpl
 import com.example.ckane.colorsorting.util.createCardList
 import com.example.ckane.colorsorting.util.createHowToList
 import com.example.ckane.colorsorting.util.toDrawable
@@ -61,17 +64,27 @@ class HowToAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
 class HowToFragment : Fragment(), HowToCardView {
     private val howToCards = createHowToList()
-    private val presenter: HowToPresenter by lazy {
-        HowToPresenterImpl(howToCards, this)
-    }
+
     private lateinit var instructionText : TextView
     private lateinit var rcAdapter : RecyclerAdapter
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         val rootView = inflater.inflate(
                 R.layout.fragment_how_to, container, false
         )
+
+        val sharedPref: SharedPreferences by lazy {
+            rootView.context.getSharedPreferences("Data_file", android.content.Context.MODE_PRIVATE)
+        }
+        val repository: LocalStorage by lazy {
+            LocalStorageImpl(sharedPref)
+        }
+        val presenter: HowToPresenter by lazy {
+            HowToPresenterImpl(howToCards, this, repository)
+        }
+
         var position = 0
         arguments?.takeIf { it.containsKey(ARG_POSITION) }?.apply {
             position = getInt(ARG_POSITION)
@@ -178,7 +191,7 @@ class HowToFragment : Fragment(), HowToCardView {
     }
 }
 
-class HowToPresenterImpl(private val howToCards : MutableList<Card>, val view: HowToCardView) : HowToPresenter {
+class HowToPresenterImpl(private val howToCards : MutableList<Card>, val view: HowToCardView, val repository: LocalStorage) : HowToPresenter {
     private var savedColoredCards = mutableListOf<Card>()
     private var pickedColors = mutableListOf<Card>()
     private var shieldActivated: Boolean = false
@@ -237,6 +250,7 @@ class HowToPresenterImpl(private val howToCards : MutableList<Card>, val view: H
     override fun showTargetedColor() {
         if (savedColoredCards.size == 1) {
             view.newCard(savedColoredCards[0])
+            view.newInstructionText(R.string.how_to_complete_instructions)
         } else if( savedColoredCards.size > 0 ) {
             val chosenColorIndex = Random().nextInt(savedColoredCards.size)
             view.newCard(savedColoredCards[chosenColorIndex])
@@ -244,6 +258,9 @@ class HowToPresenterImpl(private val howToCards : MutableList<Card>, val view: H
             savedColoredCards.removeAt(chosenColorIndex)
         }
     }
+
+    override fun isSoundOn(): Boolean = repository.isSoundOn()
+    override fun isHapticOn(): Boolean = repository.isHapticOn()
 }
 
 interface HowToCardView{

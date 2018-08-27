@@ -18,7 +18,6 @@ import java.util.*
 open class CardPresenterImpl(val view: CardView,
                              val repository: LocalStorage,
                              val userInfoRepository: UserInfoRepository) : CardPresenter {
-
     private var savedColoredCards = mutableListOf<Card>()
     private var wantedColors = mutableListOf<Card>()
     private var pickedColors = mutableListOf<Card>()
@@ -237,4 +236,8 @@ open class CardPresenterImpl(val view: CardView,
         //The amount of time the user gets to remember the colors
         view.timer(timerTime, makeGrey)
     }
+
+    override fun isSoundOn(): Boolean = repository.isSoundOn()
+    override fun isHapticOn(): Boolean = repository.isHapticOn()
+
 }

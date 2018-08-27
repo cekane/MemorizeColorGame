@@ -23,7 +23,7 @@ class RecyclerAdapter(private val context: Context,
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolderImpl {
         layoutView = LayoutInflater.from(parent.context).inflate(cardItemLayout, parent, false)
         Log.v("[VIEW CLICKABLE]", viewClickable.toString())
-        cardViewHolder = CardViewHolderImpl(layoutView, presenter, viewClickable)
+        cardViewHolder = CardViewHolderImpl(layoutView, presenter, viewClickable, presenter.isSoundOn(), presenter.isHapticOn())
         return cardViewHolder
     }
 
