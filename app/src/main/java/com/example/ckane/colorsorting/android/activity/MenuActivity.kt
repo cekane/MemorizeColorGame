@@ -63,7 +63,7 @@ class MenuActivity : AppCompatActivity(), MenuView {
 
         val howToButton: Button = findViewById(R.id.how_to_play)
         howToButton.setOnClickListener {
-            //Todo placeholder for how to play
+            startActivity(Intent(this, HowToPlayActivity::class.java))
         }
 
         val storeButton: Button = findViewById(R.id.game_store)
@@ -83,7 +83,7 @@ class MenuActivity : AppCompatActivity(), MenuView {
     }
 
     override fun updateCards(cards: MutableList<Card>) {
-        animateAdapter.newData(cards)
+        animateAdapter.newData(cards, false)
     }
 
     override fun onDestroy() {

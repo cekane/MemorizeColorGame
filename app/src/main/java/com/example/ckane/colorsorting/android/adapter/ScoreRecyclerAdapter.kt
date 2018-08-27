@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.ckane.colorsorting.R
-import com.example.ckane.colorsorting.android.CardViewHolder
 import com.example.ckane.colorsorting.android.ScoreViewHolder
 import com.example.ckane.colorsorting.cache.entity.HighScore
 

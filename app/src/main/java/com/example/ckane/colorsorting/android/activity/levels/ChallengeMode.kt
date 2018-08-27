@@ -124,13 +124,14 @@ class ChallengeMode : AppCompatActivity(), CardView {
         btn.isEnabled = false
     }
 
-    override fun newData(newCards: MutableList<Card>) {
-        rcAdapter?.newData(newCards)
+    override fun newData(newCards: MutableList<Card>,  clickable: Boolean) {
+        rcAdapter?.newData(newCards, clickable)
     }
 
     override fun newCard(newCard: Card) {
         rcAdapter?.newCard(newCard)
     }
+
 
     override fun setColorText(colorText: String, textSelector: Int) {
         when (textSelector) {

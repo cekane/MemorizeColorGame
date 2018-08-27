@@ -2,25 +2,32 @@ package com.example.ckane.colorsorting.android.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import com.example.ckane.colorsorting.android.CardViewHolder
 import com.example.ckane.colorsorting.android.CardListManager
+import com.example.ckane.colorsorting.android.CardViewHolderImpl
 import com.example.ckane.colorsorting.model.Card
-import com.example.ckane.colorsorting.presentation.CardPresenter
+import com.example.ckane.colorsorting.presentation.UpdateCardPresenter
 import com.example.ckane.colorsorting.util.getCardDrawable
 
 class RecyclerAdapter(private val context: Context,
                       private var cards: MutableList<Card>,
-                      private val presenter: CardPresenter,
-                      private val cardItemLayout : Int) : RecyclerView.Adapter<CardViewHolder>(), CardListManager {
+                      private val presenter: UpdateCardPresenter,
+                      private val cardItemLayout : Int) : RecyclerView.Adapter<CardViewHolderImpl>(), CardListManager {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
-        val layoutView = LayoutInflater.from(parent.context).inflate(cardItemLayout, parent, false)
-        return CardViewHolder(layoutView, presenter)
+    lateinit var cardViewHolder : CardViewHolderImpl
+    lateinit var layoutView : View
+    private var viewClickable = false
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolderImpl {
+        layoutView = LayoutInflater.from(parent.context).inflate(cardItemLayout, parent, false)
+        Log.v("[VIEW CLICKABLE]", viewClickable.toString())
+        cardViewHolder = CardViewHolderImpl(layoutView, presenter, viewClickable)
+        return cardViewHolder
     }
 
-    override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CardViewHolderImpl, position: Int) {
         holder.cardImage.background = getCardDrawable(cards[position], context)
     }
 
@@ -41,8 +48,10 @@ class RecyclerAdapter(private val context: Context,
      * cards on the UI are updated
      * @param newCards new list of cards to replace current list of cards
      */
-    override fun newData(newCards: MutableList<Card>) {
+    override fun newData(newCards: MutableList<Card>, clickable: Boolean) {
+        viewClickable = clickable
         cards = newCards
         notifyDataSetChanged()
     }
+
 }

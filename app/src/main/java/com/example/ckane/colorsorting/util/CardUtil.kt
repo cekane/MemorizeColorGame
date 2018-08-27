@@ -83,3 +83,25 @@ fun createPowerUpList(): MutableList<PowerUpModel> = MutableList(4) {
     }
 }
 
+fun createHowToList(): MutableList<Card> = MutableList<Card>(16) {
+    when (it) {
+        0 -> Card(0, "blue")
+        1 -> Card(1, "red")
+        2 -> Card(2, "blue")
+        3 -> Card(3, "yellow")
+        4 -> Card(4, "yellow")
+        5 -> Card(5, "yellow")
+        6 -> Card(6, "red")
+        7 -> Card(7, "red")
+        8 -> Card(8, "yellow")
+        9 -> Card(9, "red")
+        10 -> Card(10, "blue")
+        11 -> Card(11, "yellow")
+        12 -> Card(12, "yellow")
+        13 -> Card(13, "red")
+        14 -> Card(14, "green")
+        15 -> Card(15, "red")
+        else->  Card(0, "blue")
+    }
+}
+

@@ -1,10 +1,9 @@
 package com.example.ckane.colorsorting.presentation
 
-interface CardPresenter {
+interface CardPresenter : UpdateCardPresenter {
     fun startRound()
     fun makeColors(color: String)
     fun createSingleColorList()
-    fun updateCard(position: Int)
     fun setGameMode(gameMode: String)
     fun setGameTime()
     fun activateShield()

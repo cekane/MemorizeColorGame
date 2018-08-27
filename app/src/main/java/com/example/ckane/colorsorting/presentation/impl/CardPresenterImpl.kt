@@ -60,7 +60,9 @@ open class CardPresenterImpl(val view: CardView,
         //Makes the adapter create a random list of colored cards and displays them until post
         //delay is over
         makeColors(color)
-        val makeGrey: () -> Unit = { view.newData(createCardList(true, deckSize)) }
+        val makeGrey: () -> Unit = {
+            view.newData(createCardList(true, deckSize), true)
+        }
         boardToGrey(makeGrey)
     }
 
@@ -79,8 +81,7 @@ open class CardPresenterImpl(val view: CardView,
             }
         } else if (!shieldActivated) {
             val finalScore = view.getCounterNumber()
-            view.setCounterText("0")
-            view.newData(savedColoredCards)
+            view.newData(savedColoredCards, false)
             view.endGame(finalScore)
         } else {
             //Player had a shield active and got one wrong
@@ -176,7 +177,7 @@ open class CardPresenterImpl(val view: CardView,
         adapterColorText = color
         savedColoredCards = createCardList(false, deckSize)
         createSingleColorList()
-        view.newData(savedColoredCards)
+        view.newData(savedColoredCards, false)
     }
 
     /**
@@ -198,9 +199,9 @@ open class CardPresenterImpl(val view: CardView,
     }
 
     override fun replayBoard() {
-        view.newData(savedColoredCards)
+        view.newData(savedColoredCards, false)
         val makeGrey: () -> Unit = {
-            view.newData(createCardList(true, deckSize))
+            view.newData(createCardList(true, deckSize), true)
             pickedColors.forEach {
                 view.newCard(it)
             }

@@ -48,4 +48,14 @@
     <string name="buy">Buy</string>
     <string name="power_up_cost">Cost: %1$s</string>
     <string name="power_up_image">Power up image</string>
+
+    <!--How to play strings-->
+    <string name="how_to_1_instructions">Welcome to Color Flash Game! To play, look at the board and memorize which tiles are Red</string>
+    <string name="how_to_2_instructions">Now all the tiles have turned gray. Oh no! Tap the tiles that were Red to finish the level.</string>
+    <string name="how_to_3_instructions">There are four power ups to use. Try them out!</string>
+    <string name="how_to_4_instructions">Congrats! You now know how to play Color Flash Game! Easy right? You may think so now, but as you complete more levels, the tiles will turn to gray faster and faster! You can also try out challenge mode for different types of challenges. How many levels can you complete?</string>
+    <string name="how_to_red">Red</string>
+    <string name="how_to_complete_instructions">Great job! You found all the Red Tiles. Swipe left to continue.</string>
+    <string name="how_to_let_s_play">Let\'s Play!</string>
+
 </resources>
