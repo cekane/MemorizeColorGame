@@ -3,8 +3,6 @@ package com.example.ckane.colorsorting.android.activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.provider.Settings
-import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -23,8 +21,12 @@ import com.example.ckane.colorsorting.repository.UserInfoRepository
 import com.example.ckane.colorsorting.repository.impl.LocalStorageImpl
 import com.example.ckane.colorsorting.repository.impl.UserInfoRepositoryImpl
 import com.example.ckane.colorsorting.util.createCardList
-import com.google.android.gms.auth.api.Auth
-import com.google.android.gms.auth.api.signin.*
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.games.Games
+import com.google.android.gms.tasks.Task
 
 class MenuActivity : AppCompatActivity(), MenuView {
     private val sharedPref: SharedPreferences by lazy {
@@ -77,10 +79,27 @@ class MenuActivity : AppCompatActivity(), MenuView {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
 
-        presenter.handleRegistration("Connor")
-        //TODO implement google play sign in
-        //signInSilently()
+        val scoreboardButton: Button = findViewById(R.id.game_scoreboard)
+        scoreboardButton.setOnClickListener {
+            val account = GoogleSignIn.getLastSignedInAccount(this)
+            account?.let { noNullAccount ->
+                Games.getLeaderboardsClient(this, noNullAccount)
+                        .allLeaderboardsIntent
+                        .addOnSuccessListener { intent ->
+                            startActivityForResult(intent, 9004)
+                        }
+            }
+        }
 
+
+        signIn()
+
+    }
+
+    private fun updateUI(account: GoogleSignInAccount) {
+        account.displayName?.let{
+            presenter.handleRegistration(it)
+        } ?: presenter.handleRegistration("")
     }
 
     override fun updateCards(cards: MutableList<Card>) {
@@ -92,53 +111,40 @@ class MenuActivity : AppCompatActivity(), MenuView {
         super.onDestroy()
     }
 
+
+
     override fun onBackPressed() {
         //Nothing to do here
     }
 
-    private fun isSignedIn(): Boolean = GoogleSignIn.getLastSignedInAccount(this) != null
-
-    private fun signInSilently() {
-        val signInClient: GoogleSignInClient = GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
-        signInClient.silentSignIn().addOnCompleteListener {
-            Log.v("[Google Sign In]", "Display name : ${it.result}")
-            if (it.isSuccessful && it.result != null) {
-                val signedInAccount: GoogleSignInAccount = it.result
-                Log.v("[Google Sign In]", "Display name : ${signedInAccount.displayName}")
-                Log.v("[Google Sign In]", "Display name : ${signedInAccount.toJson()}")
-            } else {
-                startSignInIntent()
-            }
+    private fun signIn() {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build()
+        val googleSignInClient = GoogleSignIn.getClient(this, gso)
+        val account = GoogleSignIn.getLastSignedInAccount(this)
+        if (account == null) {
+            val signInIntent = googleSignInClient.signInIntent
+            startActivityForResult(signInIntent, 100)
+        } else {
+            updateUI(account)
         }
-    }
-
-    private fun startSignInIntent() {
-        Log.v("[Google Sign In]", "In here")
-        val RC_SIGN_IN = 100
-        val signInClient = GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
-        Log.v("[Google Sign In]", "In here")
-        val intent = signInClient.signInIntent
-        startActivityForResult(intent, RC_SIGN_IN)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 100) {
-            val result: GoogleSignInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
-            if (result.isSuccess) {
-                val signedInAccount = result.signInAccount
-                Log.v("[Google Sign In]", signedInAccount.toString())
-                GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).signOut()
-            } else {
-                var message = result.status.statusMessage
-                if (message == null || message.isEmpty()) {
-                    message = "Sign in error"
-                }
-                GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).signOut()
-                AlertDialog.Builder(this).setMessage(message)
-                        .setNeutralButton(android.R.string.ok, null).show()
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            handleSignInResult(task)
+        }
+    }
 
-            }
+    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+        try {
+            val account = completedTask.getResult(ApiException::class.java)
+            updateUI(account)
+        } catch (e: ApiException) {
+            Log.v("[API EXCEPTION]", "Sign in error", e)
         }
     }
 }

@@ -57,5 +57,12 @@
     <string name="how_to_red">Red</string>
     <string name="how_to_complete_instructions">Great job! You found all the Red Tiles. Swipe left to continue.</string>
     <string name="how_to_let_s_play">Let\'s Play!</string>
+    <string name="scoreboard_challenge_mode">CgkI_sfS6oMXEAIQAA</string>
+    <string name="scoreboard_hard_mode">CgkI_sfS6oMXEAIQBQ</string>
+    <string name="scoreboard_easy_mode">CgkI_sfS6oMXEAIQBA</string>
+    <string name="difficulty_easy">CLASSIC_MODE_EASY</string>
+    <string name="difficulty_hard">CLASSIC_MODE_HARD</string>
+    <string name="difficulty_challenge">CHALLENGE_MODE</string>
+    <string name="scoreboard_text">Scoreboard</string>
 
 </resources>

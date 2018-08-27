@@ -15,6 +15,8 @@ import com.example.ckane.colorsorting.repository.LocalStorage
 import com.example.ckane.colorsorting.repository.UserInfoRepository
 import com.example.ckane.colorsorting.repository.impl.LocalStorageImpl
 import com.example.ckane.colorsorting.repository.impl.UserInfoRepositoryImpl
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.games.Games
 
 
 class EndGame : AppCompatActivity() {
@@ -28,10 +30,10 @@ class EndGame : AppCompatActivity() {
     val db: AppDatabase by lazy {
         AppDatabase.getInstance(this)
     }
-    val userInfoRepository: UserInfoRepository by lazy {
+    private val userInfoRepository: UserInfoRepository by lazy {
         UserInfoRepositoryImpl(db)
     }
-    val presenter: EndGamePresenter by lazy {
+    private val presenter: EndGamePresenter by lazy {
         EndGamePresenterImpl(repository, userInfoRepository)
     }
 
@@ -44,6 +46,14 @@ class EndGame : AppCompatActivity() {
         val coins = presenter.determineCoins(score, mode)
 
         presenter.updateCoins(presenter.getUserName(), coins)
+        val scoreBoardKey = when(mode){
+            getString(R.string.difficulty_easy) -> getString(R.string.scoreboard_easy_mode)
+            getString(R.string.difficulty_hard) ->getString(R.string.scoreboard_hard_mode)
+            getString(R.string.difficulty_challenge) -> getString(R.string.scoreboard_challenge_mode)
+            else -> ""
+        }
+
+        postScore(score, scoreBoardKey)
         presenter.updateHighScore(mode, score)
         presenter.updateHighScoreDatabase(score, AppDatabase.getInstance(this))
 
@@ -63,6 +73,25 @@ class EndGame : AppCompatActivity() {
         val menuButton: Button = findViewById(R.id.menu)
         menuButton.setOnClickListener {
             startActivity(Intent(this, MenuActivity::class.java))
+        }
+
+        val leaderBoardBtn : Button = findViewById(R.id.scoreboard_btn)
+        leaderBoardBtn.setOnClickListener {
+            val account = GoogleSignIn.getLastSignedInAccount(this)
+            account?.let{noNullAccount ->
+                Games.getLeaderboardsClient(this, noNullAccount)
+                        .getLeaderboardIntent(scoreBoardKey)
+                        .addOnSuccessListener { intent ->
+                            startActivityForResult(intent, 9004)
+                        }
+            }
+        }
+    }
+
+    private fun postScore(score: Int, mode: String){
+        val account = GoogleSignIn.getLastSignedInAccount(this)
+        account?.let{
+            Games.getLeaderboardsClient(this, it).submitScore(mode, score.toLong())
         }
     }
 

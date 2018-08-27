@@ -7,7 +7,6 @@ import android.widget.Button
 import com.example.ckane.colorsorting.R
 import com.example.ckane.colorsorting.android.activity.levels.ChallengeMode
 
-//Todo: Make difficulty an enum
 class DifficultyPickerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,21 +16,21 @@ class DifficultyPickerActivity : AppCompatActivity() {
         val easyButton: Button = findViewById(R.id.easy_difficulty)
         easyButton.setOnClickListener {
             startActivity(Intent(this, ChallengeMode::class.java).apply {
-                putExtra("GAME_MODE", "CLASSIC_MODE_EASY")
+                putExtra("GAME_MODE", getString(R.string.difficulty_easy))
             })
         }
 
         val hardButton: Button = findViewById(R.id.hard_difficulty)
         hardButton.setOnClickListener {
             startActivity(Intent(this, ChallengeMode::class.java).apply {
-                putExtra("GAME_MODE", "CLASSIC_MODE_HARD")
+                putExtra("GAME_MODE", getString(R.string.difficulty_hard))
             })
         }
 
         val challengeModeBtn: Button = findViewById(R.id.challenge_mode)
         challengeModeBtn.setOnClickListener {
             startActivity(Intent(this, ChallengeMode::class.java).apply {
-                putExtra("GAME_MODE", "CHALLENGE_MODE")
+                putExtra("GAME_MODE", getString(R.string.difficulty_challenge))
             })
         }
     }
