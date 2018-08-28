@@ -21,7 +21,6 @@ import com.example.ckane.colorsorting.repository.impl.UserInfoRepositoryImpl
 import com.example.ckane.colorsorting.util.createPowerUpList
 
 class PowerUpStore : AppCompatActivity(), PowerUpView {
-    private val userNameTextView: TextView by lazy { findViewById<TextView>(R.id.user_name_power_up_store) }
     private val moneyTextView: TextView by lazy { findViewById<TextView>(R.id.money_power_up_store) }
 
     private val sharedPref: SharedPreferences by lazy { this.getSharedPreferences("Data_file", android.content.Context.MODE_PRIVATE) }
@@ -46,7 +45,6 @@ class PowerUpStore : AppCompatActivity(), PowerUpView {
     }
 
     override fun setUserInfo(userInfo: UserInfo) {
-        userNameTextView.text = userInfo.userName
         moneyTextView.text = resources.getString(R.string.coins, userInfo.money.toString())
         powerUpList[0].quantity = userInfo.powerUpA
         powerUpList[1].quantity = userInfo.powerUpB

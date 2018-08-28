@@ -23,10 +23,9 @@ class PowerUpRecyclerAdapter(private val context: Context,
 
     override fun onBindViewHolder(holder: PowerUpItemView, position: Int) {
         holder.powerUpImage.setImageDrawable(toDrawable(powerUps[position].imgSrc, context))
-        holder.powerUpName.text = powerUps[position].powerUpName
         holder.powerUpDescription.text = powerUps[position].description
         holder.powerUpQuantity.text = context.resources.getString(R.string.power_up_q, powerUps[position].quantity.toString())
-        holder.powerUpCost.text = context.resources.getString(R.string.power_up_cost, powerUps[position].cost.toString())
+        holder.buyPowerUpBtn.text = context.resources.getString(R.string.power_up_cost, powerUps[position].cost.toString())
         holder.buyPowerUpBtn.setOnClickListener {
             presenter.buyPowerUp(position)
         }
