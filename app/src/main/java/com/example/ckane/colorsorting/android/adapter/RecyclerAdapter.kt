@@ -2,7 +2,6 @@ package com.example.ckane.colorsorting.android.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,15 +14,14 @@ import com.example.ckane.colorsorting.util.getCardDrawable
 class RecyclerAdapter(private val context: Context,
                       private var cards: MutableList<Card>,
                       private val presenter: UpdateCardPresenter,
-                      private val cardItemLayout : Int) : RecyclerView.Adapter<CardViewHolderImpl>(), CardListManager {
+                      private val cardItemLayout : Int,
+                      private val clickable: Boolean) : RecyclerView.Adapter<CardViewHolderImpl>(), CardListManager {
 
     lateinit var cardViewHolder : CardViewHolderImpl
     lateinit var layoutView : View
-    private var viewClickable = false
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolderImpl {
         layoutView = LayoutInflater.from(parent.context).inflate(cardItemLayout, parent, false)
-        Log.v("[VIEW CLICKABLE]", viewClickable.toString())
-        cardViewHolder = CardViewHolderImpl(layoutView, presenter, viewClickable, presenter.isSoundOn(), presenter.isHapticOn())
+        cardViewHolder = CardViewHolderImpl(layoutView, presenter, clickable, presenter.isSoundOn(), presenter.isHapticOn())
         return cardViewHolder
     }
 
@@ -49,7 +47,6 @@ class RecyclerAdapter(private val context: Context,
      * @param newCards new list of cards to replace current list of cards
      */
     override fun newData(newCards: MutableList<Card>, clickable: Boolean) {
-        viewClickable = clickable
         cards = newCards
         notifyDataSetChanged()
     }

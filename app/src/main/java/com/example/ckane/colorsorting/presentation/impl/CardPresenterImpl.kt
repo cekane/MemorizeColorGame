@@ -1,6 +1,7 @@
 package com.example.ckane.colorsorting.presentation.impl
 
 import android.util.Log
+import com.example.ckane.colorsorting.R
 import com.example.ckane.colorsorting.android.CardView
 import com.example.ckane.colorsorting.cache.entity.UserInfo
 import com.example.ckane.colorsorting.model.Card
@@ -11,8 +12,11 @@ import com.example.ckane.colorsorting.util.createCardList
 import com.example.ckane.colorsorting.util.getColorFromNumber
 import com.example.ckane.colorsorting.util.randomColorTextColor
 import com.example.ckane.colorsorting.util.randomTextPosition
+import io.reactivex.Completable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.lang.Math.sqrt
 import java.util.*
 
 open class CardPresenterImpl(val view: CardView,
@@ -28,6 +32,7 @@ open class CardPresenterImpl(val view: CardView,
     private var deckSize = 16
     private var mode = ""
     private var shieldActivated: Boolean = false
+    private var itemLayout = R.layout.card_item
 
     override fun getUserInfo() {
         userInfoRepository.getUserInfo(repository.getLocalUsername())
@@ -60,7 +65,7 @@ open class CardPresenterImpl(val view: CardView,
         //delay is over
         makeColors(color)
         val makeGrey: () -> Unit = {
-            view.newData(createCardList(true, deckSize), true)
+            view.newAdapter(createCardList(true, deckSize), sqrt(deckSize.toDouble()).toInt(), true, itemLayout)
         }
         boardToGrey(makeGrey)
     }
@@ -74,13 +79,22 @@ open class CardPresenterImpl(val view: CardView,
         if (savedColoredCards.isNotEmpty() && adapterColorText == savedColoredCards[position].backgroundColor) {
             wantedColors.removeIf { it.position == position }
             pickedColors.add(Card(position, savedColoredCards[position].backgroundColor))
-            view.newCard(Card(position, savedColoredCards[position].backgroundColor))
             if (wantedColors.isEmpty()) {
-                endRound()
+                Completable.create {
+                    view.newCard(Card(position, savedColoredCards[position].backgroundColor))
+                    endRound()
+                    it.onComplete()
+                }.subscribeOn(AndroidSchedulers.mainThread()).observeOn(AndroidSchedulers.mainThread()).subscribe {
+                    view.newAdapter(getEndingGreyTargetCards(pickedColors), sqrt(deckSize.toDouble()).toInt(), false, itemLayout)
+                    pickedColors = mutableListOf()
+                }
+            } else {
+                view.newCard(Card(position, savedColoredCards[position].backgroundColor))
             }
+
         } else if (!shieldActivated) {
             val finalScore = view.getCounterNumber()
-            view.newData(savedColoredCards, false)
+            view.newAdapter(savedColoredCards, sqrt(deckSize.toDouble()).toInt(), false, itemLayout)
             view.endGame(finalScore)
         } else {
             //Player had a shield active and got one wrong
@@ -88,6 +102,14 @@ open class CardPresenterImpl(val view: CardView,
             pickedColors.add(Card(position, savedColoredCards[position].backgroundColor))
             view.newCard(Card(position, savedColoredCards[position].backgroundColor))
         }
+    }
+
+    private fun getEndingGreyTargetCards(pickedColors: MutableList<Card>): MutableList<Card> {
+        val greyTempCards = createCardList(true, deckSize)
+        pickedColors.forEach {
+            greyTempCards[it.position] = it
+        }
+        return greyTempCards
     }
 
     private fun endRound() {
@@ -101,7 +123,6 @@ open class CardPresenterImpl(val view: CardView,
             }
             "CHALLENGE_MODE" -> challengeMode(counterValue)
         }
-        pickedColors = mutableListOf()
         view.setCounterText(counterValue.toString())
         view.roundEndFragment()
     }
@@ -135,7 +156,8 @@ open class CardPresenterImpl(val view: CardView,
                 textPosition = 0
                 textColor = "#FFFFFF"
                 deckSize = 25
-                view.expandGrid(deckSize, 5)
+                itemLayout = R.layout.card_item_smaller
+//                view.newAdapter(createCardList(true, deckSize), sqrt(deckSize.toDouble()).toInt(), true, itemLayout)
             }
             //Text Moves around
             in 26..30 -> {
@@ -176,7 +198,7 @@ open class CardPresenterImpl(val view: CardView,
         adapterColorText = color
         savedColoredCards = createCardList(false, deckSize)
         createSingleColorList()
-        view.newData(savedColoredCards, false)
+        view.newAdapter(savedColoredCards, sqrt(deckSize.toDouble()).toInt(), false, itemLayout)
     }
 
     /**
@@ -198,9 +220,9 @@ open class CardPresenterImpl(val view: CardView,
     }
 
     override fun replayBoard() {
-        view.newData(savedColoredCards, false)
+        view.newAdapter(savedColoredCards, sqrt(deckSize.toDouble()).toInt(), false, itemLayout)
         val makeGrey: () -> Unit = {
-            view.newData(createCardList(true, deckSize), true)
+            view.newAdapter(createCardList(true, deckSize), sqrt(deckSize.toDouble()).toInt(), true, itemLayout)
             pickedColors.forEach {
                 view.newCard(it)
             }

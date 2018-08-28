@@ -19,13 +19,15 @@ class CardViewHolderImpl(layoutView: View,
     val cardImage: ImageView = layoutView.findViewById(R.id.card_image)
     private val mediaPlayer = MediaPlayer.create(layoutView.context, R.raw.button_click_sound)
     init {
-        cardImage.setOnClickListener {
-            presenter.updateCard(layoutPosition)
-            if(soundOn){
-                mediaPlayer.start()
-            }
-            if(hapticOn){
-                layoutView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
+        if(this.clickable){
+            cardImage.setOnClickListener {
+                presenter.updateCard(layoutPosition)
+                if(soundOn){
+                    mediaPlayer.start()
+                }
+                if(hapticOn){
+                    layoutView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
+                }
             }
         }
     }

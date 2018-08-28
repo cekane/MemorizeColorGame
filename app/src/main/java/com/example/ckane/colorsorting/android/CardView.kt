@@ -13,7 +13,7 @@ interface CardView {
     fun endGame(score: Int)
     fun roundEndFragment()
     fun setColorTextColor(textColor: String)
-    fun expandGrid(deckSize: Int, rowCount: Int)
+    fun newAdapter(cardList : MutableList<Card>, rowCount: Int, clickable: Boolean, itemLayout: Int)
     fun updateLocalHighScore(highScore: Int)
     fun enablePowerUps(userInfo : UserInfo)
 }

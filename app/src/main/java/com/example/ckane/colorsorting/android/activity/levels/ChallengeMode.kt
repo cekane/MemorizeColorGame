@@ -8,6 +8,7 @@ import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -34,7 +35,7 @@ class ChallengeMode : AppCompatActivity(), CardView {
     private val userInfoRepository: UserInfoRepository by lazy { UserInfoRepositoryImpl(db) }
     private val presenter: CardPresenter by lazy { CardPresenterImpl(this, localStorage, userInfoRepository) }
     private var cardList: MutableList<Card> = createCardList(true, 16)
-    private var rcAdapter : RecyclerAdapter? = null
+    private var rcAdapter: RecyclerAdapter? = null
     private var gLayout = GridLayoutManager(this, 4)
 
     val color: TextView by lazy { findViewById<TextView>(R.id.color_to_choose) }
@@ -51,7 +52,7 @@ class ChallengeMode : AppCompatActivity(), CardView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.challenge_mode_activity)
-        rcAdapter = RecyclerAdapter(this, cardList, presenter, R.layout.card_item)
+        rcAdapter = RecyclerAdapter(this, cardList, presenter, R.layout.card_item, true)
         gameMode = intent.getStringExtra("GAME_MODE")
         presenter.setGameMode(gameMode)
         presenter.setGameTime()
@@ -111,10 +112,10 @@ class ChallengeMode : AppCompatActivity(), CardView {
         if (userInfo.powerUpB == 0) {
             handlePowerUpButton(powerUpBBtn, R.drawable.icon_showallcolors_disabled)
         }
-        if(userInfo.powerUpC == 0 ){
+        if (userInfo.powerUpC == 0) {
             handlePowerUpButton(powerUpCBtn, R.drawable.icon_showdifferentcolor_disabled)
         }
-        if( userInfo.powerUpD == 0 ){
+        if (userInfo.powerUpD == 0) {
             handlePowerUpButton(powerUpDBtn, R.drawable.icon_showtargetcolor_disabled)
         }
     }
@@ -124,7 +125,7 @@ class ChallengeMode : AppCompatActivity(), CardView {
         btn.isEnabled = false
     }
 
-    override fun newData(newCards: MutableList<Card>,  clickable: Boolean) {
+    override fun newData(newCards: MutableList<Card>, clickable: Boolean) {
         rcAdapter?.newData(newCards, clickable)
     }
 
@@ -191,14 +192,14 @@ class ChallengeMode : AppCompatActivity(), CardView {
         findViewById<TextView>(R.id.high_score_value).text = highScore.toString()
     }
 
-    override fun expandGrid(deckSize: Int, rowCount: Int) {
-        cardList = createCardList(true, deckSize)
-        rcAdapter = RecyclerAdapter(this, cardList, presenter, R.layout.card_item_smaller)
-        gLayout = GridLayoutManager(this, rowCount)
-
+    override fun newAdapter(cardList : MutableList<Card>, rowCount: Int, clickable: Boolean, itemLayout: Int) {
+        Log.v("[NEW ADAPTER]", "Checking ***********************")
+        rcAdapter = RecyclerAdapter(this, cardList, presenter, itemLayout, clickable)
+        if(gLayout.spanCount != rowCount){
+            gLayout = GridLayoutManager(this, rowCount)
+            rView.layoutManager = gLayout
+        }
         rView.adapter = rcAdapter
-        rView.layoutManager = gLayout
     }
-
 }
 
