@@ -103,7 +103,7 @@ class MenuActivity : AppCompatActivity(), MenuView {
     }
 
     override fun updateCards(cards: MutableList<Card>) {
-        animateAdapter.newData(cards, false)
+        animateAdapter.newData(cards)
     }
 
     override fun onDestroy() {

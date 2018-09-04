@@ -5,7 +5,7 @@ import com.example.ckane.colorsorting.model.Card
 
 interface CardView {
     fun newCard(newCard: Card)
-    fun newData(newCards: MutableList<Card>,  clickable: Boolean)
+    fun newData(newCards: MutableList<Card>)
     fun setColorText(colorText: String, textSelector: Int)
     fun setCounterText(counterText: String)
     fun getCounterNumber(): Int

@@ -28,7 +28,7 @@ class RecyclerAdapterAnimated(private val context: Context,
         //Nothing to do here
     }
 
-    override fun newData(newCards: MutableList<Card>, clickable: Boolean) {
+    override fun newData(newCards: MutableList<Card>) {
         cards = newCards
         notifyDataSetChanged()
     }

@@ -101,7 +101,7 @@ class HowToFragment : Fragment(), HowToCardView {
             createCardList(true, 16)
         }
         presenter.createSingleColorList()
-        rcAdapter = RecyclerAdapter(rootView.context, cardList, presenter, R.layout.card_item, true)
+        rcAdapter = RecyclerAdapter(rootView.context, cardList, presenter, R.layout.card_item)
         val gLayout = GridLayoutManager(rootView.context, 4)
         val recyclerView = rootView.findViewById<RecyclerView>(R.id.recyclerView)
 
@@ -183,7 +183,7 @@ class HowToFragment : Fragment(), HowToCardView {
     }
 
     override fun newData(cards: MutableList<Card>) {
-        rcAdapter.newData(cards, true)
+        rcAdapter.newData(cards)
     }
 
     override fun boardToGrey(makeGrey: () -> Unit) {

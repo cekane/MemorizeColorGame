@@ -32,6 +32,7 @@ open class CardPresenterImpl(val view: CardView,
     private var mode = ""
     private var shieldActivated: Boolean = false
     private var itemLayout = R.layout.card_item
+    private var clickable = false
 
     override fun getUserInfo() {
         userInfoRepository.getUserInfo(repository.getLocalUsername())
@@ -64,7 +65,8 @@ open class CardPresenterImpl(val view: CardView,
         //delay is over
         makeColors(color)
         val makeGrey: () -> Unit = {
-            view.newAdapter(createCardList(true, deckSize), sqrt(deckSize.toDouble()).toInt(), true, itemLayout)
+            view.newData(createCardList(true, deckSize))
+            clickable = true
         }
         boardToGrey(makeGrey)
     }
@@ -75,24 +77,26 @@ open class CardPresenterImpl(val view: CardView,
      * @param position
      */
     override fun updateCard(position: Int) {
-        if (savedColoredCards.isNotEmpty() && adapterColorText == savedColoredCards[position].backgroundColor) {
-            wantedColors.removeIf { it.position == position }
-            pickedColors.add(Card(position, savedColoredCards[position].backgroundColor))
-            if (wantedColors.isEmpty()) {
-                handleEndRound(position)
+        if(clickable){
+            if (savedColoredCards.isNotEmpty() && adapterColorText == savedColoredCards[position].backgroundColor) {
+                wantedColors.removeIf { it.position == position }
+                pickedColors.add(Card(position, savedColoredCards[position].backgroundColor))
+                view.newCard(Card(position, savedColoredCards[position].backgroundColor))
+                if (wantedColors.isEmpty()) {
+                    endRound()
+                    clickable = false
+                }
+            } else if (!shieldActivated) {
+                val finalScore = view.getCounterNumber()
+                view.newData(savedColoredCards)
+                clickable = false
+                view.endGame(finalScore)
             } else {
+                //Player had a shield active and got one wrong
+                shieldActivated = false
+                pickedColors.add(Card(position, savedColoredCards[position].backgroundColor))
                 view.newCard(Card(position, savedColoredCards[position].backgroundColor))
             }
-
-        } else if (!shieldActivated) {
-            val finalScore = view.getCounterNumber()
-            view.newAdapter(savedColoredCards, sqrt(deckSize.toDouble()).toInt(), false, itemLayout)
-            view.endGame(finalScore)
-        } else {
-            //Player had a shield active and got one wrong
-            shieldActivated = false
-            pickedColors.add(Card(position, savedColoredCards[position].backgroundColor))
-            view.newCard(Card(position, savedColoredCards[position].backgroundColor))
         }
     }
 
@@ -126,6 +130,7 @@ open class CardPresenterImpl(val view: CardView,
             }
             "CHALLENGE_MODE" -> challengeMode(counterValue)
         }
+        pickedColors = mutableListOf()
         view.setCounterText(counterValue.toString())
         view.roundEndFragment()
     }
@@ -160,7 +165,7 @@ open class CardPresenterImpl(val view: CardView,
                 textColor = "#FFFFFF"
                 deckSize = 25
                 itemLayout = R.layout.card_item_smaller
-//                view.newAdapter(createCardList(true, deckSize), sqrt(deckSize.toDouble()).toInt(), true, itemLayout)
+                view.newAdapter(createCardList(true, deckSize), sqrt(deckSize.toDouble()).toInt(), true, itemLayout)
             }
             //Text Moves around
             in 26..30 -> {
@@ -201,7 +206,8 @@ open class CardPresenterImpl(val view: CardView,
         adapterColorText = color
         savedColoredCards = createCardList(false, deckSize)
         createSingleColorList()
-        view.newAdapter(savedColoredCards, sqrt(deckSize.toDouble()).toInt(), false, itemLayout)
+        view.newData(savedColoredCards)
+        clickable = false
     }
 
     /**
@@ -223,9 +229,11 @@ open class CardPresenterImpl(val view: CardView,
     }
 
     override fun replayBoard() {
-        view.newAdapter(savedColoredCards, sqrt(deckSize.toDouble()).toInt(), false, itemLayout)
+        view.newData(savedColoredCards)
+        clickable = false
         val makeGrey: () -> Unit = {
-            view.newAdapter(createCardList(true, deckSize), sqrt(deckSize.toDouble()).toInt(), true, itemLayout)
+            view.newData(createCardList(true, deckSize))
+            clickable = true
             pickedColors.forEach {
                 view.newCard(it)
             }
@@ -248,7 +256,7 @@ open class CardPresenterImpl(val view: CardView,
     override fun showTargetedColor() {
         if (wantedColors.size == 1) {
             pickedColors.add(wantedColors[0])
-            handleEndRound(wantedColors[0].position)
+            endRound()
         } else {
             val chosenColorIndex = Random().nextInt(wantedColors.size)
             view.newCard(wantedColors[chosenColorIndex])

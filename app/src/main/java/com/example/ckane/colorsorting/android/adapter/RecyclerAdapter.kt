@@ -14,14 +14,13 @@ import com.example.ckane.colorsorting.util.getCardDrawable
 class RecyclerAdapter(private val context: Context,
                       private var cards: MutableList<Card>,
                       private val presenter: UpdateCardPresenter,
-                      private val cardItemLayout : Int,
-                      private val clickable: Boolean) : RecyclerView.Adapter<CardViewHolderImpl>(), CardListManager {
+                      private val cardItemLayout : Int) : RecyclerView.Adapter<CardViewHolderImpl>(), CardListManager {
 
     lateinit var cardViewHolder : CardViewHolderImpl
     lateinit var layoutView : View
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolderImpl {
         layoutView = LayoutInflater.from(parent.context).inflate(cardItemLayout, parent, false)
-        cardViewHolder = CardViewHolderImpl(layoutView, presenter, clickable, presenter.isSoundOn(), presenter.isHapticOn())
+        cardViewHolder = CardViewHolderImpl(layoutView, presenter, presenter.isSoundOn(), presenter.isHapticOn())
         return cardViewHolder
     }
 
@@ -46,7 +45,7 @@ class RecyclerAdapter(private val context: Context,
      * cards on the UI are updated
      * @param newCards new list of cards to replace current list of cards
      */
-    override fun newData(newCards: MutableList<Card>, clickable: Boolean) {
+    override fun newData(newCards: MutableList<Card>) {
         cards = newCards
         notifyDataSetChanged()
     }
