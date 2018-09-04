@@ -13,7 +13,6 @@ import com.example.ckane.colorsorting.util.getColorFromNumber
 import com.example.ckane.colorsorting.util.randomColorTextColor
 import com.example.ckane.colorsorting.util.randomTextPosition
 import io.reactivex.Completable
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.lang.Math.sqrt
@@ -80,14 +79,7 @@ open class CardPresenterImpl(val view: CardView,
             wantedColors.removeIf { it.position == position }
             pickedColors.add(Card(position, savedColoredCards[position].backgroundColor))
             if (wantedColors.isEmpty()) {
-                Completable.create {
-                    view.newCard(Card(position, savedColoredCards[position].backgroundColor))
-                    endRound()
-                    it.onComplete()
-                }.subscribeOn(AndroidSchedulers.mainThread()).observeOn(AndroidSchedulers.mainThread()).subscribe {
-                    view.newAdapter(getEndingGreyTargetCards(pickedColors), sqrt(deckSize.toDouble()).toInt(), false, itemLayout)
-                    pickedColors = mutableListOf()
-                }
+                handleEndRound(position)
             } else {
                 view.newCard(Card(position, savedColoredCards[position].backgroundColor))
             }
@@ -101,6 +93,17 @@ open class CardPresenterImpl(val view: CardView,
             shieldActivated = false
             pickedColors.add(Card(position, savedColoredCards[position].backgroundColor))
             view.newCard(Card(position, savedColoredCards[position].backgroundColor))
+        }
+    }
+
+    private fun handleEndRound(position: Int){
+        Completable.create {
+            view.newCard(Card(position, savedColoredCards[position].backgroundColor))
+            endRound()
+            it.onComplete()
+        }.subscribeOn(AndroidSchedulers.mainThread()).observeOn(AndroidSchedulers.mainThread()).subscribe {
+            view.newAdapter(getEndingGreyTargetCards(pickedColors), sqrt(deckSize.toDouble()).toInt(), false, itemLayout)
+            pickedColors = mutableListOf()
         }
     }
 
@@ -244,8 +247,8 @@ open class CardPresenterImpl(val view: CardView,
 
     override fun showTargetedColor() {
         if (wantedColors.size == 1) {
-            view.newCard(wantedColors[0])
-            endRound()
+            pickedColors.add(wantedColors[0])
+            handleEndRound(wantedColors[0].position)
         } else {
             val chosenColorIndex = Random().nextInt(wantedColors.size)
             view.newCard(wantedColors[chosenColorIndex])

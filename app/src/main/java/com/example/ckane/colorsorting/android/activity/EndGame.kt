@@ -2,8 +2,8 @@ package com.example.ckane.colorsorting.android.activity
 
 import android.content.Intent
 import android.content.SharedPreferences
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.widget.TextView
 import com.example.ckane.colorsorting.R
@@ -55,7 +55,7 @@ class EndGame : AppCompatActivity() {
 
         postScore(score, scoreBoardKey)
         presenter.updateHighScore(mode, score)
-        presenter.updateHighScoreDatabase(score, AppDatabase.getInstance(this))
+//        presenter.updateHighScoreDatabase(score, AppDatabase.getInstance(this))
 
         val coinsTextView = findViewById<TextView>(R.id.coins)
         coinsTextView.text = resources.getString(R.string.end_game_coins, coins.toString())

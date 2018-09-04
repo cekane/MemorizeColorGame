@@ -3,8 +3,8 @@ package com.example.ckane.colorsorting.util
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
-import com.example.ckane.colorsorting.model.Card
 import com.example.ckane.colorsorting.R
+import com.example.ckane.colorsorting.model.Card
 import com.example.ckane.colorsorting.model.PowerUpModel
 import java.util.*
 
@@ -75,10 +75,10 @@ fun randomTextPosition(): Int = Random().nextInt(2)
 
 fun createPowerUpList(): MutableList<PowerUpModel> = MutableList(4) {
     when (it) {
-        0 -> PowerUpModel(R.drawable.icon_activateshield, "Shield", "Protect yourself from the next wrong card you select", 0, 40)
-        1 -> PowerUpModel(R.drawable.icon_showallcolors, "Replay", "Replay all the colors", 0, 30)
-        2 -> PowerUpModel(R.drawable.icon_showdifferentcolor, "Show", "Show all cards of one other color", 0, 20)
-        3 -> PowerUpModel(R.drawable.icon_showtargetcolor, "Target", "Pick a card to flip over", 0, 15)
+        0 -> PowerUpModel(R.drawable.icon_activateshield, "Shield", "Protects you from one wrong move", 0, 200)
+        1 -> PowerUpModel(R.drawable.icon_showallcolors, "Replay", "Shows all color tiles again", 0, 150)
+        2 -> PowerUpModel(R.drawable.icon_showdifferentcolor, "Show", "Reveals all tiles of one color", 0, 50)
+        3 -> PowerUpModel(R.drawable.icon_showtargetcolor, "Target", "Reveals one correct color tile", 0, 100)
         else -> PowerUpModel(0, "", "", 0, 0)
     }
 }

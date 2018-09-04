@@ -20,7 +20,6 @@
             android:theme="@style/AppFullScreenTheme" />
         <activity
             android:name=".android.activity.MenuActivity"
-            android:label="@string/title_activity_menu"
             android:screenOrientation="portrait"
             android:theme="@style/AppFullScreenTheme">
             <intent-filter>

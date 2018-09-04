@@ -27,7 +27,7 @@ class PowerUpRecyclerAdapter(private val context: Context,
         holder.powerUpQuantity.text = context.resources.getString(R.string.power_up_q, powerUps[position].quantity.toString())
         holder.buyPowerUpBtn.text = context.resources.getString(R.string.power_up_cost, powerUps[position].cost.toString())
         holder.buyPowerUpBtn.setOnClickListener {
-            presenter.buyPowerUp(position)
+            presenter.coinTransaction("BUY", powerUp = position)
         }
     }
 }

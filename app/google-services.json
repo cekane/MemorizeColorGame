@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "791302939646",
+    "firebase_url": "https://color-flash-37357674.firebaseio.com",
+    "project_id": "color-flash-37357674",
+    "storage_bucket": "color-flash-37357674.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:791302939646:android:5d8a5ba35613cd2f",
+        "android_client_info": {
+          "package_name": "com.ckane.colorflash"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "791302939646-bu8jikr89fqtmv22cnt0tn6dh2mgbkt8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ckane.colorflash",
+            "certificate_hash": "52cafbc2ac13fdd9a96a063069a8d8856c855aea"
+          }
+        },
+        {
+          "client_id": "791302939646-pdo412hn82a5rhdani4la8apcisate2r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrKfMUznahu_369Jf8DJmni7KkIk6cELU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "791302939646-pdo412hn82a5rhdani4la8apcisate2r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
