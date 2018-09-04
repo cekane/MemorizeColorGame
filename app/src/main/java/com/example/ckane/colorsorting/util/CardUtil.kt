@@ -38,13 +38,32 @@ fun getHexFromNumber(num: Int): String {
  */
 fun createCardList(isGrey: Boolean, size: Int): MutableList<Card> {
     var randomNumber: Int
-    return MutableList(size) {
+    val cardList = MutableList(size) {
         if (isGrey) {
             Card(it, "grey")
         } else {
             randomNumber = Random().nextInt(4)
             Card(it, getColorFromNumber(randomNumber))
         }
+    }
+    if(!isGrey) {
+        val allColors = arrayOf("red", "blue", "green", "yellow")
+        val spotsPicked = mutableListOf(0)
+        allColors.forEach {
+            val randNum = getUniqueRandomNumber(spotsPicked, size)
+            spotsPicked.add(randNum)
+            cardList[randNum].backgroundColor = it
+        }
+    }
+    return cardList
+}
+
+fun getUniqueRandomNumber(picked: List<Int>, size: Int): Int{
+    val randNum = Random().nextInt(size)
+    return if(!picked.contains(randNum)){
+        randNum
+    } else{
+        getUniqueRandomNumber(picked, size)
     }
 }
 

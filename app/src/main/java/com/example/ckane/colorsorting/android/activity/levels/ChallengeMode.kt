@@ -26,6 +26,7 @@ import com.example.ckane.colorsorting.repository.impl.LocalStorageImpl
 import com.example.ckane.colorsorting.repository.impl.UserInfoRepositoryImpl
 import com.example.ckane.colorsorting.util.createCardList
 import com.example.ckane.colorsorting.util.toDrawable
+import com.google.firebase.crash.FirebaseCrash
 
 class ChallengeMode : AppCompatActivity(), CardView {
     private val sharedPref: SharedPreferences by lazy { this.getSharedPreferences("Data_file", android.content.Context.MODE_PRIVATE) }
@@ -125,11 +126,11 @@ class ChallengeMode : AppCompatActivity(), CardView {
     }
 
     override fun newData(newCards: MutableList<Card>) {
-        rcAdapter?.newData(newCards)
+        rcAdapter?.newData(newCards) ?: FirebaseCrash.log("Null RC adapter")
     }
 
     override fun newCard(newCard: Card) {
-        rcAdapter?.newCard(newCard)
+        rcAdapter?.newCard(newCard) ?: FirebaseCrash.log("Null RC adapter")
     }
 
 
