@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "791302939646-bu8jikr89fqtmv22cnt0tn6dh2mgbkt8.apps.googleusercontent.com",
+          "client_id": "791302939646-3o0ntrco58scbd2pgvf9o0doinipqgs5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.ckane.colorflash",
-            "certificate_hash": "52cafbc2ac13fdd9a96a063069a8d8856c855aea"
+            "certificate_hash": "7f7c4c52c113744566329825d87b792f1a0b9eaf"
           }
         },
         {
@@ -29,7 +29,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCrKfMUznahu_369Jf8DJmni7KkIk6cELU"
+          "current_key": "AIzaSyCLrt2KT95KyL14lw11Qo8qCFYd-kdsFyM"
         }
       ],
       "services": {

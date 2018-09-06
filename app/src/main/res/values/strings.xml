@@ -64,5 +64,6 @@
     <string name="difficulty_hard">CLASSIC_MODE_HARD</string>
     <string name="difficulty_challenge">CHALLENGE_MODE</string>
     <string name="scoreboard_text">Scoreboard</string>
+    <string name="watch_video_for_50_coins">Watch video for +50 coins!</string>
 
 </resources>
