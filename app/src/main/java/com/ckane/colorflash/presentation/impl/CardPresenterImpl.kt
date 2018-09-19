@@ -75,8 +75,12 @@ open class CardPresenterImpl(val view: com.ckane.colorflash.android.CardView,
      * text at the top of the screen. If it does it "flips" that card over to it's proper color
      * @param position
      */
-    override fun updateCard(position: Int) {
-        if(clickable){
+    override fun updateCard(position: Int, sound: Boolean) {
+        if (clickable) {
+            if (sound) {
+                view.handleSound()
+            }
+
             if (savedColoredCards.isNotEmpty() && adapterColorText == savedColoredCards[position].backgroundColor) {
                 wantedColors.removeIf { it.position == position }
                 pickedColors.add(Card(position, savedColoredCards[position].backgroundColor))
@@ -99,7 +103,7 @@ open class CardPresenterImpl(val view: com.ckane.colorflash.android.CardView,
         }
     }
 
-    private fun handleEndRound(position: Int){
+    private fun handleEndRound(position: Int) {
         Completable.create {
             view.newCard(Card(position, savedColoredCards[position].backgroundColor))
             endRound()

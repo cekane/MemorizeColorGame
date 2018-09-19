@@ -16,4 +16,5 @@ interface CardView {
     fun newAdapter(cardList : MutableList<Card>, rowCount: Int, clickable: Boolean, itemLayout: Int)
     fun updateLocalHighScore(highScore: Int)
     fun enablePowerUps(userInfo : UserInfo)
+    fun handleSound()
 }

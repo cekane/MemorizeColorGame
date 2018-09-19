@@ -3,6 +3,7 @@ package com.ckane.colorflash.android.activity.levels
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
@@ -44,7 +45,7 @@ class ChallengeMode : AppCompatActivity(), com.ckane.colorflash.android.CardView
     private val powerUpCBtn: Button by lazy { findViewById<Button>(R.id.power_up_C) }
     private val powerUpDBtn: Button by lazy { findViewById<Button>(R.id.power_up_D) }
     private val rView: RecyclerView by lazy { findViewById<RecyclerView>(R.id.recycler_view) }
-
+    private var mediaPlayer: MediaPlayer? = null
     private var gameMode = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -196,6 +197,19 @@ class ChallengeMode : AppCompatActivity(), com.ckane.colorflash.android.CardView
             rView.layoutManager = gLayout
         }
         rView.adapter = rcAdapter
+    }
+
+    override fun handleSound() {
+        mediaPlayer = mediaPlayer?.let { mp ->
+            if(mp.isPlaying){
+                mp.stop()
+                mp.release()
+                MediaPlayer.create(this, R.raw.button_click_sound)
+            }else{
+                mediaPlayer
+            }
+        } ?: MediaPlayer.create(this, R.raw.button_click_sound)
+        mediaPlayer?.start()
     }
 }
 

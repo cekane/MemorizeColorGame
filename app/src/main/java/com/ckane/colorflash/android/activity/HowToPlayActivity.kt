@@ -195,7 +195,7 @@ class HowToPresenterImpl(private val howToCards : MutableList<Card>, val view: H
     private var savedColoredCards = mutableListOf<Card>()
     private var pickedColors = mutableListOf<Card>()
     private var shieldActivated: Boolean = false
-    override fun updateCard(position: Int) {
+    override fun updateCard(position: Int, sound : Boolean) {
         if (savedColoredCards.isNotEmpty() && "red" == howToCards[position].backgroundColor)
         {
             view.newCard(Card(position, howToCards[position].backgroundColor))

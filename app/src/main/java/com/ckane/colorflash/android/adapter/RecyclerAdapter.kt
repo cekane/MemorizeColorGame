@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.ckane.colorflash.android.CardViewHolderImpl
 import com.ckane.colorflash.model.Card
 import com.ckane.colorflash.presentation.UpdateCardPresenter
 import com.ckane.colorflash.util.getCardDrawable
@@ -18,7 +19,7 @@ class RecyclerAdapter(private val context: Context,
     lateinit var layoutView : View
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): com.ckane.colorflash.android.CardViewHolderImpl {
         layoutView = LayoutInflater.from(parent.context).inflate(cardItemLayout, parent, false)
-        cardViewHolder = com.ckane.colorflash.android.CardViewHolderImpl(layoutView, presenter, presenter.isSoundOn(), presenter.isHapticOn())
+        cardViewHolder = CardViewHolderImpl(layoutView, presenter, presenter.isSoundOn(), presenter.isHapticOn())
         return cardViewHolder
     }
 
