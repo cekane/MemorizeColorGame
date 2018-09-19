@@ -13,23 +13,6 @@ class EndGamePresenterImpl(private val repository: LocalStorage, private val use
         }
     }
 
-//    override fun updateHighScoreDatabase(score: Int, appDatabase: AppDatabase) {
-//        val userName = repository.getLocalUsername()
-//        Single.just(appDatabase)
-//                .subscribeOn(scheduler)
-//                .subscribe { db: AppDatabase ->
-//                    val scoreRepository: ScoreRepository = ScoreRepositoryImpl(db)
-//                    val scoreToInsert = HighScore(userName, score)
-//                    scoreRepository.insertScore(scoreToInsert)
-//                            .subscribeOn(scheduler)
-//                            .subscribe({
-//                                Log.v("[Room Insert]", "Inserted ${scoreToInsert.score} to db")
-//                            }, {
-//                                Log.v("[Room Error]", "Error Inserted ${scoreToInsert.score} to db", it)
-//                            })
-//                }
-//    }
-
     override fun determineCoins(score: Int, mode: String): Int {
         var marker1 = 0
         var marker2 = 0
