@@ -22,7 +22,7 @@
     <string name="logo">logo</string>
     <string name="application_name">application name</string>
     <string name="current_score">Score :</string>
-    <string name="high_score_text">High \nScore :</string>
+    <string name="high_score_text">Best :</string>
     <string name="local_high_score">local_high_score</string>
     <string name="how_to_play">How To Play</string>
     <string name="store_game">Store</string>
@@ -65,5 +65,8 @@
     <string name="difficulty_challenge">CHALLENGE_MODE</string>
     <string name="scoreboard_text">Scoreboard</string>
     <string name="watch_video_for_50_coins">Watch video for +50 coins!</string>
+    <string name="game_over_challenge_mode">Game Over</string>
+    <string name="game_over_image">Game over image</string>
+    <string name="coin_image">coin image</string>
 
 </resources>

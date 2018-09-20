@@ -11,17 +11,19 @@
     <Button
         android:id="@+id/game_scoreboard"
         android:layout_width="0dp"
-        android:layout_height="44dp"
-        android:layout_marginEnd="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/ic_green_card"
+        android:background="@color/cardGreen"
         android:fontFamily="sans-serif-condensed"
         android:text="@string/scoreboard_text"
+        android:textColor="@color/backgroundDarkGrey"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/vertical"
-        app:layout_constraintTop_toBottomOf="@+id/game_store" />
+        app:layout_constraintStart_toStartOf="@+id/vertical2"
+        app:layout_constraintTop_toTopOf="@+id/bottom2" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -29,60 +31,67 @@
         android:layout_height="0dp"
         android:layout_gravity="center"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:horizontalSpacing="0dp"
         android:numColumns="4"
         android:orientation="horizontal"
         android:verticalSpacing="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/top"
-        app:layout_constraintDimensionRatio="1:1" />
+        app:layout_constraintTop_toTopOf="@+id/top" />
 
     <Button
         android:id="@+id/game_settings"
         android:layout_width="0dp"
-        android:layout_height="44dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
         android:layout_marginEnd="4dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
         android:background="@color/cardRed"
         android:fontFamily="sans-serif-condensed"
         android:text="@string/settings_game"
+        android:textColor="@color/backgroundDarkGrey"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/vertical1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/how_to_play" />
+        app:layout_constraintTop_toTopOf="@+id/bottom2" />
 
     <Button
         android:id="@+id/game_store"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="4dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
         android:background="@color/cardBlue"
         android:fontFamily="sans-serif-condensed"
         android:text="@string/store_game"
+        android:textColor="@color/backgroundDarkGrey"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/vertical"
-        app:layout_constraintTop_toBottomOf="@+id/play_game" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/vertical2"
+        app:layout_constraintStart_toStartOf="@+id/vertical1"
+        app:layout_constraintTop_toTopOf="@+id/bottom2" />
 
     <Button
         android:id="@+id/play_game"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
         android:background="@color/cardGreen"
         android:fontFamily="sans-serif-condensed"
         android:text="@string/play_game"
+        android:textColor="@color/backgroundDarkGrey"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottom2"
+        app:layout_constraintEnd_toStartOf="@+id/vertical"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/bottom" />
@@ -91,16 +100,19 @@
         android:id="@+id/how_to_play"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
         android:background="@color/cardYellow"
         android:fontFamily="sans-serif-condensed"
         android:text="@string/how_to_play"
+        android:textColor="@color/backgroundDarkGrey"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/play_game" />
+        app:layout_constraintBottom_toTopOf="@+id/bottom2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/vertical"
+        app:layout_constraintTop_toTopOf="@+id/bottom" />
 
     <android.support.constraint.Guideline
         android:id="@+id/top"
@@ -114,7 +126,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.75" />
+        app:layout_constraintGuide_percent="0.8" />
+    <android.support.constraint.Guideline
+        android:id="@+id/bottom2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9" />
 
     <android.support.constraint.Guideline
         android:id="@+id/vertical"
@@ -123,10 +141,27 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
 
+    <android.support.constraint.Guideline
+        android:id="@+id/vertical1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.33" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/vertical2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.66" />
+
+
     <ImageView
         android:id="@+id/applicatin_name"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:contentDescription="@string/application_name"
         app:layout_constraintBottom_toTopOf="@+id/top"
         app:layout_constraintEnd_toEndOf="parent"

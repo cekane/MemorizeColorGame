@@ -165,6 +165,7 @@ class ChallengeMode : AppCompatActivity(), com.ckane.colorflash.android.CardView
     override fun endGame(score: Int) {
         nextBtn.visibility = View.VISIBLE
         makePowerUpInvisible()
+        nextBtn.text = getString(R.string.game_over_challenge_mode)
         nextBtn.setOnClickListener {
             startActivity(Intent(this, com.ckane.colorflash.android.activity.EndGame::class.java).apply {
                 putExtra("FINAL_SCORE", score)

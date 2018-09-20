@@ -10,29 +10,30 @@
     <Button
         android:id="@+id/challenge_mode"
         android:layout_width="0dp"
-        android:layout_height="54dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="35dp"
-        android:layout_marginStart="32dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:background="@color/cardBlue"
         android:fontFamily="sans-serif-condensed"
         android:text="@string/challenge_mode"
+        android:textColor="@color/backgroundDarkGrey"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hard_difficulty" />
+        app:layout_constraintTop_toTopOf="@+id/horizontal_line3" />
 
     <TextView
         android:id="@+id/difficulty_picker_text"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif-condensed"
         android:text="@string/choose_your_difficulty"
@@ -41,7 +42,7 @@
         android:textColor="@android:color/white"
         android:textSize="36sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/easy_difficulty"
+        app:layout_constraintBottom_toTopOf="@+id/horizontal_line1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -49,47 +50,59 @@
     <Button
         android:id="@+id/easy_difficulty"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:background="@color/cardGreen"
         android:fontFamily="sans-serif-condensed"
         android:text="@string/easy"
+        android:textColor="@color/backgroundDarkGrey"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/horizontal_line"
+        app:layout_constraintBottom_toTopOf="@+id/horizontal_line2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.85" />
+        app:layout_constraintTop_toTopOf="@+id/horizontal_line1" />
 
     <Button
         android:id="@+id/hard_difficulty"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:background="@color/cardRed"
         android:fontFamily="sans-serif-condensed"
         android:text="@string/hard"
+        android:textColor="@color/backgroundDarkGrey"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/horizontal_line3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/horizontal_line"
-        app:layout_constraintVertical_bias="0.13999999" />
+        app:layout_constraintTop_toTopOf="@+id/horizontal_line2" />
 
     <android.support.constraint.Guideline
-        android:id="@+id/horizontal_line"
+        android:id="@+id/horizontal_line1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+    <android.support.constraint.Guideline
+        android:id="@+id/horizontal_line2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.5" />
-
+    <android.support.constraint.Guideline
+        android:id="@+id/horizontal_line3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75" />
 
 </android.support.constraint.ConstraintLayout>

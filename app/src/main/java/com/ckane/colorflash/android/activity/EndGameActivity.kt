@@ -63,7 +63,7 @@ class EndGame : AppCompatActivity() {
         coinsTextView.text = resources.getString(R.string.end_game_coins, coins.toString())
 
         val scoreTextView = findViewById<TextView>(R.id.score)
-        scoreTextView.text = score.toString()
+        scoreTextView.text = "Score : $score"
 
         val tryAgainBtn: Button = findViewById(R.id.try_again)
         tryAgainBtn.setOnClickListener {
