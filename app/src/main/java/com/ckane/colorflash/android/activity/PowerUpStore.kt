@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.Button
 import android.widget.TextView
+import com.ckane.colorflash.BuildConfig
 import com.ckane.colorflash.R
 import com.ckane.colorflash.android.adapter.PowerUpRecyclerAdapter
 import com.ckane.colorflash.cache.AppDatabase
@@ -45,9 +46,15 @@ class PowerUpStore : AppCompatActivity(), com.ckane.colorflash.android.PowerUpVi
         rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this)
         rewardedVideoAd.rewardedVideoAdListener = this
         videoForCoins.setOnClickListener {
-            rewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",
-                    AdRequest.Builder().build())
-
+            if(BuildConfig.DEBUG){
+                //Dummy key provided by google ad mob
+                rewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",
+                        AdRequest.Builder().build())
+            }else{
+                //Key for reward ad
+                rewardedVideoAd.loadAd("ca-app-pub-7779382289276327/4452616999",
+                        AdRequest.Builder().build())
+            }
         }
 
         presenter.updateUserInfo()

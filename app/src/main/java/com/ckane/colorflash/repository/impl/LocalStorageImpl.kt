@@ -40,4 +40,13 @@ class LocalStorageImpl(private val sharedPref: SharedPreferences) : LocalStorage
             apply()
         }
     }
+
+    override fun getTimesTriedLoggedIn(): Int = sharedPref.getInt("LOGGED_IN_ATTEMPTS", 0)
+
+    override fun setTimesTriedLoggedIn(times: Int) {
+        with(sharedPref.edit()) {
+            putInt("LOGGED_IN_ATTEMPTS", times)
+            apply()
+        }
+    }
 }

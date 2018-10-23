@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "791302939646-3o0ntrco58scbd2pgvf9o0doinipqgs5.apps.googleusercontent.com",
+          "client_id": "791302939646-k8o0301j04n7jtogn7039snhiognf0ip.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.ckane.colorflash",
-            "certificate_hash": "7f7c4c52c113744566329825d87b792f1a0b9eaf"
+            "certificate_hash": "042d14fd30d66b42bd288e01c77f99f5799280fb"
           }
         },
         {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "791302939646-pdo412hn82a5rhdani4la8apcisate2r.apps.googleusercontent.com",
+              "client_id": "791302939646-30au18dr62hnstf3ijuk3b2276l82md7.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

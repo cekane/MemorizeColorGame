@@ -9,4 +9,6 @@ interface LocalStorage {
     fun toggleSound(soundOn : Boolean)
     fun isHapticOn() : Boolean
     fun toggleHaptic(hapticOn: Boolean)
+    fun getTimesTriedLoggedIn() : Int
+    fun setTimesTriedLoggedIn(times : Int)
 }

@@ -21,6 +21,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        //TODO add sign into google button
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 

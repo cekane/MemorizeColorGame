@@ -23,7 +23,8 @@ class MainMenuPresenterImpl(private val repository: LocalStorage,
     }
 
     override fun handleRegistration(userName: String) {
-        if (getLocalUserName().isEmpty()) {
+        val localUserName = getLocalUserName()
+        if (localUserName.isEmpty() || localUserName=="OfflineUser" && userName!="OfflineUser") {
             setLocalUsername(userName)
             //Insert new user into database
             createNewUser(UserInfo(userName))

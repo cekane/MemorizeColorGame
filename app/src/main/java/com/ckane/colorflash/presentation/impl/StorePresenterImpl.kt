@@ -37,6 +37,8 @@ class StorePresenterImpl(val repository: LocalStorage,
         userInfoRepository.getUserInfo(userName).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe({
             uInfo = it
             view.setUserInfo(uInfo)
+            Log.v("[Money]", uInfo.money.toString())
+            Log.v("[UserName]", uInfo.userName)
         }, {
             view.setUserInfo(UserInfo(""))
             Log.v("[Power Up User Info]", it.message)

@@ -90,15 +90,11 @@ class MenuActivity : AppCompatActivity(), com.ckane.colorflash.android.MenuView 
             }
         }
 
-
         signIn()
-
     }
 
-    private fun updateUI(account: GoogleSignInAccount) {
-        account.displayName?.let{
-            presenter.handleRegistration(it)
-        } ?: presenter.handleRegistration("")
+    private fun handleRegistration(userName: String? = "OfflineUser") {
+        userName?.let { presenter.handleRegistration(it) }
     }
 
     override fun updateCards(cards: MutableList<Card>) {
@@ -109,7 +105,6 @@ class MenuActivity : AppCompatActivity(), com.ckane.colorflash.android.MenuView 
         presenter.cleanUp()
         super.onDestroy()
     }
-
 
 
     override fun onBackPressed() {
@@ -123,16 +118,25 @@ class MenuActivity : AppCompatActivity(), com.ckane.colorflash.android.MenuView 
         val googleSignInClient = GoogleSignIn.getClient(this, gso)
         val account = GoogleSignIn.getLastSignedInAccount(this)
         if (account == null) {
-            val signInIntent = googleSignInClient.signInIntent
-            startActivityForResult(signInIntent, 100)
+            val attempts = repository.getTimesTriedLoggedIn()
+            when(attempts){
+                0 -> {
+                    val signInIntent = googleSignInClient.signInIntent
+                    startActivityForResult(signInIntent, SUCCESSFUL_LOGIN)
+                    repository.setTimesTriedLoggedIn(attempts + 1)
+                }
+                10 -> { repository.setTimesTriedLoggedIn(0) }
+                else -> { repository.setTimesTriedLoggedIn(attempts + 1) }
+            }
         } else {
-            updateUI(account)
+            //User Is Offline
+            handleRegistration()
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 100) {
+        if (requestCode == SUCCESSFUL_LOGIN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleSignInResult(task)
         }
@@ -141,9 +145,18 @@ class MenuActivity : AppCompatActivity(), com.ckane.colorflash.android.MenuView 
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
-            updateUI(account)
+            if(account.displayName.isNullOrBlank()){
+                Log.v("[Sign In Result Username]", "Null or Blank")
+                handleRegistration()
+            }else{
+                Log.v("[Sign In Result Username]", account.displayName)
+                handleRegistration(account.displayName)
+            }
         } catch (e: ApiException) {
             Log.v("[API EXCEPTION]", "Sign in error", e)
+            handleRegistration()
         }
     }
 }
+
+const val SUCCESSFUL_LOGIN = 100
