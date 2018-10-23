@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/color_flash_launcher"
@@ -14,7 +15,8 @@
         <meta-data
             android:name="com.google.android.gms.games.APP_ID"
             android:value="@string/application_id" />
-
+        <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-7779382289276327~6943048965"/>
         <activity
             android:name=".android.activity.levels.ChallengeMode"
             android:screenOrientation="portrait"

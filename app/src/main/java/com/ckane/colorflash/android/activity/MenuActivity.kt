@@ -145,12 +145,12 @@ class MenuActivity : AppCompatActivity(), com.ckane.colorflash.android.MenuView 
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
-            if(account.displayName.isNullOrBlank()){
+            if(account?.displayName.isNullOrBlank()){
                 Log.v("[Sign In Result Username]", "Null or Blank")
                 handleRegistration()
             }else{
-                Log.v("[Sign In Result Username]", account.displayName)
-                handleRegistration(account.displayName)
+                Log.v("[Sign In Result Username]", account?.displayName)
+                handleRegistration(account?.displayName)
             }
         } catch (e: ApiException) {
             Log.v("[API EXCEPTION]", "Sign in error", e)

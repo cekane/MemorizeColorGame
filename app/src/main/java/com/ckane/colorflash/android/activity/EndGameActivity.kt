@@ -85,7 +85,7 @@ class EndGame : AppCompatActivity() {
         leaderBoardBtn.setOnClickListener {
             val account = GoogleSignIn.getLastSignedInAccount(this)
             account?.let{noNullAccount ->
-                Log.v("[Successfull account]", "Account name : ${noNullAccount.toJson()}")
+                Log.v("[Successfull account]", "Account name : ${noNullAccount.displayName}")
                 Games.getLeaderboardsClient(this, noNullAccount)
                         .getLeaderboardIntent(scoreBoardKey)
                         .addOnSuccessListener { intent ->

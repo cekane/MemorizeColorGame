@@ -36,16 +36,17 @@ dependencies {
     //Room
     implementation "android.arch.persistence.room:runtime:$room_version"
     implementation 'com.android.support:support-v4:27.1.1'
-    implementation 'com.google.firebase:firebase-core:16.0.3'
-    implementation 'com.google.firebase:firebase-crash:16.2.0'
+    implementation 'com.google.firebase:firebase-auth:16.0.5'
+    implementation 'com.google.firebase:firebase-core:16.0.4'
+    implementation 'com.google.firebase:firebase-crash:16.2.1'
     kapt "android.arch.persistence.room:compiler:$room_version"
     //RxKotlinJava
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     //Google play games services
-    implementation 'com.google.android.gms:play-services-games:15.0.1'
-    implementation 'com.google.android.gms:play-services-auth:16.0.0'
-    implementation 'com.google.android.gms:play-services-identity:15.0.1'
-    implementation 'com.google.android.gms:play-services-ads:15.0.1'
+    implementation 'com.google.android.gms:play-services-games:16.0.0'
+    implementation 'com.google.android.gms:play-services-auth:16.0.1'
+    implementation 'com.google.android.gms:play-services-identity:16.0.0'
+    implementation 'com.google.android.gms:play-services-ads:17.0.0'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:27.1.1'
