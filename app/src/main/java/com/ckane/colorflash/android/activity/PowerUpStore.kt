@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import com.ckane.colorflash.BuildConfig
@@ -48,11 +49,13 @@ class PowerUpStore : AppCompatActivity(), com.ckane.colorflash.android.PowerUpVi
         videoForCoins.setOnClickListener {
             if(BuildConfig.DEBUG){
                 //Dummy key provided by google ad mob
+                Log.v("[Ads]", "Test Ad")
                 rewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",
                         AdRequest.Builder().build())
             }else{
                 //Key for reward ad
-                rewardedVideoAd.loadAd("ca-app-pub-7779382289276327/4452616999",
+                Log.v("[Ads]", "Production Ad")
+                rewardedVideoAd.loadAd("ca-app-pub-7779382289276327/2743127034",
                         AdRequest.Builder().build())
             }
         }

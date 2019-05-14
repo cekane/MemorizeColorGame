@@ -113,7 +113,6 @@ class MenuActivity : AppCompatActivity(), com.ckane.colorflash.android.MenuView 
 
     private fun signIn() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
                 .build()
         val googleSignInClient = GoogleSignIn.getClient(this, gso)
         val account = GoogleSignIn.getLastSignedInAccount(this)

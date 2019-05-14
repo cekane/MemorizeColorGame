@@ -31,6 +31,14 @@
           }
         },
         {
+          "client_id": "791302939646-ml323gtj9pq557nv8guh1c66lp4lve8l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ckane.colorflash",
+            "certificate_hash": "7f7c4c52c113744566329825d87b792f1a0b9eaf"
+          }
+        },
+        {
           "client_id": "791302939646-pdo412hn82a5rhdani4la8apcisate2r.apps.googleusercontent.com",
           "client_type": 3
         }
